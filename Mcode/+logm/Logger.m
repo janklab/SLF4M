@@ -20,6 +20,11 @@ classdef Logger
     % logm.info
     % logm.debug
     % logm.trace
+    %
+    % Examples:
+    %
+    % log = logm.Logger.getLogger('foo.bar.FooBar');
+    % log.info('Hello, world! Running on Matlab %s', version);
     
     properties (SetAccess = private)
         % The underlying SLF4J Logger object
@@ -40,7 +45,6 @@ classdef Logger
         jLogger = org.slf4j.LoggerFactory.getLogger(identifier);
         out = logm.Logger(jLogger);
         end
-        
     end
     
     methods
@@ -50,6 +54,27 @@ classdef Logger
         % Generally, you shouldn't call this. Use logm.Logger.getLogger() instead.
         mustBeType(jLogger, 'org.slf4j.Logger');
         this.jLogger = jLogger;
+        end
+        
+        function disp(this)
+            disp(dispstr(this));
+        end
+        
+        function out = dispstr(this)
+            if isscalar(this)
+                strs = dispstrs(this);
+                out = strs{1};
+            else
+                out = sprintf('%s %s', size2str(size(this)), class(this));
+            end
+        end
+        
+        function out = dispstrs(this)
+            out = cell(size(this));
+            for i = 1:numel(this)
+                out{i} = sprintf('Logger: %s (%s)', this(i).name, ...
+                    strjoin(this(i).enabledLevels, ', '));
+            end
         end
         
         function error(this, msg, varargin)

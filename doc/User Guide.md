@@ -46,15 +46,26 @@ Normally when writing a library, I avoid defining any global functions, to avoid
 
 This provides an extension point for defining custom string conversions for your own user-defined classes. You can override `dispstr` and `dispstrs` in your classes, and SLF4M will recognize it. I find this is useful for other string formatting, too.
 
-For uniformity, if you define `dispstr`, I recommend that you override `disp` to make use of it.
+For uniformity, if you define `dispstr`, I recommend that you override `disp` to make use of it. And you'll typically want to make `dispstr` and `dispstrs` consistent.
 
 ```
     function disp(this)
         disp(dispstr(this));
     end
+
+    % Standard implementation of dispstr
+    function out = dispstr(this)
+        if isscalar(this)
+            strs = dispstrs(this);
+            out = strs{1};
+        else
+            out = sprintf('%s %s', size2str(size(this)), class(this));
+        end
+    end
+
 ```
 
-As a convenience, there is a `logm.Displayable` mix-in class which provides standard implementations of `disp` and `dispstr` in terms of `dispstrs`. If you inherit from `logm.Displayable`, you only need to define `dispstrs`.
+As a convenience, there is a `logm.Displayable` mix-in class which takes care of this boilerplate for you. It provides standard implementations of `disp` and `dispstr` in terms of `dispstrs`. If you inherit from `logm.Displayable`, you only need to define `dispstrs`.
 
 ### The `dispstr` interface
 
