@@ -128,6 +128,12 @@ For most Matlab-defined objects, this just results in a "`m-by-n <classname>`" o
 
 (You used to be able to monkeypatch new methods in to Matlab-provided datatypes to customize their output, but that doesn't seem to work on newer versions of Matlab.)
 
+## Configuration
+
+All the actual logging goes through the `log4j` back end; you can configure it as with any `log4j` installation. See the [`log4j` 1.2 documentation](http://logging.apache.org/log4j/1.2/) for details. (Note: you have to use the old 1.2 series doco, because that's what Matlab currently ships with.)
+
+The `logm.Log4jConfigurator` class provides a convenient Matlab-friendly interface for configuring `log4j` to do basic stuff. It's enough for simple cases. But all the configuration state is passed on the the `log4j` back end; none of it is stored in the Matlab layer.
+
 ## Implementation notes
 
 I chose `log4j` as the back end because it's what ships with Matlab: Matlab includes the `log4j` JARs and the SLF4J-to-`log4j` binding, so it's already active, and it's hard to swap out another back end. (I probably would have chosen `logback` if I had my druthers.)
