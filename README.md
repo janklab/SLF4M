@@ -78,4 +78,4 @@ log4j was chosen as the back-end because that's what ships with Matlab.
 
 ##  License
 
-Business-friendly Apache 2.0.
+SLF4M is dual licensed under the business-friendly Apache 2.0 and BSD 2-clause licenses. Pick whichever you like.
