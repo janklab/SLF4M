@@ -123,7 +123,7 @@ classdef Logger
         end
         
         function errorj(this, msg, varargin)
-        % Log a message at the ERROR level.
+        % Log a message at the ERROR level, using SLFJ formatting.
         if ~this.jLogger.isErrorEnabled()
             return
         end
@@ -131,7 +131,7 @@ classdef Logger
         end
         
         function warnj(this, msg, varargin)
-        % Log a message at the WARN level.
+        % Log a message at the WARN level, using SLFJ formatting.
         if ~this.jLogger.isWarnEnabled()
             return
         end
@@ -139,7 +139,7 @@ classdef Logger
         end
         
         function infoj(this, msg, varargin)
-        % Log a message at the INFO level.
+        % Log a message at the INFO level, using SLFJ formatting.
         if ~this.jLogger.isInfoEnabled()
             return
         end
@@ -147,7 +147,7 @@ classdef Logger
         end
         
         function debugj(this, msg, varargin)
-        % Log a message at the DEBUG level.
+        % Log a message at the DEBUG level, using SLFJ formatting.
         if ~this.jLogger.isDebugEnabled()
             return
         end
@@ -155,7 +155,7 @@ classdef Logger
         end
         
         function tracej(this, msg, varargin)
-        % Log a message at the TRACE level.
+        % Log a message at the TRACE level, using SLFJ formatting.
         if ~this.jLogger.isTraceEnabled()
             return
         end

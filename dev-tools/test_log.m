@@ -8,4 +8,7 @@ pkg.a.deeply.nested.package.a_class.hello_static;
 
 anon_fcn = @() logm.info('Called from anonymous function in top-level function');
 anon_fcn();
+
+cld = calling_Logger_directly;
+cld.hello;
 end

@@ -1,12 +1,14 @@
 SLF4M
 ======================
 
-SLF4M is a simple logging framework for Matlab, built on top of SLF4J and log4j. You can
+SLF4M is a simple but flexible logging framework for Matlab, built on top of [SLF4J](https://www.slf4j.org/) and [Apache log4j](https://logging.apache.org/log4j/2.0/). You can
 use it to do runtime-configurable logging from your Matlab scripts and programs.
 This can be more informative and more manageable than commenting in and out
 `fprintf()` statements.
 
-SLF4M consists of a Matlab binding layer for SLF4J, along with a new `dispstr()` API for customizing object display. (You do not have to use dispstr() if you don't want to; it's a bonus enhancement.)
+The API is simple enough that you can get up and running with it quickly, or even use it casually in scripts, but it's flexible and powerful enough to be useful for larger systems.
+
+SLF4M consists of a Matlab binding layer for SLF4J, along with a new `dispstr` API for customizing object display. (The `dispstr` part is mostly optional; you don't have to learn it in order to use SLF4M logging.)
 
 ##  Usage
 
@@ -62,6 +64,10 @@ Thanks to `dispstr()`, you can also pass Matlab objects to the `%s` conversions.
 ```
 
 For more details, see the [User's Guide](doc/User Guide.md).
+
+##  Requirements
+
+A kind of recent version of Matlab. SLF4M was developed and tested on Matlab R2016b and R2017b, but it will probably work on some older Matlab versions too.
 
 ##  Implementation
 
