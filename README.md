@@ -63,7 +63,7 @@ Thanks to `dispstr()`, you can also pass Matlab objects to the `%s` conversions.
 09:52:29.809 INFO  base - Hello, world! 2-by-1 containers.Map
 ```
 
-For more details, see the [User's Guide](doc/User Guide.md).
+For more details, see the [User's Guide](doc/UserGuide.md).
 
 ##  Requirements
 
