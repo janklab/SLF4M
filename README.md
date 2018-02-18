@@ -79,3 +79,7 @@ log4j was chosen as the back-end because that's what ships with Matlab.
 ##  License
 
 SLF4M is dual licensed under the business-friendly Apache 2.0 and BSD 2-clause licenses. Pick whichever you like.
+
+##  Author
+
+SLF4M is developed by [Andrew Janke](https://apjanke.net). Its home page is [the repo on GitHub](https://github.com/apjanke/SLF4M).
