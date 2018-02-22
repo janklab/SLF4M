@@ -1,6 +1,15 @@
 SLF4M Changelog
 ==========================
 
+## Version 1.0.0  (2018-02-21)
+
+Same as version 0.2.0. I'm just declaring this 1.0 and ready for use.
+(Especially because File Exchange doesn't allow 0.x versions.)
+
+## Version 0.2.0  (2018-02-21)
+
+* Add a configuration GUI
+
 ## Version 0.1.0  (2018-02-18)
 
 * Initial checkin to GitHub
