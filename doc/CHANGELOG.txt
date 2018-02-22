@@ -1,6 +1,11 @@
 SLF4M Changelog
 ==========================
 
+## Version 1.0.0.1  (2018-02-21)
+
+Same as 1.0.0; I just added a screenshot on File Exchange, and that requires a
+revision bump.
+
 ## Version 1.0.0  (2018-02-21)
 
 Same as version 0.2.0. I'm just declaring this 1.0 and ready for use.
