@@ -7,7 +7,7 @@ SLF4M provides:
 
 * A set of logging functions to log events at various levels
  * Regular and "`j`" variants for sprintf-style or SLF4J-style formatting
-* A `log4j` configurator tool
+* A Log4j configurator tool and GUI
 * `dispstr`, a customizable string-conversion API
 
 All the code is in the `+logm` package. I chose a short, readable name because if you're using logging, it'll show up a lot in your code.
@@ -39,7 +39,7 @@ Some Matlab objects may not convert to Java objects at all, so you'll get errors
 	Error in loggerCallImpl (line 69)
 	                logger.infoj(msg, args{:});
 	Error in logm.infoj (line 13)
-	loggerCallImpl('info', msg, varargin, 'j'); 
+	loggerCallImpl('info', msg, varargin, 'j');
 ```
 
 To avoid this, use the regular variants.
@@ -60,7 +60,7 @@ classdef calling_Logger_directly
     properties (Constant)
         log = logm.Logger.getLogger('foo.bar.baz.qux.MyLoggerID');
     end
-    
+
     methods
         function hello(this)
             this.log.info('Hello, world!');
@@ -130,22 +130,21 @@ For most Matlab-defined objects, this just results in a "`m-by-n <classname>`" o
 
 ## Configuration
 
-All the actual logging goes through the `log4j` back end; you can configure it as with any `log4j` installation. See the [`log4j` 1.2 documentation](http://logging.apache.org/log4j/1.2/) for details. (Note: you have to use the old 1.2 series doco, because that's what Matlab currently ships with.)
+All the actual logging goes through the Log4j back end; you can configure it as with any Log4j installation. See the [Log4j 1.2 documentation](http://logging.apache.org/log4j/1.2/) for details. (Note: you have to use the old 1.2 series doco, because that's what Matlab currently ships with.)
 
-The `logm.Log4jConfigurator` class provides a convenient Matlab-friendly interface for configuring `log4j` to do basic stuff. It's enough for simple cases. But all the configuration state is passed on the the `log4j` back end; none of it is stored in the Matlab layer.
+The `logm.Log4jConfigurator` class provides a convenient Matlab-friendly interface for configuring Log4j to do basic stuff. It's enough for simple cases. But all the configuration state is passed on the the Log4j back end; none of it is stored in the Matlab layer.
 
 ## Implementation notes
 
-I chose `log4j` as the back end because it's what ships with Matlab: Matlab includes the `log4j` JARs and the SLF4J-to-`log4j` binding, so it's already active, and it's hard to swap out another back end. (I probably would have chosen `logback` if I had my druthers.)
+I chose Log4j as the back end because it's what ships with Matlab: Matlab includes the Log4j JARs and the SLF4J-to-Log4j binding, so it's already active, and it's hard to swap out another back end. (I probably would have chosen `logback` if I had my druthers.)
 
 Matlab's internals don't seem to make much use of logging, even though they've bundled it. But some of the third-party JARs they redistributed use it. Turn the levels up to `TRACE` and see what happens.
 
-Aside from the `dispstr` formatting, everything is done purely in terms of the underlying SLF4J interface, so SLF4M is compatible with any other code or tools that use SLF4J or `log4j`.
+Aside from the `dispstr` formatting, everything is done purely in terms of the underlying SLF4J interface, so SLF4M is compatible with any other code or tools that use SLF4J or Log4j.
 
-Matlab ships with older versions of SLF4J and `log4j`. (They're slow to update their Java libraries.) Hopefully that's not a problem for people.
+Matlab ships with older versions of SLF4J and Log4j. (They're slow to update their Java libraries.) Hopefully that's not a problem for people.
 
-| Matlab Version | SLF4J Version | `log4j` Version |
+| Matlab Version | SLF4J Version | Log4j Version   |
 | -------------- | ------------- | --------------- |
 | R2016b         | 1.5.8         | 1.2.15          |
 | R2017b         | 1.5.8         | 1.2.15          |
-

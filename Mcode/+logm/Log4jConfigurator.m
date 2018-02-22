@@ -15,8 +15,11 @@ classdef Log4jConfigurator
     %   log4j:WARN No appenders could be found for logger (unknown).
     %   log4j:WARN Please initialize the log4j system properly.
     %
-    % If that happens, it means you need to call 
+    % If that happens, it means you need to call
     % logm.Log4jConfigurator.configureBasicConsoleLogging.
+    %
+    % This also provides a log4j configuration GUI that you can launch with 
+    % `logm.Log4jConfigurator.showGui`.
     %
     % Examples:
     %
@@ -33,8 +36,11 @@ classdef Log4jConfigurator
     %
     % % Display fully-qualified class/category names in the log output:
     % logm.Log4jConfigurator.setRootAppenderPattern(...
-    %    ['%d{HH:mm:ss.SSS} %-5p %c - %m' sprintf('\n')]);
-
+    %    ['%d{HH:mm:ss.SSS} %p %c - %m' sprintf('\n')]);
+    %
+    % % Bring up the configuration GUI
+    % logm.Log4jConfigurator.showGui
+    
     
     methods (Static)
         function configureBasicConsoleLogging
@@ -51,20 +57,20 @@ classdef Log4jConfigurator
         rootAppender = rootLogger.getAllAppenders().nextElement();
         % Use \n instead of %n because the Matlab console wants Unix-style line
         % endings, even on Windows.
-        pattern = ['%d{HH:mm:ss.SSS} %c{1} %x - %m' sprintf('\n')];
+        pattern = ['%d{HH:mm:ss.SSS} %-5p %c{1} %x - %m' sprintf('\n')];
         myLayout = org.apache.log4j.PatternLayout(pattern);
         rootAppender.setLayout(myLayout);
         end
         
         function setRootAppenderPattern(pattern)
-            % Sets the pattern on the root appender
-            %
-            % This is just a convenience method. Assumes there is a single
-            % appender on the root logger.
-            rootLogger = org.apache.log4j.Logger.getRootLogger();
-            rootAppender = rootLogger.getAllAppenders().nextElement();
-            myLayout = org.apache.log4j.PatternLayout(pattern);
-            rootAppender.setLayout(myLayout);            
+        % Sets the pattern on the root appender
+        %
+        % This is just a convenience method. Assumes there is a single
+        % appender on the root logger.
+        rootLogger = org.apache.log4j.Logger.getRootLogger();
+        rootAppender = rootLogger.getAllAppenders().nextElement();
+        myLayout = org.apache.log4j.PatternLayout(pattern);
+        rootAppender.setLayout(myLayout);
         end
         
         function out = getLog4jLevel(levelName)
@@ -107,17 +113,17 @@ classdef Log4jConfigurator
         function prettyPrintLogConfiguration(verbose)
         % Displays the current log configuration to the console
         %
-        % logm.Log4jConfigurator()
+        % logm.Log4jConfigurator.prettyPrintLogConfiguration()
         
         if nargin < 1 || isempty(verbose);  verbose = false;  end
         
-            function out = getLevelName(lgr)        
-                level = lgr.getLevel();
-                if isempty(level)
-                    out = '';
-                else
-                    out = char(level.toString());
-                end
+            function out = getLevelName(lgr)
+            level = lgr.getLevel();
+            if isempty(level)
+                out = '';
+            else
+                out = char(level.toString());
+            end
             end
         
         % Get all names first so we can display in sorted order
@@ -167,6 +173,24 @@ classdef Log4jConfigurator
             fprintf('%s: %s\n',...
                 loggerNames{i}, str);
         end
+        end
+        
+        function showGui()
+        % Display the log4j configuration GUI
+        
+        % Make sure the log4j1-config-gui JAR is on the path
+        libDir = fullfile(fileparts(fileparts(fileparts(mfilename('fullpath')))), ...
+            'lib');
+        jarFile = [libDir '/log4j1-config-gui/log4j1-config-gui-0.1.1.jar'];
+        jpath = javaclasspath('-all');
+        if ~ismember(jarFile, jpath)
+            javaaddpath(jarFile);
+        end
+        
+        gui = javaObjectEDT('net.apjanke.log4j1gui.Log4jConfiguratorGui');
+        gui.initializeGui();
+        frame = gui.showInFrame();
+        frame.setVisible(true);        
         end
     end
     
