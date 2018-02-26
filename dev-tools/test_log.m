@@ -11,4 +11,24 @@ anon_fcn();
 
 cld = calling_Logger_directly;
 cld.hello;
+
+try
+    fcn_a();
+catch err
+    logm.warn(err, 'Caught error during processing.');
+end
+
+end
+
+function fcn_a
+x = 42;
+fcn_b(x);
+end
+
+function fcn_b(x) %#ok<INUSD>
+fcn_c();
+end
+
+function fcn_c()
+error('This error happened down the call stack.');
 end

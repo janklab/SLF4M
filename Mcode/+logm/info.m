@@ -2,6 +2,7 @@ function info(msg, varargin)
 % Log an INFO level message from caller, with printf style formatting.
 %
 % logm.info(msg, varargin)
+% logm.info(exception, msg, varargin)
 %
 % This accepts a message with printf style formatting, using '%...' formatting
 % controls as placeholders.

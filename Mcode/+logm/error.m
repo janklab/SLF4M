@@ -2,6 +2,7 @@ function error(msg, varargin)
 % Log an ERROR level message from caller, with printf style formatting.
 %
 % logm.error(msg, varargin)
+% logm.error(exception, msg, varargin)
 %
 % This accepts a message with printf style formatting, using '%...' formatting
 % controls as placeholders.

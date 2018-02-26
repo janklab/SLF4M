@@ -2,6 +2,7 @@ function warn(msg, varargin)
 % Log a WARN level message from caller, with printf style formatting.
 %
 % logm.warn(msg, varargin)
+% logm.warn(exception, msg, varargin)
 %
 % This accepts a message with printf style formatting, using '%...' formatting
 % controls as placeholders.

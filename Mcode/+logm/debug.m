@@ -2,6 +2,7 @@ function debug(msg, varargin)
 % Log a DEBUG level message from caller, with printf style formatting.
 %
 % logm.debug(msg, varargin)
+% logm.debug(exception, msg, varargin)
 %
 % This accepts a message with printf style formatting, using '%...' formatting
 % controls as placeholders.

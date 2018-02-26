@@ -2,6 +2,7 @@ function trace(msg, varargin)
 % Log a TRACE level message from caller, with printf style formatting.
 %
 % logm.trace(msg, varargin)
+% logm.trace(exception, msg, varargin)
 %
 % This accepts a message with printf style formatting, using '%...' formatting
 % controls as placeholders.

@@ -1,7 +1,7 @@
 classdef Logger
-    % Main entry point through which logging happens
+    %LOGGER Main entry point through which logging happens
     %
-    % The logger class provides method calls for performing logging, and the ability
+    % The Logger class provides method calls for performing logging, and the ability
     % to look up loggers by name. This is the main entry point through which all
     % SLF4M logging happens.
     %
@@ -14,6 +14,16 @@ classdef Logger
     % Use this class directly if you want to customize the names of the loggers to
     % which logging is directed.
     %
+    % Each of the logging methods - error(), warn(), info(), debug(), and
+    % trace() - takes a sprintf()-style signature, with a format string as
+    % the first argument, and substitution values as the remaining
+    % arguments.
+    %    logger.info(format, varargin)
+    % You can also insert an MException object at the beginning of the
+    % argument list to have its message and stack trace included in the log
+    % message.
+    %    logger.warn(exception, format, varargin)
+    %
     % See also:
     % logm.error
     % logm.warn
@@ -25,6 +35,12 @@ classdef Logger
     %
     % log = logm.Logger.getLogger('foo.bar.FooBar');
     % log.info('Hello, world! Running on Matlab %s', version);
+    %
+    % try
+    %     some_operation_that_could_go_wrong();
+    % catch err
+    %     log.warn(err, 'Caught exception during processing')
+    %
     
     properties (SetAccess = private)
         % The underlying SLF4J Logger object
@@ -49,7 +65,7 @@ classdef Logger
     
     methods
         function this = Logger(jLogger)
-        %LOGGER Build a new logger object around an SLF4J Logger object
+        %LOGGER Build a new logger object around an SLF4J Logger object.
         %
         % Generally, you shouldn't call this. Use logm.Logger.getLogger() instead.
         mustBeType(jLogger, 'org.slf4j.Logger');
@@ -57,10 +73,12 @@ classdef Logger
         end
         
         function disp(this)
+        %DISP Custom object display.
             disp(dispstr(this));
         end
         
         function out = dispstr(this)
+        %DISPSTR Custom object display string.
             if isscalar(this)
                 strs = dispstrs(this);
                 out = strs{1};
@@ -70,6 +88,7 @@ classdef Logger
         end
         
         function out = dispstrs(this)
+        %DISPSTRS Custom object display strings.
             out = cell(size(this));
             for i = 1:numel(this)
                 out{i} = sprintf('Logger: %s (%s)', this(i).name, ...
@@ -220,10 +239,26 @@ end
 
 function out = formatMessage(format, varargin)
 args = varargin;
+exceptionStr = [];
+if isa(format, 'MException')
+    exception = format;
+    if isempty(args)
+        format = '';
+    else
+        format = args{1};
+        args = args(2:end);
+    end
+    exceptionStr = getReport(exception, 'extended', 'hyperlinks','off');
+    % Remove blank lines for more compact, readable (imho) logs
+    exceptionStr = strrep(exceptionStr, sprintf('\n\n'), newline);
+end
 for i = 1:numel(args)
     if isobject(varargin{i})
         args{i} = dispstr(varargin{i});
     end
 end
 out = sprintf(format, args{:});
+if ~isempty(exceptionStr)
+    out = sprintf('%s\n%s', out, exceptionStr);
+end
 end
