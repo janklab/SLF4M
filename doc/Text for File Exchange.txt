@@ -13,7 +13,7 @@ Usage
 
 The logging functions are in the `+logm` package. Call them from within your Matlab code.
 
-```
+
 function helloWorld(x)
 
 if nargin < 1 || isempty(x)
@@ -31,29 +31,28 @@ end
 try
     some_bad_operation(x);
 catch err
-    logm.error('Something went wrong in some_bad_operation(%f): %s', ...
-        x, err.message);
+    logm.error(err, 'Something went wrong in some_bad_operation(x=%f)');
 end
 
 end
-```
+
 
 The output looks like this:
 
-```
+
 >> helloWorld
-08:57:47.178 INFO  helloWorld() - Answer z=165.456000
-08:57:47.179 ERROR helloWorld() - Something went wrong in some_bad_operation(123.456000): Undefined function 'some_bad_operation' for input arguments of type 'double'.
-```
+17:27:32.533 INFO  helloWorld()  - Answer z=165.456000
+17:27:32.557 ERROR helloWorld()  - Something went wrong in some_bad_operation(
+Undefined function 'some_bad_operation' for input arguments of type 'double'.
+Error in helloWorld (line 16)
+    some_bad_operation(x);
 
 Thanks to `dispstr()`, you can also pass Matlab objects to the `%s` conversions.
 
-```
 >> m = containers.Map;
 >> m('foo') = 42; m('bar') = struct;
 >> logm.info('Hello, world! %s', m)
 09:52:29.809 INFO  base - Hello, world! 2-by-1 containers.Map
-```
 
 For more details, see the User's Guide included in the distribution.
 
