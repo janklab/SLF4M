@@ -23,7 +23,17 @@ In your Matlab program, call `logm.Log4jConfigurator.configureBasicConsoleLoggin
 to set up basic logging. This will write log output to the Matlab console.
 
 The logging functions are in the `+logm` package. Call them from within your Matlab
-code.
+code. In order of logging level, they are:
+
+* logm.error()
+* logm.warn()
+* logm.info()
+* logm.debug()
+* logm.trace()
+
+The logging functions take sprintf()-style formatting arguments. You can also pass
+an `MException` as the first argument to include the error message and stack
+trace in the log message.
 
 ```
 function helloWorld(x)
@@ -43,8 +53,7 @@ end
 try
     some_bad_operation(x);
 catch err
-    logm.error('Something went wrong in some_bad_operation(%f): %s', ...
-        x, err.message);
+    logm.error(err, 'Something went wrong in some_bad_operation(x=%f)');
 end
 
 end
@@ -54,8 +63,11 @@ The output looks like this:
 
 ```
 >> helloWorld
-08:57:47.178 INFO  helloWorld() - Answer z=165.456000
-08:57:47.179 ERROR helloWorld() - Something went wrong in some_bad_operation(123.456000): Undefined function 'some_bad_operation' for input arguments of type 'double'.
+17:27:32.533 INFO  helloWorld()  - Answer z=165.456000
+17:27:32.557 ERROR helloWorld()  - Something went wrong in some_bad_operation(
+Undefined function 'some_bad_operation' for input arguments of type 'double'.
+Error in helloWorld (line 16)
+    some_bad_operation(x);
 ```
 
 Thanks to `dispstr()`, you can also pass Matlab objects to the `%s` conversions.
