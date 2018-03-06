@@ -1,6 +1,10 @@
 SLF4M Changelog
 ==========================
 
+## Version 1.1.1.1 (2018-03-06)
+
+* Revision bump for MathWorks File Exchange re-submission. No code changes.
+
 ## Version 1.1.1 (2018-03-06)
 
 * Fix JAR file missing from the distribution
