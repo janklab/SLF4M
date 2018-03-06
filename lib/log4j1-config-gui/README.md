@@ -5,4 +5,4 @@ This is the log4j1-config-gui library by Andrew Janke. It's available on GitHub 
 
 ##  License
 
-Apache 2.0 License.
+BSD 2-clause license.
