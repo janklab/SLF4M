@@ -6,7 +6,7 @@
 PROGRAM=SLF4M
 VERSION=$(shell cat VERSION)
 DIST=dist/${PROGRAM}-${VERSION}
-FILES=README.md LICENSE Mcode doc
+FILES=README.md LICENSE Mcode doc lib
 
 dist:
 	rm -rf dist/*
