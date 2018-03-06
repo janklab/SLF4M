@@ -53,7 +53,7 @@ end
 try
     some_bad_operation(x);
 catch err
-    logm.error(err, 'Something went wrong in some_bad_operation(x=%f)');
+    logm.error(err, 'Something went wrong in some_bad_operation(x=%f)', x);
 end
 
 end
@@ -63,8 +63,8 @@ The output looks like this:
 
 ```
 >> helloWorld
-17:27:32.533 INFO  helloWorld()  - Answer z=165.456000
-17:27:32.557 ERROR helloWorld()  - Something went wrong in some_bad_operation(
+16:53:18.279 INFO helloWorld() - Answer z=165.456000
+16:53:18.291 ERROR helloWorld() - Something went wrong in some_bad_operation(123.456000)
 Undefined function 'some_bad_operation' for input arguments of type 'double'.
 Error in helloWorld (line 16)
     some_bad_operation(x);

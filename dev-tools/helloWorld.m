@@ -15,7 +15,7 @@ end
 try
     some_bad_operation(x);
 catch err
-    logm.error(err, 'Something went wrong in some_bad_operation(%f)');
+    logm.error(err, 'Something went wrong in some_bad_operation(%f)', x);
 end
  
 end
