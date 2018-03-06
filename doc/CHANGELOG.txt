@@ -1,6 +1,10 @@
 SLF4M Changelog
 ==========================
 
+## Version 1.1.1 (2018-03-06)
+
+* Fix JAR file missing from the distribution
+
 ## Version 1.1.0.1 (2018-03-06)
 
 * Clarify dual-licensing in the LICENSE file. No changes to code.
