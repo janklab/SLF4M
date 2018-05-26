@@ -64,4 +64,6 @@ For more details, see the User's Guide included in the distribution.
 Author
 -----------------------------------
 
+SLF4M is developed by Andrew Janke <andrew@apjanke.net>.
+
 SLF4M's home page is the repo on GitHub: https://github.com/apjanke/SLF4M.
