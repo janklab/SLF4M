@@ -5,7 +5,7 @@ SLF4M is a simple but flexible logging framework for Matlab, built on top of [SL
 
 SLF4M provides:
 * Logging functions (a Matlab layer of bindings for SLF4J)
-* A `dispstr` API for customizing object display.
+* A "Dispstr" API for customizing object display.
 * A Log4j configuration GUI
 
 The API is simple enough that you can get up and running with it quickly, or even use it casually in scripts, but it's flexible and powerful enough to be useful for larger systems.
@@ -19,7 +19,9 @@ The API is simple enough that you can get up and running with it quickly, or eve
 To install, unzip the distribution somewhere, and add its `Mcode/` directory
 to your Matlab path.
 
-In your Matlab program, call `logm.Log4jConfigurator.configureBasicConsoleLogging()`
+In your Matlab program:
+* Call `logm.initSLF4M()` to initialize SLF4M. This needs to be done before any logging calls are made.
+* Call `logm.Log4jConfigurator.configureBasicConsoleLogging()`
 to set up basic logging. This will write log output to the Matlab console.
 
 The logging functions are in the `+logm` package. Call them from within your Matlab

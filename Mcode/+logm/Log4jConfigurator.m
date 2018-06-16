@@ -181,7 +181,7 @@ classdef Log4jConfigurator
         % Make sure the log4j1-config-gui JAR is on the path
         libDir = fullfile(fileparts(fileparts(fileparts(mfilename('fullpath')))), ...
             'lib');
-        jarFile = [libDir '/log4j1-config-gui/log4j1-config-gui-0.1.1.jar'];
+        jarFile = [libDir '/java/log4j1-config-gui/log4j1-config-gui-0.1.1.jar'];
         jpath = javaclasspath('-all');
         if ~ismember(jarFile, jpath)
             javaaddpath(jarFile);

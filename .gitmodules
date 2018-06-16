@@ -1,0 +1,3 @@
+[submodule "lib/matlab/dispstr-HEAD"]
+	path = lib/matlab/dispstr-HEAD
+	url = https://github.com/apjanke/dispstr
