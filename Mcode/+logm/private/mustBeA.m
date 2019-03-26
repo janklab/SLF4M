@@ -1,4 +1,4 @@
-function mustBeType(value, type)
+function mustBeA(value, type)
 %MUSTBETYPE Validate that an input is of a particular data type
 %
 % MUSTBETYPE(value, type)

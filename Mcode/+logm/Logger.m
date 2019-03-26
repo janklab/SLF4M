@@ -68,7 +68,7 @@ classdef Logger
         %LOGGER Build a new logger object around an SLF4J Logger object.
         %
         % Generally, you shouldn't call this. Use logm.Logger.getLogger() instead.
-        mustBeType(jLogger, 'org.slf4j.Logger');
+        mustBeA(jLogger, 'org.slf4j.Logger');
         this.jLogger = jLogger;
         end
         
