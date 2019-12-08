@@ -1,5 +1,5 @@
 function infoj(msg, varargin)
-% Log an INFO level message from caller.
+% Log an INFO level message from caller, using SLF4M style formatting.
 %
 % logm.infoj(msg, varargin)
 %

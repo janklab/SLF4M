@@ -1,5 +1,5 @@
 function debugj(msg, varargin)
-% Log a DEBUG level message from caller.
+% Log a DEBUG level message from caller, using SLF4M style formatting.
 %
 % logm.debug(msg, varargin)
 %
@@ -8,7 +8,7 @@ function debugj(msg, varargin)
 %
 % Examples:
 %
-% logm.debug('Some message. value1={} value2={}', 'foo', 42);
+% logm.debugj('Some message. value1={} value2={}', 'foo', 42);
 
 loggerCallImpl('debug', msg, varargin, 'j');
 

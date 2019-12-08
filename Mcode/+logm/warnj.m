@@ -1,5 +1,5 @@
 function warnj(msg, varargin)
-% Log a WARN level message from caller.
+% Log a WARN level message from caller, using SLF4M style formatting.
 %
 % logm.warnj(msg, varargin)
 %
@@ -8,7 +8,7 @@ function warnj(msg, varargin)
 %
 % Examples:
 %
-% logm.warn('Some message. value1={} value2={}', 'foo', 42);
+% logm.warnj('Some message. value1={} value2={}', 'foo', 42);
 
 loggerCallImpl('warn', msg, varargin, 'j');
 
