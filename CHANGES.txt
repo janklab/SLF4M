@@ -1,6 +1,10 @@
 SLF4M Changelog
 ==========================
 
+## Version 1.2.1.1 (2020-01-09)
+
+* Dummy release just to sync up File Exchange and GitHub Releases
+
 ## Version 1.2.1 (2020-01-09)
 
 * Dummy release just to sync up File Exchange and GitHub Releases
