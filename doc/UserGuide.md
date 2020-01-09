@@ -197,3 +197,4 @@ Matlab ships with older versions of SLF4J and Log4j. (They're slow to update the
 | -------------- | ------------- | --------------- |
 | R2016b         | 1.5.8         | 1.2.15          |
 | R2017b         | 1.5.8         | 1.2.15          |
+| R2019b         | 1.5.8         | 1.2.15          |
