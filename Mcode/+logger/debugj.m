@@ -1,5 +1,5 @@
 function debugj(msg, varargin)
-% Log a DEBUG level message from caller, using SLF4M style formatting.
+% Log a DEBUG level message from caller, using SLF4J style formatting.
 %
 % logger.debug(msg, varargin)
 %

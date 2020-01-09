@@ -1,5 +1,5 @@
 function tracej(msg, varargin)
-% Log a TRACE level message from caller, using SLF4M style formatting.
+% Log a TRACE level message from caller, using SLF4J style formatting.
 %
 % logger.tracej(msg, varargin)
 %

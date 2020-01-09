@@ -1,5 +1,5 @@
 function errorj(msg, varargin)
-% Log an ERROR level message from caller, using SLF4M style formatting.
+% Log an ERROR level message from caller, using SLF4J style formatting.
 %
 % logger.errorj(msg, varargin)
 %
