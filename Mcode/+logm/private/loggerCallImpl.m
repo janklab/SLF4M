@@ -17,20 +17,25 @@ if isempty(caller)
     callerId = 'base';
 else
     callerEl = caller{1};
-    if contains(callerEl, '.')
-        % It's a class, or function inside a package
-        % We can't differentiate a 'package.class.method' from a
-        % 'package.function', so calls from package functions will get logged
-        % using the package name, unfortunately.
-        callerId = regexprep(callerEl, '/.*', '');
-        % Strip off the function name
-        ix = find(callerId == '.', 1, 'last');
-        if ~isempty(ix)
-            callerId = callerId(1:ix-1);
-        end
+    % Could be 'package.class/method', 'package.function', or
+    % 'package.class.staticmethod'. (I think, based on R2016b output.)
+    if contains(callerEl, '/')
+        ixSlash = find(callerEl == '/', 1, 'last');
+        callerId = callerEl(1:ixSlash-1);
     else
-        % Plain function
-        callerId = [callerEl '()'];
+        % Static method or function
+        ixDot = find(callerEl == '.', 1, 'last');
+        if isempty(ixDot)
+            callerId = callerEl;
+        else
+            prefix = callerEl(1:ixDot-1);
+            maybeClass = meta.class.fromName(prefix);
+            if isempty(maybeClass)
+                callerId = callerEl;
+            else
+                callerId = prefix;
+            end
+        end
     end
 end
 
