@@ -1,0 +1,21 @@
+SLF4M Changelog
+===============
+
+1.1.2 - 2020-01-09
+----------------------
+* Update dispstr dependency
+* dispstr: handle datetimes and categoricals
+* Fix caller class/function name detection for static methods
+* Allow configureBasicConsoleLogging to be called multiple times safely
+
+1.1.1 - 2018-03-06
+----------------------
+* Fix missing lib/ in dist
+
+1.1.0 - 2018-02-26
+----------------------
+* MException formatting in logging functions
+
+1.0.0 - 2018-02-21
+----------------------
+* Initial release
