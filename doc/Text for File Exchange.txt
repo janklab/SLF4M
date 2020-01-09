@@ -26,9 +26,11 @@ if nargin < 1 || isempty(x)
     % These debug() calls will only show up if you set log level to DEBUG
     logm.debug('Got empty x input; defaulted to %f', x);
 end
+
 z = x + 42;
 
-logm.info('Answer z=%f', z);
+timestamp = datetime;
+logm.info('Answer: z=%f, calculated at %s', z, timestamp);
 if z > intmax('int32')
     logm.warn('Large value z=%f will overflow int32', z);
 end
@@ -44,10 +46,10 @@ end
 
 The output looks like this:
 
-
+>> logm.initSLF4M
 >> helloWorld
-17:27:32.533 INFO  helloWorld  - Answer z=165.456000
-17:27:32.557 ERROR helloWorld  - Something went wrong in some_bad_operation(
+06:39:45.292 INFO  helloWorld  - Answer: z=165.456000, calculated at 09-Jan-2020 06:39:45
+06:39:45.297 ERROR helloWorld  - Something went wrong in some_bad_operation(123.456000)
 Undefined function 'some_bad_operation' for input arguments of type 'double'.
 Error in helloWorld (line 16)
     some_bad_operation(x);

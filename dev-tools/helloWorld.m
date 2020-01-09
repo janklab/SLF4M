@@ -7,7 +7,8 @@ if nargin < 1 || isempty(x)
 end
 z = x + 42;
 
-logm.info('Answer z=%f', z);
+timestamp = datetime;
+logm.info('Answer: z=%f, calculated at %s', z, timestamp);
 if z > intmax('int32')
     logm.warn('Large value z=%f will overflow int32', z);
 end

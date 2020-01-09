@@ -1,12 +1,21 @@
 SLF4M User's Guide
 ===========================
 
+# Setup
+
+To use SLF4M in your code:
+
+* Get the SLF4M `Mcode` directory on your Matlab path
+* Call `logm.initSLF4M` to initialize the library before doing any logging calls
+* Add calls to the `logm` functions in your code
+
 # API
 
 SLF4M provides:
 
 * A set of logging functions to log events at various levels
  * Regular and "`j`" variants for sprintf-style or SLF4J-style formatting
+* A Logger class for doing logging with more control over its behavior
 * A Log4j configurator tool and GUI
 * `dispstr`, a customizable string-conversion API
 
@@ -14,13 +23,24 @@ All the code is in the `+logm` package. I chose a short, readable name because i
 
 ## Logging functions
 
-| Level  |  Function  |  J Variant |
-| ------ | ---------  | ---------  |
-| `ERROR`  | `logm.error`      | `logm.errorj`    |
-| `WARNING` | `logm.warn`      | `logm.warnj`   |
-| `INFO`   | `logm.info`   | `logm.infoj`    |
-| `DEBUG`  | `logm.debug`  | `logm.debugj` |
-| `TRACE`  | `logm.trace`  | `logm.tracej` |
+| Level     |  Function    |  J Variant    |
+| --------- | ------------ | ------------- |
+| `ERROR`   | `logm.error` | `logm.errorj` |
+| `WARNING` | `logm.warn`  | `logm.warnj`  |
+| `INFO`    | `logm.info`  | `logm.infoj`  |
+| `DEBUG`   | `logm.debug` | `logm.debugj` |
+| `TRACE`   | `logm.trace` | `logm.tracej` |
+
+##  Calling logging functions
+
+In your code, put calls to `logm.info(...)`, `logm.debug(...)`, and so on, as appropriate.
+
+```
+    ...
+    logm.info('Working on item %d of %d: %s', i, n, description);
+    logm.debug('Intermediate value: %f', someDoubleValue);
+    ...
+```
 
 ##  Regular and "`j`" variants
 
@@ -51,13 +71,34 @@ In both cases, the formatting and conversion is done lazily: if the logger is no
 The logging functions in `+logm` use the caller's class or function name as the logger name. (This is
 in line with the Java convention of using the fully-qualified class name as the logger name.) This is accomplished with a trick with `dbstack`, looking up the call stack to see who invoked it.
 
-You can also use the object-oriented `logm.Logger` API directly. This allows you to set custom logger names. It'll also be a bit faster, because it doesn't have to spend time extracting the caller name from the call stack.
+You can use anything for a logger name; if no logger of that name exists, one is created automatically. Logger names are arranged in a hierarchy using dot-qualified prefixes, like package names in Java or Matlab. For example, if you have the following loggers:
 
-If you use `logm.Logger`, I recommend you do it like this, which looks like the SLFJ Java conventions.
+* foo.Thing
+* foo.bar.Thing
+* foo.bar.OtherThing
+* foo.bar.baz.Whatever
+
+Then:
+
+* All these loggers are children of the logger `foo`
+* `foo.bar.Thing` and `foo.bar.OtherThing` are children of `foo.bar`, which in turn is a child of `foo`.
+* `foo.bar.baz.Whatever` is a child of `foo.bar.baz`, which is a child of `foo.bar`, which is a child of `foo`.
+
+### The Logger object
+
+You can also use the object-oriented `logm.Logger` API directly. This allows you to set custom logger names. It'll also be a bit faster, because it doesn't have to spend time extracting the caller name from the call stack. To use the Logger object directly, get a logger object by calling `logm.Logger.getLogger(name)` where `name` is a string holding the name of the logger you want to use. 
 
 ```
-classdef calling_Logger_directly
-    properties (Constant)
+logger = logm.Logger.getLogger('foo.bar.baz.MyThing');
+logger.info('Something happened');
+```
+
+If you use `logm.Logger` in object-oriented Matlab code, I recommend you do it like this, which looks like the SLFJ Java conventions.
+
+```
+classdef CallingLoggerDirectlyExample
+
+    properties (Constant, Access=private)
         log = logm.Logger.getLogger('foo.bar.baz.qux.MyLoggerID');
     end
 
@@ -65,11 +106,19 @@ classdef calling_Logger_directly
         function hello(this)
             this.log.info('Hello, world!');
         end
+
+        function doWork(this)
+            label = 'thingy';
+            x = 1 + 2;
+            timestamp = datetime;
+            this.log.debug('Calculation result: label=%s, x=%f at %s', label, x, timestamp);
+         end
     end
+    
 end
 ```
 
-Evn though `log` is a `Constant` (static) property, I like to call it via `this` because it's more concise. Make it `private` so you can have `log` properties defined in your subclasses, too; they may want to use different IDs.
+Evn though `log` is a `Constant` (static) property, I like to call it via `this` because it's more concise, and then you can copy and paste your code that makes logging calls between classes. Make the `log` property `private` so you can have `log` properties defined in your subclasses, too; they may want to use different IDs.
 
 # The `dispstr` API
 

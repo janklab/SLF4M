@@ -8,12 +8,13 @@ function initSLF4M
 
 if ~isempty(which('dispstr'))
 	% Assume caller got Dispstr loaded themselves
-	return
+else
+	% Load Dispstr
+	thisFile = mfilename('fullpath');
+	distDir = fileparts(fileparts(fileparts(thisFile)));
+	matLibDir = [distDir '/lib/matlab'];
+	dispstrDir = [matLibDir '/dispstr-HEAD'];
+	addpath([dispstrDir '/Mcode']);
 end
 
-% Load Dispstr
-thisFile = mfilename('fullpath');
-distDir = fileparts(fileparts(fileparts(thisFile)));
-matLibDir = [distDir '/lib/matlab'];
-dispstrDir = [matLibDir '/dispstr-HEAD'];
-addpath([dispstrDir '/Mcode']);
+logm.Log4jConfigurator.configureBasicConsoleLogging()
