@@ -1,6 +1,12 @@
 SLF4M Changelog
 ===============
 
+1.2 - ???
+----------------------
+* Add logm.version function
+* Really use the vendored SLF4M library
+* Require logm.initSLF4M for real
+
 1.1.2 - 2020-01-09
 ----------------------
 * Update dispstr dependency
