@@ -56,6 +56,8 @@ elseif isa(x, 'datetime') && isscalar(x)
     end
 elseif isscalar(x) && (isa(x, 'duration') || isa(x, 'calendarDuration'))
     out = char(x);
+elseif isscalar(x) && iscategorical(x)
+    out = char(x);
 else
     out = sprintf('%s %s', size2str(size(x)), class(x));
 end
