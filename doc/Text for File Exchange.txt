@@ -16,7 +16,7 @@ Usage
 -------------------------
 
 
-The logging functions are in the `+logm` package. Call them from within your Matlab code.
+The logging functions are in the `+logger` package. Call them from within your Matlab code.
 
 
 function helloWorld(x)
@@ -24,21 +24,21 @@ function helloWorld(x)
 if nargin < 1 || isempty(x)
     x = 123.456;
     % These debug() calls will only show up if you set log level to DEBUG
-    logm.debug('Got empty x input; defaulted to %f', x);
+    logger.debug('Got empty x input; defaulted to %f', x);
 end
 
 z = x + 42;
 
 timestamp = datetime;
-logm.info('Answer: z=%f, calculated at %s', z, timestamp);
+logger.info('Answer: z=%f, calculated at %s', z, timestamp);
 if z > intmax('int32')
-    logm.warn('Large value z=%f will overflow int32', z);
+    logger.warn('Large value z=%f will overflow int32', z);
 end
 
 try
     some_bad_operation(x);
 catch err
-    logm.error(err, 'Something went wrong in some_bad_operation(x=%f)');
+    logger.error(err, 'Something went wrong in some_bad_operation(x=%f)');
 end
 
 end
@@ -46,7 +46,7 @@ end
 
 The output looks like this:
 
->> logm.initSLF4M
+>> logger.initSLF4M
 >> helloWorld
 06:39:45.292 INFO  helloWorld  - Answer: z=165.456000, calculated at 09-Jan-2020 06:39:45
 06:39:45.297 ERROR helloWorld  - Something went wrong in some_bad_operation(123.456000)
@@ -58,7 +58,7 @@ Thanks to `dispstr()`, you can also pass Matlab objects to the `%s` conversions.
 
 >> m = containers.Map;
 >> m('foo') = 42; m('bar') = struct;
->> logm.info('Hello, world! %s', m)
+>> logger.info('Hello, world! %s', m)
 09:52:29.809 INFO  base - Hello, world! 2-by-1 containers.Map
 
 For more details, see the User's Guide included in the distribution.

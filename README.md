@@ -23,18 +23,18 @@ To install, unzip the distribution somewhere, and add its `Mcode/` directory
 to your Matlab path.
 
 In your Matlab program:
-* Call `logm.initSLF4M()` to initialize SLF4M. This needs to be done before any logging calls are made.
-* Call `logm.Log4jConfigurator.configureBasicConsoleLogging()`
+* Call `logger.initSLF4M()` to initialize SLF4M. This needs to be done before any logging calls are made.
+* Call `logger.Log4jConfigurator.configureBasicConsoleLogging()`
 to set up basic logging. This will write log output to the Matlab console.
 
-The logging functions are in the `+logm` package. Call them from within your Matlab
+The logging functions are in the `+logger` package. Call them from within your Matlab
 code. In order of logging level, they are:
 
-* logm.error()
-* logm.warn()
-* logm.info()
-* logm.debug()
-* logm.trace()
+* logger.error()
+* logger.warn()
+* logger.info()
+* logger.debug()
+* logger.trace()
 
 The logging functions take sprintf()-style formatting arguments. You can also pass
 an `MException` as the first argument to include the error message and stack
@@ -46,19 +46,19 @@ function helloWorld(x)
 if nargin < 1 || isempty(x)
     x = 123.456;
     % These debug() calls will only show up if you set log level to DEBUG
-    logm.debug('Got empty x input; defaulted to %f', x);
+    logger.debug('Got empty x input; defaulted to %f', x);
 end
 z = x + 42;
 
-logm.info('Answer z=%f', z);
+logger.info('Answer z=%f', z);
 if z > intmax('int32')
-    logm.warn('Large value z=%f will overflow int32', z);
+    logger.warn('Large value z=%f will overflow int32', z);
 end
 
 try
     some_bad_operation(x);
 catch err
-    logm.error(err, 'Something went wrong in some_bad_operation(x=%f)', x);
+    logger.error(err, 'Something went wrong in some_bad_operation(x=%f)', x);
 end
 
 end
@@ -80,11 +80,11 @@ Thanks to `dispstr()`, you can also pass Matlab objects to the `%s` conversions.
 ```
 >> m = containers.Map;
 >> m('foo') = 42; m('bar') = struct;
->> logm.info('Hello, world! %s', m)
+>> logger.info('Hello, world! %s', m)
 09:52:29.809 INFO  base - Hello, world! 2-by-1 containers.Map
 ```
 
-To launch the configuration GUI, run `logm.Log4jConfigurator.showGui`. This GUI lets you set the logging levels and other attributes of the various loggers in your Matlab session.
+To launch the configuration GUI, run `logger.Log4jConfigurator.showGui`. This GUI lets you set the logging levels and other attributes of the various loggers in your Matlab session.
 
 For more details, see the [User's Guide](doc/UserGuide.md).
 

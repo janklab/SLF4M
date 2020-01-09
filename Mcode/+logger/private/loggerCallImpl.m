@@ -39,48 +39,48 @@ else
     end
 end
 
-logger = logm.Logger.getLogger(callerId);
+loggerObj = logger.Logger.getLogger(callerId);
 
 switch form
     case 'm'
         switch logLevel
             case 'error'
-                logger.error(msg, args{:});
+                loggerObj.error(msg, args{:});
                 return
             case 'warn'
-                logger.warn(msg, args{:});
+                loggerObj.warn(msg, args{:});
                 return
             case 'info'
-                logger.info(msg, args{:});
+                loggerObj.info(msg, args{:});
                 return
             case 'debug'
-                logger.debug(msg, args{:});
+                loggerObj.debug(msg, args{:});
                 return
             case 'trace'
-                logger.trace(msg, args{:});
+                loggerObj.trace(msg, args{:});
                 return
             otherwise
-                error('logm:InvalidInput', 'Invalid logLevel: %s', logLevel);
+                error('logger:InvalidInput', 'Invalid logLevel: %s', logLevel);
         end
     case 'j'
         switch logLevel
             case 'error'
-                logger.errorj(msg, args{:});
+                loggerObj.errorj(msg, args{:});
                 return
             case 'warn'
-                logger.warnj(msg, args{:});
+                loggerObj.warnj(msg, args{:});
                 return
             case 'info'
-                logger.infoj(msg, args{:});
+                loggerObj.infoj(msg, args{:});
                 return
             case 'debug'
-                logger.debugj(msg, args{:});
+                loggerObj.debugj(msg, args{:});
                 return
             case 'trace'
-                logger.tracej(msg, args{:});
+                loggerObj.tracej(msg, args{:});
                 return
             otherwise
-                error('logm:InvalidInput', 'Invalid logLevel: %s', logLevel);
+                error('logger:InvalidInput', 'Invalid logLevel: %s', logLevel);
         end
 end
 

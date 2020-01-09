@@ -1,8 +1,8 @@
 function out = version
 % VERSION Get version info for SLF4M
 %
-% logm.version
-% v = logm.version
+% logger.version
+% v = logger.version
 %
 % Gets version info for the SLF4M library.
 %

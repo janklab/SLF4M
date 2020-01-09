@@ -2,13 +2,13 @@ function gen_dummy_log_entries(n)
 % Generate a bunch of dummy log entries
 %
 % Example:
-% logm.Log4jConfigurator.setLevels({'foo.bar', 'DEBUG'});
+% logger.Log4jConfigurator.setLevels({'foo.bar', 'DEBUG'});
 % gen_dummy_log_entries
 
 if nargin < 1 || isempty(n);  n = 50;  end
 
-logDb = logm.Logger.getLogger('foo.bar.Database');
-logAlgo = logm.Logger.getLogger('foo.bar.Algorithm');
+logDb = logger.Logger.getLogger('foo.bar.Database');
+logAlgo = logger.Logger.getLogger('foo.bar.Algorithm');
 for i = 1:n
     item = sprintf('id%d', round(rand*10000));
     te = rand * 0.15; pause(te);

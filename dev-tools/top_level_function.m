@@ -1,3 +1,3 @@
 function top_level_function
-logm.info('Called from top-level function');
+logger.info('Called from top-level function');
 end

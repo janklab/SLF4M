@@ -1,11 +1,11 @@
 classdef calling_Logger_directly
     properties (Constant, Access = private)
-        log = logm.Logger.getLogger('foo.bar.baz.qux.MyLoggerID');
+        logger = logger.Logger.getLogger('foo.bar.baz.qux.MyLoggerID');
     end
     
     methods
         function hello(this)
-            this.log.info('Hello, world!');
+            this.logger.info('Hello, world!');
         end
     end
 end

@@ -1,27 +1,50 @@
 SLF4M Changelog
-===============
+==========================
 
-1.2 - ???
-----------------------
-* Add logm.version function
+## Version 1.2.0 (2020-01-09)
+
+* Rename 'logm' package to 'logger'
+* Add logger.version function
 * Really use the vendored SLF4M library
-* Require logm.initSLF4M for real
+* Require logger.initSLF4M for real
 
-1.1.2 - 2020-01-09
-----------------------
+## Version 1.1.2 (2020-01-09)
+
 * Update dispstr dependency
 * dispstr: handle datetimes and categoricals
 * Fix caller class/function name detection for static methods
 * Allow configureBasicConsoleLogging to be called multiple times safely
 
-1.1.1 - 2018-03-06
-----------------------
-* Fix missing lib/ in dist
+## Version 1.1.1.1 (2018-03-06)
 
-1.1.0 - 2018-02-26
-----------------------
-* MException formatting in logging functions
+* Revision bump for MathWorks File Exchange re-submission. No code changes.
 
-1.0.0 - 2018-02-21
-----------------------
-* Initial release
+## Version 1.1.1 (2018-03-06)
+
+* Fix JAR file missing from the distribution
+
+## Version 1.1.0.1 (2018-03-06)
+
+* Clarify dual-licensing in the LICENSE file. No changes to code.
+
+## Version 1.1.0 (2018-02-26)
+
+* Added exception formatting to the logging functions.
+
+## Version 1.0.0.1  (2018-02-21)
+
+Same as 1.0.0; I just added a screenshot on File Exchange, and that requires a
+revision bump.
+
+## Version 1.0.0  (2018-02-21)
+
+Same as version 0.2.0. I'm just declaring this 1.0 and ready for use.
+(Especially because File Exchange doesn't allow 0.x versions.)
+
+## Version 0.2.0  (2018-02-21)
+
+* Add a configuration GUI
+
+## Version 0.1.0  (2018-02-18)
+
+* Initial checkin to GitHub

@@ -6,7 +6,7 @@ classdef Logger
     % SLF4M logging happens.
     %
     % Usually you don't need to interact with this class directly, but can just call
-    % one of the error(), warn(), info(), debug(), or trace() functions in the logm
+    % one of the error(), warn(), info(), debug(), or trace() functions in the logger
     % namespace. Those will log messages using the calling class's name as the name
     % of the logger. Also, don't call the constructor for this class. Use the static
     % getLogger() method instead.
@@ -25,15 +25,15 @@ classdef Logger
     %    logger.warn(exception, format, varargin)
     %
     % See also:
-    % logm.error
-    % logm.warn
-    % logm.info
-    % logm.debug
-    % logm.trace
+    % logger.error
+    % logger.warn
+    % logger.info
+    % logger.debug
+    % logger.trace
     %
     % Examples:
     %
-    % log = logm.Logger.getLogger('foo.bar.FooBar');
+    % log = logger.Logger.getLogger('foo.bar.FooBar');
     % log.info('Hello, world! Running on Matlab %s', version);
     %
     % try
@@ -59,7 +59,7 @@ classdef Logger
         function out = getLogger(identifier)
         % Gets the named Logger
         jLogger = org.slf4j.LoggerFactory.getLogger(identifier);
-        out = logm.Logger(jLogger);
+        out = logger.Logger(jLogger);
         end
     end
     
@@ -67,7 +67,7 @@ classdef Logger
         function this = Logger(jLogger)
         %LOGGER Build a new logger object around an SLF4J Logger object.
         %
-        % Generally, you shouldn't call this. Use logm.Logger.getLogger() instead.
+        % Generally, you shouldn't call this. Use logger.Logger.getLogger() instead.
         mustBeA(jLogger, 'org.slf4j.Logger');
         this.jLogger = jLogger;
         end

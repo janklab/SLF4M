@@ -16,30 +16,30 @@ classdef Log4jConfigurator
     %   log4j:WARN Please initialize the log4j system properly.
     %
     % If that happens, it means you need to call
-    % logm.Log4jConfigurator.configureBasicConsoleLogging.
+    % logger.Log4jConfigurator.configureBasicConsoleLogging.
     %
     % This also provides a log4j configuration GUI that you can launch with
-    % `logm.Log4jConfigurator.showGui`.
+    % `logger.Log4jConfigurator.showGui`.
     %
     % Examples:
     %
-    % logm.Log4jConfigurator.configureBasicConsoleLogging
+    % logger.Log4jConfigurator.configureBasicConsoleLogging
     %
-    % logm.Log4jConfigurator.setLevels({'root','DEBUG'});
+    % logger.Log4jConfigurator.setLevels({'root','DEBUG'});
     %
-    % logm.Log4jConfigurator.setLevels({
+    % logger.Log4jConfigurator.setLevels({
     %     'root'    'INFO'
-    %     'net.apjanke.logm.swing'  'DEBUG'
+    %     'net.apjanke.logger.swing'  'DEBUG'
     %     });
     %
-    % logm.Log4jConfigurator.prettyPrintLogConfiguration
+    % logger.Log4jConfigurator.prettyPrintLogConfiguration
     %
     % % Display fully-qualified class/category names in the log output:
-    % logm.Log4jConfigurator.setRootAppenderPattern(...
+    % logger.Log4jConfigurator.setRootAppenderPattern(...
     %    ['%d{HH:mm:ss.SSS} %p %c - %m' sprintf('\n')]);
     %
     % % Bring up the configuration GUI
-    % logm.Log4jConfigurator.showGui
+    % logger.Log4jConfigurator.showGui
     
     
     methods (Static)
@@ -94,7 +94,7 @@ classdef Log4jConfigurator
         function setLevels(levels)
             % Set the logging levels for multiple loggers
             %
-            % logm.Log4jConfigurator.setLevels(levels)
+            % logger.Log4jConfigurator.setLevels(levels)
             %
             % This is a convenience method for setting the logging levels for multiple
             % loggers.
@@ -104,16 +104,16 @@ classdef Log4jConfigurator
             %
             % Examples:
             %
-            % logm.Log4jConfigurator.setLevels({'root','DEBUG'});
+            % logger.Log4jConfigurator.setLevels({'root','DEBUG'});
             %
-            % logm.Log4jConfigurator.setLevels({
+            % logger.Log4jConfigurator.setLevels({
             %     'root'    'INFO'
-            %     'net.apjanke.logm.swing'  'DEBUG'
+            %     'net.apjanke.logger.swing'  'DEBUG'
             %     });
             for i = 1:size(levels, 1)
                 [logName,levelName] = levels{i,:};
                 logger = org.apache.log4j.LogManager.getLogger(logName);
-                level = logm.Log4jConfigurator.getLog4jLevel(levelName);
+                level = logger.Log4jConfigurator.getLog4jLevel(levelName);
                 logger.setLevel(level);
             end
         end
@@ -121,7 +121,7 @@ classdef Log4jConfigurator
         function prettyPrintLogConfiguration(verbose)
             % Displays the current log configuration to the console
             %
-            % logm.Log4jConfigurator.prettyPrintLogConfiguration()
+            % logger.Log4jConfigurator.prettyPrintLogConfiguration()
             
             if nargin < 1 || isempty(verbose);  verbose = false;  end
             

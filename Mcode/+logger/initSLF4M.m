@@ -17,4 +17,4 @@ else
 	addpath([dispstrDir '/Mcode']);
 end
 
-logm.Log4jConfigurator.configureBasicConsoleLogging()
+logger.Log4jConfigurator.configureBasicConsoleLogging()

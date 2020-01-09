@@ -6,8 +6,8 @@ SLF4M User's Guide
 To use SLF4M in your code:
 
 * Get the SLF4M `Mcode` directory on your Matlab path
-* Call `logm.initSLF4M` to initialize the library before doing any logging calls
-* Add calls to the `logm` functions in your code
+* Call `logger.initSLF4M` to initialize the library before doing any logging calls
+* Add calls to the `logger` functions in your code
 
 # API
 
@@ -19,26 +19,26 @@ SLF4M provides:
 * A Log4j configurator tool and GUI
 * `dispstr`, a customizable string-conversion API
 
-All the code is in the `+logm` package. I chose a short, readable name because if you're using logging, it'll show up a lot in your code.
+All the code is in the `+logger` package. I chose a short, readable name because if you're using logging, it'll show up a lot in your code.
 
 ## Logging functions
 
 | Level     |  Function    |  J Variant    |
 | --------- | ------------ | ------------- |
-| `ERROR`   | `logm.error` | `logm.errorj` |
-| `WARNING` | `logm.warn`  | `logm.warnj`  |
-| `INFO`    | `logm.info`  | `logm.infoj`  |
-| `DEBUG`   | `logm.debug` | `logm.debugj` |
-| `TRACE`   | `logm.trace` | `logm.tracej` |
+| `ERROR`   | `logger.error` | `logger.errorj` |
+| `WARNING` | `logger.warn`  | `logger.warnj`  |
+| `INFO`    | `logger.info`  | `logger.infoj`  |
+| `DEBUG`   | `logger.debug` | `logger.debugj` |
+| `TRACE`   | `logger.trace` | `logger.tracej` |
 
 ##  Calling logging functions
 
-In your code, put calls to `logm.info(...)`, `logm.debug(...)`, and so on, as appropriate.
+In your code, put calls to `logger.info(...)`, `logger.debug(...)`, and so on, as appropriate.
 
 ```
     ...
-    logm.info('Working on item %d of %d: %s', i, n, description);
-    logm.debug('Intermediate value: %f', someDoubleValue);
+    logger.info('Working on item %d of %d: %s', i, n, description);
+    logger.debug('Intermediate value: %f', someDoubleValue);
     ...
 ```
 
@@ -52,13 +52,13 @@ Some Matlab objects may not convert to Java objects at all, so you'll get errors
 
 ```
 	>> d = database;
-	>> logm.infoj('My database: {}', d)
+	>> logger.infoj('My database: {}', d)
 	No method 'info' with matching signature found for class 'org.slf4j.impl.Log4jLoggerAdapter'.
-	Error in logm.Logger/infoj (line 146)
+	Error in logger.Logger/infoj (line 146)
 	        this.jLogger.info(msg, varargin{:});
 	Error in loggerCallImpl (line 69)
 	                logger.infoj(msg, args{:});
-	Error in logm.infoj (line 13)
+	Error in logger.infoj (line 13)
 	loggerCallImpl('info', msg, varargin, 'j');
 ```
 
@@ -68,7 +68,7 @@ In both cases, the formatting and conversion is done lazily: if the logger is no
 
 ##  Logger names
 
-The logging functions in `+logm` use the caller's class or function name as the logger name. (This is
+The logging functions in `+logger` use the caller's class or function name as the logger name. (This is
 in line with the Java convention of using the fully-qualified class name as the logger name.) This is accomplished with a trick with `dbstack`, looking up the call stack to see who invoked it.
 
 You can use anything for a logger name; if no logger of that name exists, one is created automatically. Logger names are arranged in a hierarchy using dot-qualified prefixes, like package names in Java or Matlab. For example, if you have the following loggers:
@@ -86,20 +86,20 @@ Then:
 
 ### The Logger object
 
-You can also use the object-oriented `logm.Logger` API directly. This allows you to set custom logger names. It'll also be a bit faster, because it doesn't have to spend time extracting the caller name from the call stack. To use the Logger object directly, get a logger object by calling `logm.Logger.getLogger(name)` where `name` is a string holding the name of the logger you want to use. 
+You can also use the object-oriented `logger.Logger` API directly. This allows you to set custom logger names. It'll also be a bit faster, because it doesn't have to spend time extracting the caller name from the call stack. To use the Logger object directly, get a logger object by calling `logger.Logger.getLogger(name)` where `name` is a string holding the name of the logger you want to use. 
 
 ```
-logger = logm.Logger.getLogger('foo.bar.baz.MyThing');
+logger = logger.Logger.getLogger('foo.bar.baz.MyThing');
 logger.info('Something happened');
 ```
 
-If you use `logm.Logger` in object-oriented Matlab code, I recommend you do it like this, which looks like the SLFJ Java conventions.
+If you use `logger.Logger` in object-oriented Matlab code, I recommend you do it like this, which looks like the SLFJ Java conventions.
 
 ```
 classdef CallingLoggerDirectlyExample
 
     properties (Constant, Access=private)
-        log = logm.Logger.getLogger('foo.bar.baz.qux.MyLoggerID');
+        log = logger.Logger.getLogger('foo.bar.baz.qux.MyLoggerID');
     end
 
     methods
@@ -156,7 +156,7 @@ For uniformity, if you define `dispstr`, I recommend that you override `disp` to
 
 ```
 
-As a convenience, there is a `logm.Displayable` mix-in class which takes care of this boilerplate for you. It provides standard implementations of `disp` and `dispstr` in terms of `dispstrs`. If you inherit from `logm.Displayable`, you only need to define `dispstrs`.
+As a convenience, there is a `logger.Displayable` mix-in class which takes care of this boilerplate for you. It provides standard implementations of `disp` and `dispstr` in terms of `dispstrs`. If you inherit from `logger.Displayable`, you only need to define `dispstrs`.
 
 ### The `dispstr` interface
 
@@ -170,7 +170,7 @@ When you call the normal ("`m`") variants of the logging functions, `dispstr()` 
 
 ```
     d = database;
-    logm.info('Database: %s', d);
+    logger.info('Database: %s', d);
 ```
 
 For most Matlab-defined objects, this just results in a "`m-by-n <classname>`" output. (But at least it doesn't raise an error, which is especially problematic when your functions are receiving inputs of the wrong type.) It gets particularly useful when you define custom `dispstr` overrides so your objects have useful string representations.
@@ -181,7 +181,7 @@ For most Matlab-defined objects, this just results in a "`m-by-n <classname>`" o
 
 All the actual logging goes through the Log4j back end; you can configure it as with any Log4j installation. See the [Log4j 1.2 documentation](http://logging.apache.org/log4j/1.2/) for details. (Note: you have to use the old 1.2 series doco, because that's what Matlab currently ships with.)
 
-The `logm.Log4jConfigurator` class provides a convenient Matlab-friendly interface for configuring Log4j to do basic stuff. It's enough for simple cases. But all the configuration state is passed on the the Log4j back end; none of it is stored in the Matlab layer.
+The `logger.Log4jConfigurator` class provides a convenient Matlab-friendly interface for configuring Log4j to do basic stuff. It's enough for simple cases. But all the configuration state is passed on the the Log4j back end; none of it is stored in the Matlab layer.
 
 ## Implementation notes
 

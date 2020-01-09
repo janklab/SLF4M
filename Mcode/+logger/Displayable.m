@@ -7,7 +7,7 @@ classdef Displayable
     %
     % Examples:
     %
-    % classdef mydate < logm.Displayable
+    % classdef mydate < logger.Displayable
     %     % An example of using Displayable
     %     %
     %     % (Don't actually implement dates like this! It's super slow; you need to use
