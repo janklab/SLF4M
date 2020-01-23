@@ -1,8 +1,8 @@
-SLF4M Changelog
-==========================
+# SLF4M Changelog
 
 ## Version 1.2.2 (?)
 
+* R2020a compatibility
 
 ## Version 1.2.1.1 (2020-01-09)
 
