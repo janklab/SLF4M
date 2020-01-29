@@ -1,0 +1,19 @@
+Summary:
+An API for polymorphic custom object display
+
+
+Description:
+
+Matlab does not provide a general, polymorphic object display function, like Java's toString() method. This makes it hard to write generic code that can do concise debugging display of objects, which is useful for logging, error messages, and interaction at the console.
+
+The Dispstr API provides a concise API for generic, polymorphic, customizable object display, and implementations for the major types that come with Matlab.
+
+Dispstr only provides a few functions and classes: dispstr(), dispstrs(), prettyprint(), sprintfds(), fprintfds(), and dispstrlib.Displayable. dispstr() and disptrs() are generic object display functions, which can be overridden by user-defined classes to customize their display. prettyprint() is a function for dumping the details of an array, and respects dispstr/dispstrs. sprintfds() and fprintfds() let you do formatted output that respects dispstr(). @dispstrlib.Displayable is a convenience mixin that makes it easier to write classes that implement dispstr/dispstrs.
+
+When using this library, your user-defined objects can now be displayed inside structs and tables with meaningful data representations, instead of just "<1-by-1 SomeClass>", which Matlab's default disp() does when objects are stuck inside fields of cells or variables of tables.
+
+I think the major value in this library is in establishing the function convention and signatures, not in the implementation code itself.
+
+To use Dispstr, get it on your Matlab path, and then define dispstr() and dispstrs() methods on your classes that you want to have custom displays for. (Or have them inherit from @dispstrlib.Displayable and just define dispstr_scalar().)
+
+This project's home is on GitHub at https://github.com/apjanke/dispstr.
