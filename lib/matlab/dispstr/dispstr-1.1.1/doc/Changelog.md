@@ -1,6 +1,11 @@
 Changelog for Dispstr
 ======================
 
+Version 1.1.1 (2020-01-30)
+--------------------------
+
+* Fix a bug with orientation of numeric arrays in dispstr
+
 Version 1.1 (2020-01-29)
 ------------------------
 

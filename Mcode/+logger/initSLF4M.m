@@ -15,7 +15,7 @@ if ~isempty(which('dispstr'))
 else
   % Load Dispstr
   matlabLibDir = fullfile(libDir, 'matlab');
-  dispstrDir = fullfile(matlabLibDir, 'dispstr', 'dispstr-1.1.0');
+  dispstrDir = fullfile(matlabLibDir, 'dispstr', 'dispstr-1.1.1');
   addpath(fullfile(dispstrDir, 'Mcode'));
 end
 

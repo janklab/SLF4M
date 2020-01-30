@@ -47,6 +47,7 @@ elseif isnumeric(x)
         out = num2str(x);
     else
         strs = strtrim(cellstr(num2str(x(:))));
+        strs = reshape(strs, size(x));
         out = formatArrayOfStrings(strs);
     end
 elseif ischar(x)

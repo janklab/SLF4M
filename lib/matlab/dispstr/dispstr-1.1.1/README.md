@@ -14,7 +14,7 @@ This fixes Matlab output that looks like this:
 
 ```
 >> disp(tbl)
-    Name         UserID          Birthday   
+    Name       UserID          Birthday
     _______    ____________    ______________
     'Alice'    [1x1 UserID]    [1x1 Birthday]
     'Bob'      [1x1 UserID]    [1x1 Birthday]
@@ -31,7 +31,6 @@ to look more useful, like this:
     Bob     Sales\bob     Dec 14  
     Carol   Sales\carol   Apr 20  
 ```
-
 
 There's not a whole lot of code in this library. I think the major value in it is in establishing the function convention and signatures, not in the implementation code itself.
 
