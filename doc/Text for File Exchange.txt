@@ -1,5 +1,10 @@
-SLF4M is a simple but flexible logging framework for Matlab, built on top of SLF4J and Apache Log4j. You can use it to do runtime-configurable logging from your Matlab scripts and programs. This can be more informative and more manageable than commenting `fprintf()` statements in and out.
+Summary:
+A simple but powerful logging framework for Matlab
 
+
+Description:
+
+SLF4M is a simple but flexible logging framework for Matlab, built on top of SLF4J and Apache Log4j. You can use it to do runtime-configurable logging from your Matlab scripts and programs. This can be more informative and more manageable than commenting `fprintf()` statements in and out.
 
 SLF4M provides:
 
