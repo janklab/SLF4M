@@ -5,7 +5,9 @@ SLF4M provides:
 
 
 * Logging functions
+
 * A `dispstr` API for customizing object display.
+
 * A Log4j configuration GUI
 
 
