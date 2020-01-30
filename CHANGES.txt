@@ -1,61 +1,75 @@
-# SLF4M Changelog
+SLF4M Changelog
+===============
 
-## Version 1.2.2 (?)
+Version 1.2.2 (2020-01-30)
+--------------------------
 
 * R2020a compatibility
+* Switch dispstr from HEAD to releases
 
-## Version 1.2.1.1 (2020-01-09)
-
-* Dummy release just to sync up File Exchange and GitHub Releases
-
-## Version 1.2.1 (2020-01-09)
+Version 1.2.1.1 (2020-01-09)
+--------------------------
 
 * Dummy release just to sync up File Exchange and GitHub Releases
 
-## Version 1.2.0 (2020-01-09)
+Version 1.2.1 (2020-01-09)
+--------------------------
+
+* Dummy release just to sync up File Exchange and GitHub Releases
+
+Version 1.2.0 (2020-01-09)
+--------------------------
 
 * Rename 'logm' package to 'logger'
 * Add logger.version function
-* Really use the vendored SLF4M library
 * Require logger.initSLF4M for real
 
-## Version 1.1.2 (2020-01-09)
+Version 1.1.2 (2020-01-09)
+--------------------------
 
 * Update dispstr dependency
 * dispstr: handle datetimes and categoricals
 * Fix caller class/function name detection for static methods
 * Allow configureBasicConsoleLogging to be called multiple times safely
 
-## Version 1.1.1.1 (2018-03-06)
+Version 1.1.1.1 (2018-03-06)
+--------------------------
 
 * Revision bump for MathWorks File Exchange re-submission. No code changes.
 
-## Version 1.1.1 (2018-03-06)
+Version 1.1.1 (2018-03-06)
+--------------------------
 
 * Fix JAR file missing from the distribution
 
-## Version 1.1.0.1 (2018-03-06)
+Version 1.1.0.1 (2018-03-06)
+--------------------------
 
 * Clarify dual-licensing in the LICENSE file. No changes to code.
 
-## Version 1.1.0 (2018-02-26)
+Version 1.1.0 (2018-02-26)
+--------------------------
 
 * Added exception formatting to the logging functions.
 
-## Version 1.0.0.1  (2018-02-21)
+Version 1.0.0.1  (2018-02-21)
+--------------------------
 
 Same as 1.0.0; I just added a screenshot on File Exchange, and that requires a
 revision bump.
 
-## Version 1.0.0  (2018-02-21)
+Version 1.0.0  (2018-02-21)
+--------------------------
 
 Same as version 0.2.0. I'm just declaring this 1.0 and ready for use.
 (Especially because File Exchange doesn't allow 0.x versions.)
 
-## Version 0.2.0  (2018-02-21)
+Version 0.2.0  (2018-02-21)
+--------------------------
 
 * Add a configuration GUI
 
-## Version 0.1.0  (2018-02-18)
+Version 0.1.0  (2018-02-18)
+--------------------------
 
 * Initial checkin to GitHub
