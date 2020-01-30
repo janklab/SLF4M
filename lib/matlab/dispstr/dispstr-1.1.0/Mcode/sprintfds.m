@@ -17,13 +17,7 @@ function out = sprintfds(fmt, varargin)
 % See also:
 % FPRINTFDS
 
-args = varargin;
-for i = 1:numel(args)
-  arg = args{i};
-  if isobject(arg)
-    args{i} = dispstr(arg);
-  end
-end
+args = dispstrlib.internal.convertArgsForPrintf(varargin);
 
 out = sprintf(fmt, args{:});
 

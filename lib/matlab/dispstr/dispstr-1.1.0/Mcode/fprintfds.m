@@ -1,4 +1,4 @@
-function fprintfds(varargin)
+function out = fprintfds(varargin)
 %FPRINTFDS A fprintf that respects dispstr()
 %
 % out = fprintfds(fmt, varargin)
@@ -26,12 +26,16 @@ end
 fmt = args{1};
 args(1) = [];
 
-str = sprintfds(fmt, args{:});
+args = dispstrlib.internal.convertArgsForPrintf(args);
 
 if isempty(fid)
-  fprintf('%s', str);
+  out = fprintf(fmt, args{:});
 else
-  fprintf(fid, '%s', str);
+  out = fprintf(fid, fmt, args{:});
+end
+
+if nargout == 0
+  clear out
 end
 
 end

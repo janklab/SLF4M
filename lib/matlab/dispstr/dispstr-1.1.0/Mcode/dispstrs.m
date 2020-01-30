@@ -60,6 +60,8 @@ else
 	out = dispstrsGenericDisp(x);
 end
 
+out = string(out);
+
 end
 
 function out = dispstrsDatetime(x)

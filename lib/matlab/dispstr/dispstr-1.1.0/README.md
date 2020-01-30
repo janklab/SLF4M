@@ -45,9 +45,11 @@ There's not a whole lot of code in this library. I think the major value in it i
 
 `dispstr` produces a string for each element in an array, that describes that particular element's value or contents.
 
-### `sprintfds` and `fprintfds`
+### `sprintfds`, `fprintfds`, `errords`, and `warningds`
 
 `sprintfds` and `fprintfds` are variants of `sprintf` and `fprintf` that respect dispstr() methods defined on their arguments, so you can pass objects to '%s' conversion specifiers and get nice output.
+
+Similarly, `errords` and `warningds` are variants of Matlab’s `error` and `warning` that support dispstr functionality, so you can pass objects to their '%s' conversion specifiers, too.
 
 ### `prettyprint` and `pp`
 

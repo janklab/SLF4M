@@ -45,7 +45,7 @@ classdef Displayable
         strs = dispstrs(this);
         out = strs{1};
       else
-        out = sprintf('%s %s', size2str(size(this)), class(this));
+        out = sprintf('%s %s', dispstrlib.internal.size2str(size(this)), class(this));
       end
     end
     
@@ -96,7 +96,7 @@ classdef Displayable
         if isequal(size(this), [0 0])
           fprintf('[] (%s)\n', class(this));
         else
-          fprintf('Empty %s %s array\n', size2str(size(this)), ...
+          fprintf('Empty %s %s array\n', dispstrlib.internal.size2str(size(this)), ...
             class(this));
         end
       else

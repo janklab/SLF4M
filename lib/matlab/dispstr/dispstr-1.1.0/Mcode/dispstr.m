@@ -33,14 +33,14 @@ if nargin < 2;  options = [];  end
 options = parseOpts(options, {'QuoteStrings',false});
 
 if ~ismatrix(x)
-    out = sprintf('%s %s', size2str(size(x)), class(x));
+    out = sprintf('%s %s', dispstrlib.internal.size2str(size(x)), class(x));
 elseif isempty(x)
     if ischar(x) && isequal(size(x), [0 0])
         out = '''''';
     elseif isnumeric(x) && isequal(size(x), [0 0])
         out = '[]';
     else
-        out = sprintf('Empty %s %s', size2str(size(x)), class(x));
+        out = sprintf('Empty %s %s', dispstrlib.internal.size2str(size(x)), class(x));
     end
 elseif isnumeric(x)
     if isscalar(x)
@@ -85,8 +85,10 @@ elseif isscalar(x) && (isa(x, 'duration') || isa(x, 'calendarDuration'))
 elseif isscalar(x) && iscategorical(x)
     out = char(x);
 else
-    out = sprintf('%s %s', size2str(size(x)), class(x));
+    out = sprintf('%s %s', dispstrlib.internal.size2str(size(x)), class(x));
 end
+
+out = string(out);
 
 end
 
