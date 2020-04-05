@@ -40,7 +40,7 @@ classdef Logger
     %     some_operation_that_could_go_wrong();
     % catch err
     %     log.warn(err, 'Caught exception during processing')
-    %
+    % end
     
     properties (SetAccess = private)
         % The underlying SLF4J Logger object
