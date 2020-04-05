@@ -3,8 +3,7 @@ function initSLF4M
 %
 % This function must be called once before you use SLF4M.
 %
-% Alternately, you can manually ensure that Dispstr is on the Matlab
-% path. That's all the initialization does.
+% It is safe to call this function multiple times; it is idempotent.
 
 thisFile = mfilename('fullpath');
 distDir = fileparts(fileparts(fileparts(thisFile)));
