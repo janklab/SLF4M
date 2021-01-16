@@ -258,8 +258,17 @@ if isa(format, 'MException')
   exceptionStr = strrep(exceptionStr, sprintf('\n\n'), newline);
 end
 for i = 1:numel(args)
-  if isobject(varargin{i})
-    args{i} = dispstr(varargin{i});
+  if isobject(args{i})
+    if isa(args{i}, 'string') && isscalar(args{i})
+      if ismissing(args{i})
+        args{i} = '<missing>';
+      else
+        args{i} = char(args{i});
+      end
+    else
+      % General case
+      args{i} = dispstr(args{i});
+    end
   end
 end
 out = sprintf(format, args{:});
