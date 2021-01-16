@@ -44,7 +44,7 @@ classdef Logger
   
   % Implicit library initializer trick
   properties (Constant, Access=private)
-    initializer = logger.internal.Slf4mInitializer
+    initializer = logger.internal.LibraryInitializer
   end
   
   properties (SetAccess = private)

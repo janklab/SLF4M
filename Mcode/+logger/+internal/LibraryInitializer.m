@@ -1,5 +1,5 @@
-classdef Slf4mInitializer
-  % Initializer for the SLF4M library.
+classdef LibraryInitializer
+  % Initializer for the this library.
   %
   % This exists as a class so we can use the trick of using it as a dependency
   % of our functions to cause it to be implicitly run. Its only purpose is to
@@ -8,18 +8,18 @@ classdef Slf4mInitializer
   
   methods
     
-    function this = Slf4mInitializer()
-      logger.internal.Slf4mInitializer.initSLF4M;
+    function this = LibraryInitializer()
+      logger.internal.LibraryInitializer.initLibrary;
     end
     
   end
   
   methods (Static)
     
-    function initSLF4M()
-      %INITSLF4M Initialize SLF4M
+    function initLibrary()
+      % Initialize this library
       %
-      % This function must be called once before you use SLF4M.
+      % This function must be called once before you use this library.
       %
       % It is safe to call this function multiple times; it is idempotent.
       

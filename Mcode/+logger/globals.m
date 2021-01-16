@@ -2,7 +2,7 @@ classdef globals
   % Global library properties and settings for SLF4M
   
   properties (Constant)
-    % Path to the root directory of this MailSpoon distribution
+    % Path to the root directory of this SLF4M distribution
     distroot = string(fileparts(fileparts(fileparts(mfilename('fullpath')))));
   end
   
