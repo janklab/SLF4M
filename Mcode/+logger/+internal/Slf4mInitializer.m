@@ -24,16 +24,15 @@ classdef Slf4mInitializer
       % It is safe to call this function multiple times; it is idempotent.
       
       thisFile = mfilename('fullpath');
-      distDir = fileparts(fileparts(fileparts(thisFile)));
+      distDir = fileparts(fileparts(fileparts(fileparts(thisFile))));
       libDir = fullfile(distDir, 'lib');
       
-      if ~isempty(which('dispstr'))
-        % Assume caller got Dispstr loaded themselves
-      else
-        % Load Dispstr
-        matlabLibDir = fullfile(libDir, 'matlab');
-        dispstrDir = fullfile(matlabLibDir, 'dispstr', 'dispstr-1.1.1');
-        addpath(fullfile(dispstrDir, 'Mcode'));
+      % Load Dispstr
+      matlabLibDir = fullfile(libDir, 'matlab');
+      dispstrMcodeDir = fullfile(matlabLibDir, 'dispstr', 'dispstr-1.1.1', 'Mcode');
+      mPath = strsplit(path, pathsep);
+      if ~ismember(dispstrMcodeDir, mPath)
+        addpath(dispstrMcodeDir);
       end
       
       % Compatibility shims
