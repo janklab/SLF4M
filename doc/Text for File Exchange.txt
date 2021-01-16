@@ -53,7 +53,6 @@ end
 
 The output looks like this:
 
->> logger.initSLF4M
 >> helloWorld
 06:39:45.292 INFO  helloWorld  - Answer: z=165.456000, calculated at 09-Jan-2020 06:39:45
 06:39:45.297 ERROR helloWorld  - Something went wrong in some_bad_operation(123.456000)

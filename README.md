@@ -12,23 +12,15 @@ SLF4M provides:
 
 The API is simple enough that you can get up and running with it quickly, or even use it casually in scripts, but it’s flexible and powerful enough to be useful for larger systems.
 
-(The `dispstr` part is mostly optional; you don't have to learn it in order to use SLF4M logging.)
+(The `dispstr` part is optional; you don't have to learn it in order to use SLF4M logging.)
 
 ![SLF4M screenshot showing log output and configuration GUI](doc/SLF4M-configurator-screenshot-scaled.png)
 
 ## Usage
 
-To install, unzip the distribution somewhere, and add its `Mcode/` directory
-to your Matlab path.
+To install, unzip the distribution somewhere, and add its `Mcode/` directory to your Matlab path.
 
-In your Matlab program:
-
-* Call `logger.initSLF4M()` to initialize SLF4M. This needs to be done before any logging calls are made.
-* Call `logger.Log4jConfigurator.configureBasicConsoleLogging()`
-to set up basic logging. This will write log output to the Matlab console.
-
-The logging functions are in the `+logger` package. Call them from within your Matlab
-code. In order of logging level, they are:
+The logging functions are in the `+logger` package. Call them from within your Matlab code to emit log messages. In order of descending severity of logging level, they are:
 
 * logger.error()
 * logger.warn()
@@ -84,7 +76,9 @@ Thanks to `dispstr()`, you can also pass Matlab objects to the `%s` conversions.
 09:52:29.809 INFO  base - Hello, world! 2-by-1 containers.Map
 ```
 
-To launch the configuration GUI, run `logger.Log4jConfigurator.showGui`. This GUI lets you set the logging levels and other attributes of the various loggers in your Matlab session.
+If you want to customize how logging is displayed and where it goes, call `logger.Log4jConfigurator.configureBasicConsoleLogging()` at the beginning of your program to set up basic logging. If you want your logs to be saved to a file somewhere, call Matlab's `diary` function.
+
+To launch an interactive configuration GUI, run `logger.Log4jConfigurator.showGui`. This GUI lets you see and set the logging levels and other attributes of the various loggers in your Matlab session.
 
 For more details, see the [User's Guide](doc/UserGuide.md).
 

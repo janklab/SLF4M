@@ -1,6 +1,12 @@
 SLF4M Changelog
 ===============
 
+Version 1.3.0 (2021-01-16)
+--------------------------
+
+* Automatic library initialization
+* Centralize global stuff in logger.globals class
+
 Version 1.2.2 (2020-01-30)
 --------------------------
 

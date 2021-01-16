@@ -42,6 +42,11 @@ classdef Logger
     %     log.warn(err, 'Caught exception during processing')
     % end
     
+    % Implicit library initializer trick
+    properties (Constant, Access=private)
+      initializer = logger.internal.Slf4mInitializer
+    end
+      
     properties (SetAccess = private)
         % The underlying SLF4J Logger object
         jLogger
