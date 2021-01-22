@@ -14,7 +14,7 @@ The API is simple enough that you can get up and running with it quickly, or eve
 
 (The `dispstr` part is optional; you don't have to learn it in order to use SLF4M logging.)
 
-![SLF4M screenshot showing log output and configuration GUI](docs/images/SLF4M-configurator-screenshot-scaled.png)
+![SLF4M screenshot showing log output and configuration GUI](images/SLF4M-configurator-screenshot-scaled.png)
 
 ## Usage
 
@@ -95,6 +95,12 @@ Log4j was chosen as the back-end because that’s what ships with Matlab.
 ## License
 
 SLF4M is dual licensed under the business-friendly Apache 2.0 and BSD 2-clause licenses. Pick whichever you like.
+
+## More info
+
+See:
+
+* [User Guide](UserGuide.html)
 
 ## Author
 
