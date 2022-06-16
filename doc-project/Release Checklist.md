@@ -1,7 +1,7 @@
 # SLF4M Release Checklist
 
-* Double-check the version number and date in `VERSION`
-* Update the installation instructions in README to use the upcoming new release tarball URL.
+* Double-check the version number in `VERSION`
+* CURRENTLY UNUSED: Update the installation instructions in README to use the upcoming new release tarball URL.
   * Format is: `https://github.com/janklab/SLF4M/releases/download/v<version>/SLF4M-<version>.tar.gz`
 * Commit all the files changed by the above steps.
   * Use form: `git commit -a -m "Cut release v<version>"`
