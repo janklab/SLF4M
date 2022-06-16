@@ -1,29 +1,34 @@
 # SLF4M User's Guide
 
+## Requirements
+
+* Matlab between R2016b and R2021a, inclusive.
+  * Matlab R2021b and R2022a will not work, due to a Java library change in R2021b!
+
 ## Setup
 
 To use SLF4M in your code:
 
-* Get the SLF4M distribution's `Mcode` directory on your Matlab path
-* Add calls to the `logger` functions in your code
-* Optionally call methods on `logger.Log4jConfigurator` to customize output formatting
+* Add the SLF4M distribution's `Mcode` directory to your Matlab path.
+* Add calls to the `logger` functions in your code.
+* Optionally call methods on `logger.Log4jConfigurator` to customize output formatting.
 
 ## API
 
 SLF4M provides:
 
-* A set of logging functions to log events at various levels
-  * Regular and "`j`" variants for sprintf-style or SLF4J-style formatting
-* A Logger class for doing logging with more control over its behavior
-* A Log4j configurator tool and GUI
-* `dispstr`, a customizable string-conversion API
+* A set of logging functions to log events at various levels.
+  * Regular and "`j`" variants for sprintf-style or SLF4J-style formatting.
+* A Logger class for doing logging with more control over its behavior.
+* A Log4j configurator tool and GUI.
+* `dispstr`, a customizable string-conversion API.
 
 All the code is in the `+logger` package. I chose a short, readable name because if you're using logging, it'll show up a lot in your code.
 
 ### Logging functions
 
-| Level     |  Function    |  J Variant    |
-| --------- | ------------ | ------------- |
+| Level     |  Function      |  J Variant      |
+| --------- | -------------- | --------------- |
 | `ERROR`   | `logger.error` | `logger.errorj` |
 | `WARNING` | `logger.warn`  | `logger.warnj`  |
 | `INFO`    | `logger.info`  | `logger.infoj`  |
@@ -79,7 +84,7 @@ You can use anything for a logger name; if no logger of that name exists, one is
 
 Then:
 
-* All these loggers are children of the logger `foo`
+* All these loggers are children of the logger `foo`.
 * `foo.bar.Thing` and `foo.bar.OtherThing` are children of `foo.bar`, which in turn is a child of `foo`.
 * `foo.bar.baz.Whatever` is a child of `foo.bar.baz`, which is a child of `foo.bar`, which is a child of `foo`.
 
@@ -178,7 +183,7 @@ For most Matlab-defined objects, this just results in a "`m-by-n <classname>`" o
 
 ## Configuration
 
-All the actual logging goes through the Log4j back end; you can configure it as with any Log4j installation. See the [Log4j 1.2 documentation](http://logging.apache.org/log4j/1.2/) for details. (Note: you have to use the old 1.2 series doco, because that's the version of Log4j that Matlab currently ships with.)
+All the actual logging goes through the Log4j back end; you can configure it as with any Log4j installation. See the [Log4j 1.2 documentation](http://logging.apache.org/log4j/1.2/) for details. (Note: you have to use the old 1.2 series doco, because that's the version of Log4j that Matlab currently ships with. SLF4M does not work with the Log4j 2.x shipped with Matlab R2021b and newer!)
 
 The `logger.Log4jConfigurator` class provides a convenient Matlab-friendly interface for configuring Log4j to do basic stuff. It's enough for simple cases. But all the configuration state is passed on the the Log4j back end; none of it is stored in the Matlab layer.
 
@@ -197,3 +202,9 @@ Matlab ships with older versions of SLF4J and Log4j. (They're slow to update the
 | R2016b         | 1.5.8         | 1.2.15          |
 | R2017b         | 1.5.8         | 1.2.15          |
 | R2019b         | 1.5.8         | 1.2.15          |
+| R2021a         | 1.5.8         | 1.2.15          |
+| R2021b u3      | 1.5.8         | 2.17.0          |
+
+For more details, see [my Matlab `jarext` Java lib dependency spreadsheet](https://docs.google.com/spreadsheets/d/1qL9NVwVhiA_BqX16Gr9-mMKqQ0MEOGxClGA0ms7mji0/edit?usp=sharing) and the [Janklab JarExt Inspector project](https://github.com/janklab/matlab-jarext-inspector).
+
+UPDATE (2022-04): Turns out this is a problem! Matlab R2021b upgraded the Log4j library to Log4j 2.x, and something about that and the SLF4J-to-Log4j binding arrangement it is using has broken SLF4M. I'm working on it, but it's going to be a nontrivial fix.

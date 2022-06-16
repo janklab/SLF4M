@@ -19,6 +19,12 @@ SLF4M provides:
 The API is simple enough that you can get up and running with it quickly, or even use it casually in scripts, but it's flexible and powerful enough to be useful for larger systems.
 
 
+Compatibility Warning
+-------------------------
+
+WARNING: SLF4M does not work with Matlab R2021b or later! A change in R2021b's bundled Java libraries broke SLF4M. Please see the "Requirements" section below.
+
+
 Usage
 -------------------------
 

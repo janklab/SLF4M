@@ -2,13 +2,15 @@
 
 [![View SLF4M on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/85740-slf4m)
 
-SLF4M is a simple but flexible logging framework for Matlab, built on top of [SLF4J](https://www.slf4j.org/) and [Apache Log4j](https://logging.apache.org/log4j/2.0/). You can use it to do runtime-configurable logging from your Matlab scripts and programs. This can be more informative and more manageable than commenting in and out `fprintf()` statements.
+SLF4M is a simple but flexible logging framework for Matlab, built on top of [SLF4J](https://www.slf4j.org/) and [Apache Log4j](https://logging.apache.org/log4j/1.2/). You can use it to do runtime-configurable logging from your Matlab scripts and programs. This can be more informative and more manageable than commenting in and out `fprintf()` statements.
+
+WARNING: SLF4M does not work with Matlab R2021b or later! A change in R2021b's bundled Java libraries broke SLF4M. Please see the "Requirements" section below.
 
 SLF4M provides:
 
-* Logging functions (a Matlab layer of bindings for SLF4J)
+* Logging functions (a Matlab layer of bindings for SLF4J).
 * A "Dispstr" API for customizing object display.
-* A Log4j configuration GUI
+* A Log4j configuration GUI.
 
 The API is simple enough that you can get up and running with it quickly, or even use it casually in scripts, but it’s flexible and powerful enough to be useful for larger systems.
 
@@ -84,7 +86,11 @@ For more details, see the [User's Guide](UserGuide.html).
 
 ## Requirements
 
-A kind of recent version of Matlab. SLF4M was developed and tested on Matlab R2016b and R2017b, but it will probably work on some older Matlab versions too.
+A kind of recent version of Matlab, but older than R2021b. SLF4M was developed and tested on Matlab R2016b, R2017b, and R2019b, but it will probably work on some older and newer Matlab versions too.
+
+WARNING: SLF4M does not work with Matlab R2021b or later! R2021b changed the versions of Log4j and SLF4J it ships with, and is using an unusual SLF4J/Log4j binding arrangement. This breaks SLF4M. As of 2022-04, I'm working on fixing it; see [Issue #7](https://github.com/janklab/SLF4M/issues/7) or MathWorks Tech Support Case #05490191. I'm afraid it's nontrivial.
+
+If you're using a Matlab older than R2016b and would like SLF4M to work on it but are having problems, feel free to [submit a bug report](https://github.com/janklab/SLF4M/issues)! I'm happy to work on supporting older Matlabs if I know there are actual users out there.
 
 ## Implementation
 

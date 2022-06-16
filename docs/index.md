@@ -6,9 +6,9 @@
 
 SLF4M provides:
 
-* Logging functions (a Matlab layer of bindings for SLF4J)
+* Logging functions (a Matlab layer of bindings for SLF4J).
 * A "Dispstr" API for customizing object display.
-* A Log4j configuration GUI
+* A Log4j configuration GUI.
 
 The API is simple enough that you can get up and running with it quickly, or even use it casually in scripts, but it’s flexible and powerful enough to be useful for larger systems.
 
