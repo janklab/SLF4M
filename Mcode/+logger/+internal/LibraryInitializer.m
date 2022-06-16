@@ -60,12 +60,6 @@ classdef LibraryInitializer
       
     end
     
-    function out = readdir(pth)
-      d = dir(pth);
-      d(ismember({d.name}, {'.','..'})) = [];
-      out = {d.name};
-    end
-    
   end
   
 end
