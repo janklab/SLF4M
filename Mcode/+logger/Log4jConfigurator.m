@@ -114,9 +114,9 @@ classdef Log4jConfigurator
             %     });
             for i = 1:size(levels, 1)
                 [logName,levelName] = levels{i,:};
-                loggerobj = org.apache.log4j.LogManager.getLogger(logName);
+                loggerObj = org.apache.log4j.LogManager.getLogger(logName);
                 level = logger.Log4jConfigurator.getLog4jLevel(levelName);
-                loggerobj.setLevel(level);
+                loggerObj.setLevel(level);
             end
         end
         
