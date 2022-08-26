@@ -1,0 +1,16 @@
+-classpath '/home/ubuntu/apache-log4j-1.2.15_rc5/target/checkout/target/classes:/home/ubuntu/.m2/repository/javax/mail/mail/1.4/mail-1.4.jar:/home/ubuntu/.m2/repository/javax/activation/activation/1.1/activation-1.1.jar:/home/ubuntu/.m2/repository/com/sun/jmx/jmxri/1.2.1/jmxri-1.2.1.jar:/home/ubuntu/.m2/repository/javax/jms/jms/1.1/jms-1.1.jar:/home/ubuntu/.m2/repository/com/sun/jdmk/jmxtools/1.2.1/jmxtools-1.2.1.jar' -protected
+-sourcepath
+'/home/ubuntu/apache-log4j-1.2.15_rc5/target/checkout/src/main/java:/home/ubuntu/apache-log4j-1.2.15_rc5/target/checkout/src/main/javadoc'
+-author
+-bottom
+'Copyright &copy; 1999-2007 <a href="http://www.apache.org">Apache Software Foundation</a>. All Rights Reserved.'
+-charset
+'ISO-8859-1'
+-d
+'/home/ubuntu/apache-log4j-1.2.15_rc5/target/checkout/target/site/apidocs'
+-doctitle
+'Apache Log4j 1.2.15 API'
+-use
+-version
+-windowtitle
+'Apache Log4j 1.2.15 API'

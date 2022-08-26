@@ -1,0 +1,486 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" /><title>OptionConverter xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../../../../../../apidocs/org/apache/log4j/helpers/OptionConverter.html">View Javadoc</a></div><pre>
+
+<a name="1" href="#1">1</a>   <em class="comment">/*</em>
+<a name="2" href="#2">2</a>   <em class="comment"> * Licensed to the Apache Software Foundation (ASF) under one or more</em>
+<a name="3" href="#3">3</a>   <em class="comment"> * contributor license agreements.  See the NOTICE file distributed with</em>
+<a name="4" href="#4">4</a>   <em class="comment"> * this work for additional information regarding copyright ownership.</em>
+<a name="5" href="#5">5</a>   <em class="comment"> * The ASF licenses this file to You under the Apache License, Version 2.0</em>
+<a name="6" href="#6">6</a>   <em class="comment"> * (the "License"); you may not use this file except in compliance with</em>
+<a name="7" href="#7">7</a>   <em class="comment"> * the License.  You may obtain a copy of the License at</em>
+<a name="8" href="#8">8</a>   <em class="comment"> * </em>
+<a name="9" href="#9">9</a>   <em class="comment"> *      <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
+<a name="10" href="#10">10</a>  <em class="comment"> * </em>
+<a name="11" href="#11">11</a>  <em class="comment"> * Unless required by applicable law or agreed to in writing, software</em>
+<a name="12" href="#12">12</a>  <em class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,</em>
+<a name="13" href="#13">13</a>  <em class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</em>
+<a name="14" href="#14">14</a>  <em class="comment"> * See the License for the specific language governing permissions and</em>
+<a name="15" href="#15">15</a>  <em class="comment"> * limitations under the License.</em>
+<a name="16" href="#16">16</a>  <em class="comment"> */</em>
+<a name="17" href="#17">17</a>  
+<a name="18" href="#18">18</a>  <strong>package</strong> org.apache.log4j.helpers;
+<a name="19" href="#19">19</a>  
+<a name="20" href="#20">20</a>  <strong>import</strong> java.util.Properties;
+<a name="21" href="#21">21</a>  <strong>import</strong> java.net.URL;
+<a name="22" href="#22">22</a>  <strong>import</strong> org.apache.log4j.Level;
+<a name="23" href="#23">23</a>  <strong>import</strong> org.apache.log4j.spi.Configurator;
+<a name="24" href="#24">24</a>  <strong>import</strong> org.apache.log4j.spi.LoggerRepository;
+<a name="25" href="#25">25</a>  <strong>import</strong> org.apache.log4j.PropertyConfigurator;
+<a name="26" href="#26">26</a>  
+<a name="27" href="#27">27</a>  <em class="comment">// Contributors:   Avy Sharell (sharell@online.fr)</em>
+<a name="28" href="#28">28</a>  <em class="comment">//                 Matthieu Verbert (mve@zurich.ibm.com)</em>
+<a name="29" href="#29">29</a>  <em class="comment">//                 Colin Sampaleanu</em>
+<a name="30" href="#30">30</a>  
+<a name="31" href="#31">31</a>  <em>/**<em>*</em></em>
+<a name="32" href="#32">32</a>  <em>   A convenience class to convert property values to specific types.</em>
+<a name="33" href="#33">33</a>  
+<a name="34" href="#34">34</a>  <em>   @author Ceki G&amp;uuml;lc&amp;uuml;</em>
+<a name="35" href="#35">35</a>  <em>   @author Simon Kitching;</em>
+<a name="36" href="#36">36</a>  <em>   @author Anders Kristensen</em>
+<a name="37" href="#37">37</a>  <em>*/</em>
+<a name="38" href="#38">38</a>  <strong>public</strong> <strong>class</strong> <a href="../../../../org/apache/log4j/helpers/OptionConverter.html">OptionConverter</a> {
+<a name="39" href="#39">39</a>  
+<a name="40" href="#40">40</a>    <strong>static</strong> String DELIM_START = <span class="string">"${"</span>;
+<a name="41" href="#41">41</a>    <strong>static</strong> <strong>char</strong>   DELIM_STOP  = '}';
+<a name="42" href="#42">42</a>    <strong>static</strong> <strong>int</strong> DELIM_START_LEN = 2;
+<a name="43" href="#43">43</a>    <strong>static</strong> <strong>int</strong> DELIM_STOP_LEN  = 1;
+<a name="44" href="#44">44</a>  
+<a name="45" href="#45">45</a>    <em>/**<em>* <a href="../../../../org/apache/log4j/helpers/OptionConverter.html">OptionConverter</a> is a static class. */</em></em>
+<a name="46" href="#46">46</a>    <strong>private</strong> <a href="../../../../org/apache/log4j/helpers/OptionConverter.html">OptionConverter</a>() {}
+<a name="47" href="#47">47</a>  
+<a name="48" href="#48">48</a>    <strong>public</strong>
+<a name="49" href="#49">49</a>    <strong>static</strong>
+<a name="50" href="#50">50</a>    String[] concatanateArrays(String[] l, String[] r) {
+<a name="51" href="#51">51</a>      <strong>int</strong> len = l.length + r.length;
+<a name="52" href="#52">52</a>      String[] a = <strong>new</strong> String[len];
+<a name="53" href="#53">53</a>  
+<a name="54" href="#54">54</a>      System.arraycopy(l, 0, a, 0, l.length);
+<a name="55" href="#55">55</a>      System.arraycopy(r, 0, a, l.length, r.length);
+<a name="56" href="#56">56</a>  
+<a name="57" href="#57">57</a>      <strong>return</strong> a;
+<a name="58" href="#58">58</a>    }
+<a name="59" href="#59">59</a>  
+<a name="60" href="#60">60</a>    <strong>public</strong>
+<a name="61" href="#61">61</a>    <strong>static</strong>
+<a name="62" href="#62">62</a>    String convertSpecialChars(String s) {
+<a name="63" href="#63">63</a>      <strong>char</strong> c;
+<a name="64" href="#64">64</a>      <strong>int</strong> len = s.length();
+<a name="65" href="#65">65</a>      StringBuffer sbuf = <strong>new</strong> StringBuffer(len);
+<a name="66" href="#66">66</a>  
+<a name="67" href="#67">67</a>      <strong>int</strong> i = 0;
+<a name="68" href="#68">68</a>      <strong>while</strong>(i &lt; len) {
+<a name="69" href="#69">69</a>        c = s.charAt(i++);
+<a name="70" href="#70">70</a>        <strong>if</strong> (c == '&#47;&#47;') {
+<a name="71" href="#71">71</a>  	c =  s.charAt(i++);
+<a name="72" href="#72">72</a>  	<strong>if</strong>(c == 'n')      c = '\n';
+<a name="73" href="#73">73</a>  	<strong>else</strong> <strong>if</strong>(c == 'r') c = '\r';
+<a name="74" href="#74">74</a>  	<strong>else</strong> <strong>if</strong>(c == 't') c = '\t';
+<a name="75" href="#75">75</a>  	<strong>else</strong> <strong>if</strong>(c == 'f') c = '\f';
+<a name="76" href="#76">76</a>  	<strong>else</strong> <strong>if</strong>(c == '\b') c = '\b';
+<a name="77" href="#77">77</a>  	<strong>else</strong> <strong>if</strong>(c == '\&quot;') c = '\&quot;';
+<a name="78" href="#78">78</a>  	<strong>else</strong> <strong>if</strong>(c == '\'') c = '\'';
+<a name="79" href="#79">79</a>  	<strong>else</strong> <strong>if</strong>(c == '&#47;&#47;') c = '&#47;&#47;';
+<a name="80" href="#80">80</a>        }
+<a name="81" href="#81">81</a>        sbuf.append(c);
+<a name="82" href="#82">82</a>      }
+<a name="83" href="#83">83</a>      <strong>return</strong> sbuf.toString();
+<a name="84" href="#84">84</a>    }
+<a name="85" href="#85">85</a>  
+<a name="86" href="#86">86</a>  
+<a name="87" href="#87">87</a>    <em>/**<em>*</em></em>
+<a name="88" href="#88">88</a>  <em>     Very similar to &lt;code>System.getProperty&lt;/code> except</em>
+<a name="89" href="#89">89</a>  <em>     that the {@link SecurityException} is hidden.</em>
+<a name="90" href="#90">90</a>  
+<a name="91" href="#91">91</a>  <em>     @param key The key to search for.</em>
+<a name="92" href="#92">92</a>  <em>     @param def The default value to return.</em>
+<a name="93" href="#93">93</a>  <em>     @return the string value of the system property, or the default</em>
+<a name="94" href="#94">94</a>  <em>     value if there is no property with that key.</em>
+<a name="95" href="#95">95</a>  
+<a name="96" href="#96">96</a>  <em>     @since 1.1 */</em>
+<a name="97" href="#97">97</a>    <strong>public</strong>
+<a name="98" href="#98">98</a>    <strong>static</strong>
+<a name="99" href="#99">99</a>    String getSystemProperty(String key, String def) {
+<a name="100" href="#100">100</a>     <strong>try</strong> {
+<a name="101" href="#101">101</a>       <strong>return</strong> System.getProperty(key, def);
+<a name="102" href="#102">102</a>     } <strong>catch</strong>(Throwable e) { <em class="comment">// MS-Java throws com.ms.security.SecurityExceptionEx</em>
+<a name="103" href="#103">103</a>       LogLog.debug(<span class="string">"Was not allowed to read system property \&quot;"</span>+key+<span class="string">"\&quot;."</span>);
+<a name="104" href="#104">104</a>       <strong>return</strong> def;
+<a name="105" href="#105">105</a>     }
+<a name="106" href="#106">106</a>   }
+<a name="107" href="#107">107</a> 
+<a name="108" href="#108">108</a> 
+<a name="109" href="#109">109</a>   <strong>public</strong>
+<a name="110" href="#110">110</a>   <strong>static</strong>
+<a name="111" href="#111">111</a>   Object instantiateByKey(Properties props, String key, Class superClass,
+<a name="112" href="#112">112</a> 				Object defaultValue) {
+<a name="113" href="#113">113</a> 
+<a name="114" href="#114">114</a>     <em class="comment">// Get the value of the property in string form</em>
+<a name="115" href="#115">115</a>     String className = findAndSubst(key, props);
+<a name="116" href="#116">116</a>     <strong>if</strong>(className == <strong>null</strong>) {
+<a name="117" href="#117">117</a>       LogLog.error(<span class="string">"Could not find value for key "</span> + key);
+<a name="118" href="#118">118</a>       <strong>return</strong> defaultValue;
+<a name="119" href="#119">119</a>     }
+<a name="120" href="#120">120</a>     <em class="comment">// Trim className to avoid trailing spaces that cause problems.</em>
+<a name="121" href="#121">121</a>     <strong>return</strong> OptionConverter.instantiateByClassName(className.trim(), superClass,
+<a name="122" href="#122">122</a> 						  defaultValue);
+<a name="123" href="#123">123</a>   }
+<a name="124" href="#124">124</a> 
+<a name="125" href="#125">125</a>   <em>/**<em>*</em></em>
+<a name="126" href="#126">126</a> <em>     If &lt;code>value&lt;/code> is "true", then &lt;code>true&lt;/code> is</em>
+<a name="127" href="#127">127</a> <em>     returned. If &lt;code>value&lt;/code> is "false", then</em>
+<a name="128" href="#128">128</a> <em>     &lt;code>true&lt;/code> is returned. Otherwise, &lt;code>default&lt;/code> is</em>
+<a name="129" href="#129">129</a> <em>     returned.</em>
+<a name="130" href="#130">130</a> 
+<a name="131" href="#131">131</a> <em>     &lt;p>Case of value is unimportant.  */</em>
+<a name="132" href="#132">132</a>   <strong>public</strong>
+<a name="133" href="#133">133</a>   <strong>static</strong>
+<a name="134" href="#134">134</a>   <strong>boolean</strong> toBoolean(String value, <strong>boolean</strong> dEfault) {
+<a name="135" href="#135">135</a>     <strong>if</strong>(value == <strong>null</strong>)
+<a name="136" href="#136">136</a>       <strong>return</strong> dEfault;
+<a name="137" href="#137">137</a>     String trimmedVal = value.trim();
+<a name="138" href="#138">138</a>     <strong>if</strong>(<span class="string">"true"</span>.equalsIgnoreCase(trimmedVal))
+<a name="139" href="#139">139</a>       <strong>return</strong> <strong>true</strong>;
+<a name="140" href="#140">140</a>     <strong>if</strong>(<span class="string">"false"</span>.equalsIgnoreCase(trimmedVal))
+<a name="141" href="#141">141</a>       <strong>return</strong> false;
+<a name="142" href="#142">142</a>     <strong>return</strong> dEfault;
+<a name="143" href="#143">143</a>   }
+<a name="144" href="#144">144</a> 
+<a name="145" href="#145">145</a>   <strong>public</strong>
+<a name="146" href="#146">146</a>   <strong>static</strong>
+<a name="147" href="#147">147</a>   <strong>int</strong> toInt(String value, <strong>int</strong> dEfault) {
+<a name="148" href="#148">148</a>     <strong>if</strong>(value != <strong>null</strong>) {
+<a name="149" href="#149">149</a>       String s = value.trim();
+<a name="150" href="#150">150</a>       <strong>try</strong> {
+<a name="151" href="#151">151</a> 	<strong>return</strong> Integer.valueOf(s).intValue();
+<a name="152" href="#152">152</a>       }
+<a name="153" href="#153">153</a>       <strong>catch</strong> (NumberFormatException e) {
+<a name="154" href="#154">154</a> 	 LogLog.error(<span class="string">"["</span> + s + <span class="string">"] is not in proper int form."</span>);
+<a name="155" href="#155">155</a> 	e.printStackTrace();
+<a name="156" href="#156">156</a>       }
+<a name="157" href="#157">157</a>     }
+<a name="158" href="#158">158</a>     <strong>return</strong> dEfault;
+<a name="159" href="#159">159</a>   }
+<a name="160" href="#160">160</a> 
+<a name="161" href="#161">161</a>   <em>/**<em>*</em></em>
+<a name="162" href="#162">162</a> <em>     Converts a standard or custom priority level to a Level</em>
+<a name="163" href="#163">163</a> <em>     object.  &lt;p> If &lt;code>value&lt;/code> is of form</em>
+<a name="164" href="#164">164</a> <em>     "level#classname", then the specified class' toLevel method</em>
+<a name="165" href="#165">165</a> <em>     is called to process the specified level string; if no '#'</em>
+<a name="166" href="#166">166</a> <em>     character is present, then the default {@link org.apache.log4j.Level}</em>
+<a name="167" href="#167">167</a> <em>     class is used to process the level value.</em>
+<a name="168" href="#168">168</a> 
+<a name="169" href="#169">169</a> <em>     &lt;p>As a special case, if the &lt;code>value&lt;/code> parameter is</em>
+<a name="170" href="#170">170</a> <em>     equal to the string "NULL", then the value &lt;code>null&lt;/code> will</em>
+<a name="171" href="#171">171</a> <em>     be returned.</em>
+<a name="172" href="#172">172</a> 
+<a name="173" href="#173">173</a> <em>     &lt;p> If any error occurs while converting the value to a level,</em>
+<a name="174" href="#174">174</a> <em>     the &lt;code>defaultValue&lt;/code> parameter, which may be</em>
+<a name="175" href="#175">175</a> <em>     &lt;code>null&lt;/code>, is returned.</em>
+<a name="176" href="#176">176</a> 
+<a name="177" href="#177">177</a> <em>     &lt;p> Case of &lt;code>value&lt;/code> is insignificant for the level level, but is</em>
+<a name="178" href="#178">178</a> <em>     significant for the class name part, if present.</em>
+<a name="179" href="#179">179</a> 
+<a name="180" href="#180">180</a> <em>     @since 1.1 */</em>
+<a name="181" href="#181">181</a>   <strong>public</strong>
+<a name="182" href="#182">182</a>   <strong>static</strong>
+<a name="183" href="#183">183</a>   <a href="../../../../org/apache/log4j/Level.html">Level</a> toLevel(String value, <a href="../../../../org/apache/log4j/Level.html">Level</a> defaultValue) {
+<a name="184" href="#184">184</a>     <strong>if</strong>(value == <strong>null</strong>)
+<a name="185" href="#185">185</a>       <strong>return</strong> defaultValue;
+<a name="186" href="#186">186</a>       
+<a name="187" href="#187">187</a>     value = value.trim();
+<a name="188" href="#188">188</a> 
+<a name="189" href="#189">189</a>     <strong>int</strong> hashIndex = value.indexOf('#');
+<a name="190" href="#190">190</a>     <strong>if</strong> (hashIndex == -1) {
+<a name="191" href="#191">191</a>       <strong>if</strong>(<span class="string">"NULL"</span>.equalsIgnoreCase(value)) {
+<a name="192" href="#192">192</a> 	<strong>return</strong> <strong>null</strong>;
+<a name="193" href="#193">193</a>       } <strong>else</strong> {
+<a name="194" href="#194">194</a> 	<em class="comment">// no class name specified : use standard Level class</em>
+<a name="195" href="#195">195</a> 	<strong>return</strong>(<a href="../../../../org/apache/log4j/Level.html">Level</a>) Level.toLevel(value, defaultValue);
+<a name="196" href="#196">196</a>       }
+<a name="197" href="#197">197</a>     }
+<a name="198" href="#198">198</a> 
+<a name="199" href="#199">199</a>     <a href="../../../../org/apache/log4j/Level.html">Level</a> result = defaultValue;
+<a name="200" href="#200">200</a> 
+<a name="201" href="#201">201</a>     String clazz = value.substring(hashIndex+1);
+<a name="202" href="#202">202</a>     String levelName = value.substring(0, hashIndex);
+<a name="203" href="#203">203</a> 
+<a name="204" href="#204">204</a>     <em class="comment">// This is degenerate case but you never know.</em>
+<a name="205" href="#205">205</a>     <strong>if</strong>(<span class="string">"NULL"</span>.equalsIgnoreCase(levelName)) {
+<a name="206" href="#206">206</a> 	<strong>return</strong> <strong>null</strong>;
+<a name="207" href="#207">207</a>     }
+<a name="208" href="#208">208</a> 
+<a name="209" href="#209">209</a>     LogLog.debug(<span class="string">"toLevel"</span> + <span class="string">":class=["</span> + clazz + <span class="string">"]"</span>
+<a name="210" href="#210">210</a> 		 + <span class="string">":pri=["</span> + levelName + <span class="string">"]"</span>);
+<a name="211" href="#211">211</a> 
+<a name="212" href="#212">212</a>     <strong>try</strong> {
+<a name="213" href="#213">213</a>       Class customLevel = Loader.loadClass(clazz);
+<a name="214" href="#214">214</a> 
+<a name="215" href="#215">215</a>       <em class="comment">// get a ref to the specified class' static method</em>
+<a name="216" href="#216">216</a>       <em class="comment">// toLevel(String, org.apache.log4j.Level)</em>
+<a name="217" href="#217">217</a>       Class[] paramTypes = <strong>new</strong> Class[] { String.<strong>class</strong>,
+<a name="218" href="#218">218</a> 					 org.apache.log4j.Level.<strong>class</strong>
+<a name="219" href="#219">219</a>                                        };
+<a name="220" href="#220">220</a>       java.lang.reflect.Method toLevelMethod =
+<a name="221" href="#221">221</a>                       customLevel.getMethod(<span class="string">"toLevel"</span>, paramTypes);
+<a name="222" href="#222">222</a> 
+<a name="223" href="#223">223</a>       <em class="comment">// now call the toLevel method, passing level string + default</em>
+<a name="224" href="#224">224</a>       Object[] params = <strong>new</strong> Object[] {levelName, defaultValue};
+<a name="225" href="#225">225</a>       Object o = toLevelMethod.invoke(<strong>null</strong>, params);
+<a name="226" href="#226">226</a> 
+<a name="227" href="#227">227</a>       result = (Level) o;
+<a name="228" href="#228">228</a>     } <strong>catch</strong>(ClassNotFoundException e) {
+<a name="229" href="#229">229</a>       LogLog.warn(<span class="string">"custom level class ["</span> + clazz + <span class="string">"] not found."</span>);
+<a name="230" href="#230">230</a>     } <strong>catch</strong>(NoSuchMethodException e) {
+<a name="231" href="#231">231</a>       LogLog.warn(<span class="string">"custom level class ["</span> + clazz + <span class="string">"]"</span>
+<a name="232" href="#232">232</a>         + <span class="string">" does not have a class function toLevel(String, Level)"</span>, e);
+<a name="233" href="#233">233</a>     } <strong>catch</strong>(java.lang.reflect.InvocationTargetException e) {
+<a name="234" href="#234">234</a>       LogLog.warn(<span class="string">"custom level class ["</span> + clazz + <span class="string">"]"</span>
+<a name="235" href="#235">235</a> 		   + <span class="string">" could not be instantiated"</span>, e);
+<a name="236" href="#236">236</a>     } <strong>catch</strong>(ClassCastException e) {
+<a name="237" href="#237">237</a>       LogLog.warn(<span class="string">"class ["</span> + clazz
+<a name="238" href="#238">238</a>         + <span class="string">"] is not a subclass of org.apache.log4j.Level"</span>, e);
+<a name="239" href="#239">239</a>     } <strong>catch</strong>(IllegalAccessException e) {
+<a name="240" href="#240">240</a>       LogLog.warn(<span class="string">"class ["</span>+clazz+
+<a name="241" href="#241">241</a> 		   <span class="string">"] cannot be instantiated due to access restrictions"</span>, e);
+<a name="242" href="#242">242</a>     } <strong>catch</strong>(Exception e) {
+<a name="243" href="#243">243</a>       LogLog.warn(<span class="string">"class ["</span>+clazz+<span class="string">"], level ["</span>+levelName+
+<a name="244" href="#244">244</a> 		   <span class="string">"] conversion failed."</span>, e);
+<a name="245" href="#245">245</a>     }
+<a name="246" href="#246">246</a>     <strong>return</strong> result;
+<a name="247" href="#247">247</a>    }
+<a name="248" href="#248">248</a> 
+<a name="249" href="#249">249</a>   <strong>public</strong>
+<a name="250" href="#250">250</a>   <strong>static</strong>
+<a name="251" href="#251">251</a>   <strong>long</strong> toFileSize(String value, <strong>long</strong> dEfault) {
+<a name="252" href="#252">252</a>     <strong>if</strong>(value == <strong>null</strong>)
+<a name="253" href="#253">253</a>       <strong>return</strong> dEfault;
+<a name="254" href="#254">254</a> 
+<a name="255" href="#255">255</a>     String s = value.trim().toUpperCase();
+<a name="256" href="#256">256</a>     <strong>long</strong> multiplier = 1;
+<a name="257" href="#257">257</a>     <strong>int</strong> index;
+<a name="258" href="#258">258</a> 
+<a name="259" href="#259">259</a>     <strong>if</strong>((index = s.indexOf(<span class="string">"KB"</span>)) != -1) {
+<a name="260" href="#260">260</a>       multiplier = 1024;
+<a name="261" href="#261">261</a>       s = s.substring(0, index);
+<a name="262" href="#262">262</a>     }
+<a name="263" href="#263">263</a>     <strong>else</strong> <strong>if</strong>((index = s.indexOf(<span class="string">"MB"</span>)) != -1) {
+<a name="264" href="#264">264</a>       multiplier = 1024*1024;
+<a name="265" href="#265">265</a>       s = s.substring(0, index);
+<a name="266" href="#266">266</a>     }
+<a name="267" href="#267">267</a>     <strong>else</strong> <strong>if</strong>((index = s.indexOf(<span class="string">"GB"</span>)) != -1) {
+<a name="268" href="#268">268</a>       multiplier = 1024*1024*1024;
+<a name="269" href="#269">269</a>       s = s.substring(0, index);
+<a name="270" href="#270">270</a>     }
+<a name="271" href="#271">271</a>     <strong>if</strong>(s != <strong>null</strong>) {
+<a name="272" href="#272">272</a>       <strong>try</strong> {
+<a name="273" href="#273">273</a> 	<strong>return</strong> Long.valueOf(s).longValue() * multiplier;
+<a name="274" href="#274">274</a>       }
+<a name="275" href="#275">275</a>       <strong>catch</strong> (NumberFormatException e) {
+<a name="276" href="#276">276</a> 	LogLog.error(<span class="string">"["</span> + s + <span class="string">"] is not in proper int form."</span>);
+<a name="277" href="#277">277</a> 	LogLog.error(<span class="string">"["</span> + value + <span class="string">"] not in expected format."</span>, e);
+<a name="278" href="#278">278</a>       }
+<a name="279" href="#279">279</a>     }
+<a name="280" href="#280">280</a>     <strong>return</strong> dEfault;
+<a name="281" href="#281">281</a>   }
+<a name="282" href="#282">282</a> 
+<a name="283" href="#283">283</a>   <em>/**<em>*</em></em>
+<a name="284" href="#284">284</a> <em>     Find the value corresponding to &lt;code>key&lt;/code> in</em>
+<a name="285" href="#285">285</a> <em>     &lt;code>props&lt;/code>. Then perform variable substitution on the</em>
+<a name="286" href="#286">286</a> <em>     found value.</em>
+<a name="287" href="#287">287</a> 
+<a name="288" href="#288">288</a> <em> */</em>
+<a name="289" href="#289">289</a>   <strong>public</strong>
+<a name="290" href="#290">290</a>   <strong>static</strong>
+<a name="291" href="#291">291</a>   String findAndSubst(String key, Properties props) {
+<a name="292" href="#292">292</a>     String value = props.getProperty(key);
+<a name="293" href="#293">293</a>     <strong>if</strong>(value == <strong>null</strong>)
+<a name="294" href="#294">294</a>       <strong>return</strong> <strong>null</strong>;
+<a name="295" href="#295">295</a> 
+<a name="296" href="#296">296</a>     <strong>try</strong> {
+<a name="297" href="#297">297</a>       <strong>return</strong> substVars(value, props);
+<a name="298" href="#298">298</a>     } <strong>catch</strong>(IllegalArgumentException e) {
+<a name="299" href="#299">299</a>       LogLog.error(<span class="string">"Bad option value ["</span>+value+<span class="string">"]."</span>, e);
+<a name="300" href="#300">300</a>       <strong>return</strong> value;
+<a name="301" href="#301">301</a>     }
+<a name="302" href="#302">302</a>   }
+<a name="303" href="#303">303</a> 
+<a name="304" href="#304">304</a>   <em>/**<em>*</em></em>
+<a name="305" href="#305">305</a> <em>     Instantiate an object given a class name. Check that the</em>
+<a name="306" href="#306">306</a> <em>     &lt;code>className&lt;/code> is a subclass of</em>
+<a name="307" href="#307">307</a> <em>     &lt;code>superClass&lt;/code>. If that test fails or the object could</em>
+<a name="308" href="#308">308</a> <em>     not be instantiated, then &lt;code>defaultValue&lt;/code> is returned.</em>
+<a name="309" href="#309">309</a> 
+<a name="310" href="#310">310</a> <em>     @param className The fully qualified class name of the object to instantiate.</em>
+<a name="311" href="#311">311</a> <em>     @param superClass The class to which the new object should belong.</em>
+<a name="312" href="#312">312</a> <em>     @param defaultValue The object to return in case of non-fulfillment</em>
+<a name="313" href="#313">313</a> <em>   */</em>
+<a name="314" href="#314">314</a>   <strong>public</strong>
+<a name="315" href="#315">315</a>   <strong>static</strong>
+<a name="316" href="#316">316</a>   Object instantiateByClassName(String className, Class superClass,
+<a name="317" href="#317">317</a> 				Object defaultValue) {
+<a name="318" href="#318">318</a>     <strong>if</strong>(className != <strong>null</strong>) {
+<a name="319" href="#319">319</a>       <strong>try</strong> {
+<a name="320" href="#320">320</a> 	Class classObj = Loader.loadClass(className);
+<a name="321" href="#321">321</a> 	<strong>if</strong>(!superClass.isAssignableFrom(classObj)) {
+<a name="322" href="#322">322</a> 	  LogLog.error(<span class="string">"A \&quot;"</span>+className+<span class="string">"\&quot; object is not assignable to a \&quot;"</span>+
+<a name="323" href="#323">323</a> 		       superClass.getName() + <span class="string">"\&quot; variable."</span>);
+<a name="324" href="#324">324</a> 	  LogLog.error(<span class="string">"The class \&quot;"</span>+ superClass.getName()+<span class="string">"\&quot; was loaded by "</span>);
+<a name="325" href="#325">325</a> 	  LogLog.error(<span class="string">"["</span>+superClass.getClassLoader()+<span class="string">"] whereas object of type "</span>);
+<a name="326" href="#326">326</a> 	  LogLog.error(<span class="string">"\&quot;"</span> +classObj.getName()+<span class="string">"\&quot; was loaded by ["</span>
+<a name="327" href="#327">327</a> 		       +classObj.getClassLoader()+<span class="string">"]."</span>);
+<a name="328" href="#328">328</a> 	  <strong>return</strong> defaultValue;
+<a name="329" href="#329">329</a> 	}
+<a name="330" href="#330">330</a> 	<strong>return</strong> classObj.newInstance();
+<a name="331" href="#331">331</a>       } <strong>catch</strong> (Exception e) {
+<a name="332" href="#332">332</a> 	LogLog.error(<span class="string">"Could not instantiate class ["</span> + className + <span class="string">"]."</span>, e);
+<a name="333" href="#333">333</a>       }
+<a name="334" href="#334">334</a>     }
+<a name="335" href="#335">335</a>     <strong>return</strong> defaultValue;
+<a name="336" href="#336">336</a>   }
+<a name="337" href="#337">337</a> 
+<a name="338" href="#338">338</a> 
+<a name="339" href="#339">339</a>   <em>/**<em>*</em></em>
+<a name="340" href="#340">340</a> <em>     Perform variable substitution in string &lt;code>val&lt;/code> from the</em>
+<a name="341" href="#341">341</a> <em>     values of keys found in the system propeties.</em>
+<a name="342" href="#342">342</a> 
+<a name="343" href="#343">343</a> <em>     &lt;p>The variable substitution delimeters are &lt;b>${&lt;/b> and &lt;b>}&lt;/b>.</em>
+<a name="344" href="#344">344</a> 
+<a name="345" href="#345">345</a> <em>     &lt;p>For example, if the System properties contains "key=value", then</em>
+<a name="346" href="#346">346</a> <em>     the call</em>
+<a name="347" href="#347">347</a> <em>     &lt;pre></em>
+<a name="348" href="#348">348</a> <em>     String s = OptionConverter.substituteVars("Value of key is ${key}.");</em>
+<a name="349" href="#349">349</a> <em>     &lt;/pre></em>
+<a name="350" href="#350">350</a> 
+<a name="351" href="#351">351</a> <em>     will set the variable &lt;code>s&lt;/code> to "Value of key is value.".</em>
+<a name="352" href="#352">352</a> 
+<a name="353" href="#353">353</a> <em>     &lt;p>If no value could be found for the specified key, then the</em>
+<a name="354" href="#354">354</a> <em>     &lt;code>props&lt;/code> parameter is searched, if the value could not</em>
+<a name="355" href="#355">355</a> <em>     be found there, then substitution defaults to the empty string.</em>
+<a name="356" href="#356">356</a> 
+<a name="357" href="#357">357</a> <em>     &lt;p>For example, if system propeties contains no value for the key</em>
+<a name="358" href="#358">358</a> <em>     "inexistentKey", then the call</em>
+<a name="359" href="#359">359</a> 
+<a name="360" href="#360">360</a> <em>     &lt;pre></em>
+<a name="361" href="#361">361</a> <em>     String s = OptionConverter.subsVars("Value of inexistentKey is [${inexistentKey}]");</em>
+<a name="362" href="#362">362</a> <em>     &lt;/pre></em>
+<a name="363" href="#363">363</a> <em>     will set &lt;code>s&lt;/code> to "Value of inexistentKey is []"</em>
+<a name="364" href="#364">364</a> 
+<a name="365" href="#365">365</a> <em>     &lt;p>An {@link java.lang.IllegalArgumentException} is thrown if</em>
+<a name="366" href="#366">366</a> <em>     &lt;code>val&lt;/code> contains a start delimeter "${" which is not</em>
+<a name="367" href="#367">367</a> <em>     balanced by a stop delimeter "}". &lt;/p></em>
+<a name="368" href="#368">368</a> 
+<a name="369" href="#369">369</a> <em>     &lt;p>&lt;b>Author&lt;/b> Avy Sharell&lt;/a>&lt;/p></em>
+<a name="370" href="#370">370</a> 
+<a name="371" href="#371">371</a> <em>     @param val The string on which variable substitution is performed.</em>
+<a name="372" href="#372">372</a> <em>     @throws IllegalArgumentException if &lt;code>val&lt;/code> is malformed.</em>
+<a name="373" href="#373">373</a> 
+<a name="374" href="#374">374</a> <em>  */</em>
+<a name="375" href="#375">375</a>   <strong>public</strong> <strong>static</strong>
+<a name="376" href="#376">376</a>   String substVars(String val, Properties props) throws
+<a name="377" href="#377">377</a>                         IllegalArgumentException {
+<a name="378" href="#378">378</a> 
+<a name="379" href="#379">379</a>     StringBuffer sbuf = <strong>new</strong> StringBuffer();
+<a name="380" href="#380">380</a> 
+<a name="381" href="#381">381</a>     <strong>int</strong> i = 0;
+<a name="382" href="#382">382</a>     <strong>int</strong> j, k;
+<a name="383" href="#383">383</a> 
+<a name="384" href="#384">384</a>     <strong>while</strong>(<strong>true</strong>) {
+<a name="385" href="#385">385</a>       j=val.indexOf(DELIM_START, i);
+<a name="386" href="#386">386</a>       <strong>if</strong>(j == -1) {
+<a name="387" href="#387">387</a> 	<em class="comment">// no more variables</em>
+<a name="388" href="#388">388</a> 	<strong>if</strong>(i==0) { <em class="comment">// this is a simple string</em>
+<a name="389" href="#389">389</a> 	  <strong>return</strong> val;
+<a name="390" href="#390">390</a> 	} <strong>else</strong> { <em class="comment">// add the tail string which contails no variables and return the result.</em>
+<a name="391" href="#391">391</a> 	  sbuf.append(val.substring(i, val.length()));
+<a name="392" href="#392">392</a> 	  <strong>return</strong> sbuf.toString();
+<a name="393" href="#393">393</a> 	}
+<a name="394" href="#394">394</a>       } <strong>else</strong> {
+<a name="395" href="#395">395</a> 	sbuf.append(val.substring(i, j));
+<a name="396" href="#396">396</a> 	k = val.indexOf(DELIM_STOP, j);
+<a name="397" href="#397">397</a> 	<strong>if</strong>(k == -1) {
+<a name="398" href="#398">398</a> 	  <strong>throw</strong> <strong>new</strong> IllegalArgumentException('&quot;'+val+
+<a name="399" href="#399">399</a> 		      <span class="string">"\&quot; has no closing brace. Opening brace at position "</span> + j
+<a name="400" href="#400">400</a> 					     + '.');
+<a name="401" href="#401">401</a> 	} <strong>else</strong> {
+<a name="402" href="#402">402</a> 	  j += DELIM_START_LEN;
+<a name="403" href="#403">403</a> 	  String key = val.substring(j, k);
+<a name="404" href="#404">404</a> 	  <em class="comment">// first try in System properties</em>
+<a name="405" href="#405">405</a> 	  String replacement = getSystemProperty(key, <strong>null</strong>);
+<a name="406" href="#406">406</a> 	  <em class="comment">// then try props parameter</em>
+<a name="407" href="#407">407</a> 	  <strong>if</strong>(replacement == <strong>null</strong> &amp;&amp; props != <strong>null</strong>) {
+<a name="408" href="#408">408</a> 	    replacement =  props.getProperty(key);
+<a name="409" href="#409">409</a> 	  }
+<a name="410" href="#410">410</a> 
+<a name="411" href="#411">411</a> 	  <strong>if</strong>(replacement != <strong>null</strong>) {
+<a name="412" href="#412">412</a> 	    <em class="comment">// Do variable substitution on the replacement string</em>
+<a name="413" href="#413">413</a> 	    <em class="comment">// such that we can solve "Hello ${x2}" as "Hello p1" </em>
+<a name="414" href="#414">414</a>             <em class="comment">// the where the properties are</em>
+<a name="415" href="#415">415</a> 	    <em class="comment">// x1=p1</em>
+<a name="416" href="#416">416</a>             <em class="comment">// x2=${x1}</em>
+<a name="417" href="#417">417</a> 	    String recursiveReplacement = substVars(replacement, props);
+<a name="418" href="#418">418</a> 	    sbuf.append(recursiveReplacement);
+<a name="419" href="#419">419</a> 	  }
+<a name="420" href="#420">420</a> 	  i = k + DELIM_STOP_LEN;
+<a name="421" href="#421">421</a> 	}
+<a name="422" href="#422">422</a>       }
+<a name="423" href="#423">423</a>     }
+<a name="424" href="#424">424</a>   }
+<a name="425" href="#425">425</a> 
+<a name="426" href="#426">426</a> 
+<a name="427" href="#427">427</a>   <em>/**<em>*</em></em>
+<a name="428" href="#428">428</a> <em>     Configure log4j given a URL.</em>
+<a name="429" href="#429">429</a> 
+<a name="430" href="#430">430</a> <em>     &lt;p>The url must point to a file or resource which will be interpreted by</em>
+<a name="431" href="#431">431</a> <em>     a new instance of a log4j configurator.</em>
+<a name="432" href="#432">432</a> 
+<a name="433" href="#433">433</a> <em>     &lt;p>All configurations steps are taken on the</em>
+<a name="434" href="#434">434</a> <em>     &lt;code>hierarchy&lt;/code> passed as a parameter.</em>
+<a name="435" href="#435">435</a> 
+<a name="436" href="#436">436</a> <em>     &lt;p></em>
+<a name="437" href="#437">437</a> <em>     @param url The location of the configuration file or resource.</em>
+<a name="438" href="#438">438</a> <em>     @param clazz The classname, of the log4j configurator which will parse</em>
+<a name="439" href="#439">439</a> <em>     the file or resource at &lt;code>url&lt;/code>. This must be a subclass of</em>
+<a name="440" href="#440">440</a> <em>     {@link Configurator}, or null. If this value is null then a default</em>
+<a name="441" href="#441">441</a> <em>     configurator of {@link PropertyConfigurator} is used, unless the</em>
+<a name="442" href="#442">442</a> <em>     filename pointed to by &lt;code>url&lt;/code> ends in '.xml', in which case</em>
+<a name="443" href="#443">443</a> <em>     {@link org.apache.log4j.xml.DOMConfigurator} is used.</em>
+<a name="444" href="#444">444</a> <em>     @param hierarchy The {@link org.apache.log4j.Hierarchy} to act on.</em>
+<a name="445" href="#445">445</a> 
+<a name="446" href="#446">446</a> <em>     @since 1.1.4 */</em>
+<a name="447" href="#447">447</a> 
+<a name="448" href="#448">448</a>   <strong>static</strong>
+<a name="449" href="#449">449</a>   <strong>public</strong>
+<a name="450" href="#450">450</a>   <strong>void</strong> selectAndConfigure(URL url, String clazz, <a href="../../../../org/apache/log4j/spi/LoggerRepository.html">LoggerRepository</a> hierarchy) {
+<a name="451" href="#451">451</a>    <a href="../../../../org/apache/log4j/spi/Configurator.html">Configurator</a> configurator = <strong>null</strong>;
+<a name="452" href="#452">452</a>    String filename = url.getFile();
+<a name="453" href="#453">453</a> 
+<a name="454" href="#454">454</a>    <strong>if</strong>(clazz == <strong>null</strong> &amp;&amp; filename != <strong>null</strong> &amp;&amp; filename.endsWith(<span class="string">".xml"</span>)) {
+<a name="455" href="#455">455</a>      clazz = <span class="string">"org.apache.log4j.xml.DOMConfigurator"</span>;
+<a name="456" href="#456">456</a>    }
+<a name="457" href="#457">457</a> 
+<a name="458" href="#458">458</a>    <strong>if</strong>(clazz != <strong>null</strong>) {
+<a name="459" href="#459">459</a>      LogLog.debug(<span class="string">"Preferred configurator class: "</span> + clazz);
+<a name="460" href="#460">460</a>      configurator = (Configurator) instantiateByClassName(clazz,
+<a name="461" href="#461">461</a> 							  Configurator.<strong>class</strong>,
+<a name="462" href="#462">462</a> 							  <strong>null</strong>);
+<a name="463" href="#463">463</a>      <strong>if</strong>(configurator == <strong>null</strong>) {
+<a name="464" href="#464">464</a>    	  LogLog.error(<span class="string">"Could not instantiate configurator ["</span>+clazz+<span class="string">"]."</span>);
+<a name="465" href="#465">465</a>    	  <strong>return</strong>;
+<a name="466" href="#466">466</a>      }
+<a name="467" href="#467">467</a>    } <strong>else</strong> {
+<a name="468" href="#468">468</a>      configurator = <strong>new</strong> <a href="../../../../org/apache/log4j/PropertyConfigurator.html">PropertyConfigurator</a>();
+<a name="469" href="#469">469</a>    }
+<a name="470" href="#470">470</a> 
+<a name="471" href="#471">471</a>    configurator.doConfigure(url, hierarchy);
+<a name="472" href="#472">472</a>   }
+<a name="473" href="#473">473</a> }
+</pre>
+<hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
+</html>
+
