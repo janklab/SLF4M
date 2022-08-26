@@ -1,0 +1,457 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" /><title>DailyRollingFileAppender xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../../../../apidocs/org/apache/log4j/DailyRollingFileAppender.html">View Javadoc</a></div><pre>
+
+<a name="1" href="#1">1</a>   <em class="comment">/*</em>
+<a name="2" href="#2">2</a>   <em class="comment"> * Licensed to the Apache Software Foundation (ASF) under one or more</em>
+<a name="3" href="#3">3</a>   <em class="comment"> * contributor license agreements.  See the NOTICE file distributed with</em>
+<a name="4" href="#4">4</a>   <em class="comment"> * this work for additional information regarding copyright ownership.</em>
+<a name="5" href="#5">5</a>   <em class="comment"> * The ASF licenses this file to You under the Apache License, Version 2.0</em>
+<a name="6" href="#6">6</a>   <em class="comment"> * (the "License"); you may not use this file except in compliance with</em>
+<a name="7" href="#7">7</a>   <em class="comment"> * the License.  You may obtain a copy of the License at</em>
+<a name="8" href="#8">8</a>   <em class="comment"> * </em>
+<a name="9" href="#9">9</a>   <em class="comment"> *      <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
+<a name="10" href="#10">10</a>  <em class="comment"> * </em>
+<a name="11" href="#11">11</a>  <em class="comment"> * Unless required by applicable law or agreed to in writing, software</em>
+<a name="12" href="#12">12</a>  <em class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,</em>
+<a name="13" href="#13">13</a>  <em class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</em>
+<a name="14" href="#14">14</a>  <em class="comment"> * See the License for the specific language governing permissions and</em>
+<a name="15" href="#15">15</a>  <em class="comment"> * limitations under the License.</em>
+<a name="16" href="#16">16</a>  <em class="comment"> */</em>
+<a name="17" href="#17">17</a>  
+<a name="18" href="#18">18</a>  
+<a name="19" href="#19">19</a>  
+<a name="20" href="#20">20</a>  <strong>package</strong> org.apache.log4j;
+<a name="21" href="#21">21</a>  
+<a name="22" href="#22">22</a>  <strong>import</strong> java.io.IOException;
+<a name="23" href="#23">23</a>  <strong>import</strong> java.io.File;
+<a name="24" href="#24">24</a>  <strong>import</strong> java.text.SimpleDateFormat;
+<a name="25" href="#25">25</a>  <strong>import</strong> java.util.Date;
+<a name="26" href="#26">26</a>  <strong>import</strong> java.util.GregorianCalendar;
+<a name="27" href="#27">27</a>  <strong>import</strong> java.util.Calendar;
+<a name="28" href="#28">28</a>  <strong>import</strong> java.util.TimeZone;
+<a name="29" href="#29">29</a>  <strong>import</strong> java.util.Locale;
+<a name="30" href="#30">30</a>  
+<a name="31" href="#31">31</a>  <strong>import</strong> org.apache.log4j.helpers.LogLog;
+<a name="32" href="#32">32</a>  <strong>import</strong> org.apache.log4j.spi.LoggingEvent;
+<a name="33" href="#33">33</a>  
+<a name="34" href="#34">34</a>  <em>/**<em>*</em></em>
+<a name="35" href="#35">35</a>  <em>   DailyRollingFileAppender extends {@link FileAppender} so that the</em>
+<a name="36" href="#36">36</a>  <em>   underlying file is rolled over at a user chosen frequency.</em>
+<a name="37" href="#37">37</a>  
+<a name="38" href="#38">38</a>  <em>   &lt;p>The rolling schedule is specified by the &lt;b>DatePattern&lt;/b></em>
+<a name="39" href="#39">39</a>  <em>   option. This pattern should follow the {@link SimpleDateFormat}</em>
+<a name="40" href="#40">40</a>  <em>   conventions. In particular, you &lt;em>must&lt;/em> escape literal text</em>
+<a name="41" href="#41">41</a>  <em>   within a pair of single quotes. A formatted version of the date</em>
+<a name="42" href="#42">42</a>  <em>   pattern is used as the suffix for the rolled file name.</em>
+<a name="43" href="#43">43</a>  
+<a name="44" href="#44">44</a>  <em>   &lt;p>For example, if the &lt;b>File&lt;/b> option is set to</em>
+<a name="45" href="#45">45</a>  <em>   &lt;code>/foo/bar.log&lt;/code> and the &lt;b>DatePattern&lt;/b> set to</em>
+<a name="46" href="#46">46</a>  <em>   &lt;code>'.'yyyy-MM-dd&lt;/code>, on 2001-02-16 at midnight, the logging</em>
+<a name="47" href="#47">47</a>  <em>   file &lt;code>/foo/bar.log&lt;/code> will be copied to</em>
+<a name="48" href="#48">48</a>  <em>   &lt;code>/foo/bar.log.2001-02-16&lt;/code> and logging for 2001-02-17</em>
+<a name="49" href="#49">49</a>  <em>   will continue in &lt;code>/foo/bar.log&lt;/code> until it rolls over</em>
+<a name="50" href="#50">50</a>  <em>   the next day.</em>
+<a name="51" href="#51">51</a>  
+<a name="52" href="#52">52</a>  <em>   &lt;p>Is is possible to specify monthly, weekly, half-daily, daily,</em>
+<a name="53" href="#53">53</a>  <em>   hourly, or minutely rollover schedules.</em>
+<a name="54" href="#54">54</a>  
+<a name="55" href="#55">55</a>  <em>   &lt;p>&lt;table border="1" cellpadding="2"></em>
+<a name="56" href="#56">56</a>  <em>   &lt;tr></em>
+<a name="57" href="#57">57</a>  <em>   &lt;th>DatePattern&lt;/th></em>
+<a name="58" href="#58">58</a>  <em>   &lt;th>Rollover schedule&lt;/th></em>
+<a name="59" href="#59">59</a>  <em>   &lt;th>Example&lt;/th></em>
+<a name="60" href="#60">60</a>  
+<a name="61" href="#61">61</a>  <em>   &lt;tr></em>
+<a name="62" href="#62">62</a>  <em>   &lt;td>&lt;code>'.'yyyy-MM&lt;/code></em>
+<a name="63" href="#63">63</a>  <em>   &lt;td>Rollover at the beginning of each month&lt;/td></em>
+<a name="64" href="#64">64</a>  
+<a name="65" href="#65">65</a>  <em>   &lt;td>At midnight of May 31st, 2002 &lt;code>/foo/bar.log&lt;/code> will be</em>
+<a name="66" href="#66">66</a>  <em>   copied to &lt;code>/foo/bar.log.2002-05&lt;/code>. Logging for the month</em>
+<a name="67" href="#67">67</a>  <em>   of June will be output to &lt;code>/foo/bar.log&lt;/code> until it is</em>
+<a name="68" href="#68">68</a>  <em>   also rolled over the next month.</em>
+<a name="69" href="#69">69</a>  
+<a name="70" href="#70">70</a>  <em>   &lt;tr></em>
+<a name="71" href="#71">71</a>  <em>   &lt;td>&lt;code>'.'yyyy-ww&lt;/code></em>
+<a name="72" href="#72">72</a>  
+<a name="73" href="#73">73</a>  <em>   &lt;td>Rollover at the first day of each week. The first day of the</em>
+<a name="74" href="#74">74</a>  <em>   week depends on the locale.&lt;/td></em>
+<a name="75" href="#75">75</a>  
+<a name="76" href="#76">76</a>  <em>   &lt;td>Assuming the first day of the week is Sunday, on Saturday</em>
+<a name="77" href="#77">77</a>  <em>   midnight, June 9th 2002, the file &lt;i>/foo/bar.log&lt;/i> will be</em>
+<a name="78" href="#78">78</a>  <em>   copied to &lt;i>/foo/bar.log.2002-23&lt;/i>.  Logging for the 24th week</em>
+<a name="79" href="#79">79</a>  <em>   of 2002 will be output to &lt;code>/foo/bar.log&lt;/code> until it is</em>
+<a name="80" href="#80">80</a>  <em>   rolled over the next week.</em>
+<a name="81" href="#81">81</a>  
+<a name="82" href="#82">82</a>  <em>   &lt;tr></em>
+<a name="83" href="#83">83</a>  <em>   &lt;td>&lt;code>'.'yyyy-MM-dd&lt;/code></em>
+<a name="84" href="#84">84</a>  
+<a name="85" href="#85">85</a>  <em>   &lt;td>Rollover at midnight each day.&lt;/td></em>
+<a name="86" href="#86">86</a>  
+<a name="87" href="#87">87</a>  <em>   &lt;td>At midnight, on March 8th, 2002, &lt;code>/foo/bar.log&lt;/code> will</em>
+<a name="88" href="#88">88</a>  <em>   be copied to &lt;code>/foo/bar.log.2002-03-08&lt;/code>. Logging for the</em>
+<a name="89" href="#89">89</a>  <em>   9th day of March will be output to &lt;code>/foo/bar.log&lt;/code> until</em>
+<a name="90" href="#90">90</a>  <em>   it is rolled over the next day.</em>
+<a name="91" href="#91">91</a>  
+<a name="92" href="#92">92</a>  <em>   &lt;tr></em>
+<a name="93" href="#93">93</a>  <em>   &lt;td>&lt;code>'.'yyyy-MM-dd-a&lt;/code></em>
+<a name="94" href="#94">94</a>  
+<a name="95" href="#95">95</a>  <em>   &lt;td>Rollover at midnight and midday of each day.&lt;/td></em>
+<a name="96" href="#96">96</a>  
+<a name="97" href="#97">97</a>  <em>   &lt;td>At noon, on March 9th, 2002, &lt;code>/foo/bar.log&lt;/code> will be</em>
+<a name="98" href="#98">98</a>  <em>   copied to &lt;code>/foo/bar.log.2002-03-09-AM&lt;/code>. Logging for the</em>
+<a name="99" href="#99">99</a>  <em>   afternoon of the 9th will be output to &lt;code>/foo/bar.log&lt;/code></em>
+<a name="100" href="#100">100</a> <em>   until it is rolled over at midnight.</em>
+<a name="101" href="#101">101</a> 
+<a name="102" href="#102">102</a> <em>   &lt;tr></em>
+<a name="103" href="#103">103</a> <em>   &lt;td>&lt;code>'.'yyyy-MM-dd-HH&lt;/code></em>
+<a name="104" href="#104">104</a> 
+<a name="105" href="#105">105</a> <em>   &lt;td>Rollover at the top of every hour.&lt;/td></em>
+<a name="106" href="#106">106</a> 
+<a name="107" href="#107">107</a> <em>   &lt;td>At approximately 11:00.000 o'clock on March 9th, 2002,</em>
+<a name="108" href="#108">108</a> <em>   &lt;code>/foo/bar.log&lt;/code> will be copied to</em>
+<a name="109" href="#109">109</a> <em>   &lt;code>/foo/bar.log.2002-03-09-10&lt;/code>. Logging for the 11th hour</em>
+<a name="110" href="#110">110</a> <em>   of the 9th of March will be output to &lt;code>/foo/bar.log&lt;/code></em>
+<a name="111" href="#111">111</a> <em>   until it is rolled over at the beginning of the next hour.</em>
+<a name="112" href="#112">112</a> 
+<a name="113" href="#113">113</a> 
+<a name="114" href="#114">114</a> <em>   &lt;tr></em>
+<a name="115" href="#115">115</a> <em>   &lt;td>&lt;code>'.'yyyy-MM-dd-HH-mm&lt;/code></em>
+<a name="116" href="#116">116</a> 
+<a name="117" href="#117">117</a> <em>   &lt;td>Rollover at the beginning of every minute.&lt;/td></em>
+<a name="118" href="#118">118</a> 
+<a name="119" href="#119">119</a> <em>   &lt;td>At approximately 11:23,000, on March 9th, 2001,</em>
+<a name="120" href="#120">120</a> <em>   &lt;code>/foo/bar.log&lt;/code> will be copied to</em>
+<a name="121" href="#121">121</a> <em>   &lt;code>/foo/bar.log.2001-03-09-10-22&lt;/code>. Logging for the minute</em>
+<a name="122" href="#122">122</a> <em>   of 11:23 (9th of March) will be output to</em>
+<a name="123" href="#123">123</a> <em>   &lt;code>/foo/bar.log&lt;/code> until it is rolled over the next minute.</em>
+<a name="124" href="#124">124</a> 
+<a name="125" href="#125">125</a> <em>   &lt;/table></em>
+<a name="126" href="#126">126</a> 
+<a name="127" href="#127">127</a> <em>   &lt;p>Do not use the colon ":" character in anywhere in the</em>
+<a name="128" href="#128">128</a> <em>   &lt;b>DatePattern&lt;/b> option. The text before the colon is interpeted</em>
+<a name="129" href="#129">129</a> <em>   as the protocol specificaion of a URL which is probably not what</em>
+<a name="130" href="#130">130</a> <em>   you want.</em>
+<a name="131" href="#131">131</a> 
+<a name="132" href="#132">132</a> 
+<a name="133" href="#133">133</a> <em>   @author Eirik Lygre</em>
+<a name="134" href="#134">134</a> <em>   @author Ceki G&amp;uuml;lc&amp;uuml; */</em>
+<a name="135" href="#135">135</a> <strong>public</strong> <strong>class</strong> <a href="../../../org/apache/log4j/DailyRollingFileAppender.html">DailyRollingFileAppender</a> <strong>extends</strong> <a href="../../../org/apache/log4j/FileAppender.html">FileAppender</a> {
+<a name="136" href="#136">136</a> 
+<a name="137" href="#137">137</a> 
+<a name="138" href="#138">138</a>   <em class="comment">// The code assumes that the following constants are in a increasing</em>
+<a name="139" href="#139">139</a>   <em class="comment">// sequence.</em>
+<a name="140" href="#140">140</a>   <strong>static</strong> <strong>final</strong> <strong>int</strong> TOP_OF_TROUBLE=-1;
+<a name="141" href="#141">141</a>   <strong>static</strong> <strong>final</strong> <strong>int</strong> TOP_OF_MINUTE = 0;
+<a name="142" href="#142">142</a>   <strong>static</strong> <strong>final</strong> <strong>int</strong> TOP_OF_HOUR   = 1;
+<a name="143" href="#143">143</a>   <strong>static</strong> <strong>final</strong> <strong>int</strong> HALF_DAY      = 2;
+<a name="144" href="#144">144</a>   <strong>static</strong> <strong>final</strong> <strong>int</strong> TOP_OF_DAY    = 3;
+<a name="145" href="#145">145</a>   <strong>static</strong> <strong>final</strong> <strong>int</strong> TOP_OF_WEEK   = 4;
+<a name="146" href="#146">146</a>   <strong>static</strong> <strong>final</strong> <strong>int</strong> TOP_OF_MONTH  = 5;
+<a name="147" href="#147">147</a> 
+<a name="148" href="#148">148</a> 
+<a name="149" href="#149">149</a>   <em>/**<em>*</em></em>
+<a name="150" href="#150">150</a> <em>     The date pattern. By default, the pattern is set to</em>
+<a name="151" href="#151">151</a> <em>     "'.'yyyy-MM-dd" meaning daily rollover.</em>
+<a name="152" href="#152">152</a> <em>   */</em>
+<a name="153" href="#153">153</a>   <strong>private</strong> String datePattern = <span class="string">"'.'yyyy-MM-dd"</span>;
+<a name="154" href="#154">154</a> 
+<a name="155" href="#155">155</a>   <em>/**<em>*</em></em>
+<a name="156" href="#156">156</a> <em>     The log file will be renamed to the value of the</em>
+<a name="157" href="#157">157</a> <em>     scheduledFilename variable when the next interval is entered. For</em>
+<a name="158" href="#158">158</a> <em>     example, if the rollover period is one hour, the log file will be</em>
+<a name="159" href="#159">159</a> <em>     renamed to the value of "scheduledFilename" at the beginning of</em>
+<a name="160" href="#160">160</a> <em>     the next hour. </em>
+<a name="161" href="#161">161</a> 
+<a name="162" href="#162">162</a> <em>     The precise time when a rollover occurs depends on logging</em>
+<a name="163" href="#163">163</a> <em>     activity. </em>
+<a name="164" href="#164">164</a> <em>  */</em>
+<a name="165" href="#165">165</a>   <strong>private</strong> String scheduledFilename;
+<a name="166" href="#166">166</a> 
+<a name="167" href="#167">167</a>   <em>/**<em>*</em></em>
+<a name="168" href="#168">168</a> <em>     The next time we estimate a rollover should occur. */</em>
+<a name="169" href="#169">169</a>   <strong>private</strong> <strong>long</strong> nextCheck = System.currentTimeMillis () - 1;
+<a name="170" href="#170">170</a> 
+<a name="171" href="#171">171</a>   Date now = <strong>new</strong> Date();
+<a name="172" href="#172">172</a> 
+<a name="173" href="#173">173</a>   SimpleDateFormat sdf;
+<a name="174" href="#174">174</a> 
+<a name="175" href="#175">175</a>   RollingCalendar rc = <strong>new</strong> RollingCalendar();
+<a name="176" href="#176">176</a> 
+<a name="177" href="#177">177</a>   <strong>int</strong> checkPeriod = TOP_OF_TROUBLE;
+<a name="178" href="#178">178</a> 
+<a name="179" href="#179">179</a>   <em class="comment">// The gmtTimeZone is used only in computeCheckPeriod() method.</em>
+<a name="180" href="#180">180</a>   <strong>static</strong> <strong>final</strong> TimeZone gmtTimeZone = TimeZone.getTimeZone(<span class="string">"GMT"</span>);
+<a name="181" href="#181">181</a> 
+<a name="182" href="#182">182</a> 
+<a name="183" href="#183">183</a>   <em>/**<em>*</em></em>
+<a name="184" href="#184">184</a> <em>     The default constructor does nothing. */</em>
+<a name="185" href="#185">185</a>   <strong>public</strong> <a href="../../../org/apache/log4j/DailyRollingFileAppender.html">DailyRollingFileAppender</a>() {
+<a name="186" href="#186">186</a>   }
+<a name="187" href="#187">187</a> 
+<a name="188" href="#188">188</a>   <em>/**<em>*</em></em>
+<a name="189" href="#189">189</a> <em>    Instantiate a &lt;code>DailyRollingFileAppender&lt;/code> and open the</em>
+<a name="190" href="#190">190</a> <em>    file designated by &lt;code>filename&lt;/code>. The opened filename will</em>
+<a name="191" href="#191">191</a> <em>    become the ouput destination for this appender.</em>
+<a name="192" href="#192">192</a> 
+<a name="193" href="#193">193</a> <em>    */</em>
+<a name="194" href="#194">194</a>   <strong>public</strong> <a href="../../../org/apache/log4j/DailyRollingFileAppender.html">DailyRollingFileAppender</a> (Layout layout, String filename,
+<a name="195" href="#195">195</a> 				   String datePattern) throws IOException {
+<a name="196" href="#196">196</a>     <strong>super</strong>(layout, filename, <strong>true</strong>);
+<a name="197" href="#197">197</a>     <strong>this</strong>.datePattern = datePattern;
+<a name="198" href="#198">198</a>     activateOptions();
+<a name="199" href="#199">199</a>   }
+<a name="200" href="#200">200</a> 
+<a name="201" href="#201">201</a>   <em>/**<em>*</em></em>
+<a name="202" href="#202">202</a> <em>     The &lt;b>DatePattern&lt;/b> takes a string in the same format as</em>
+<a name="203" href="#203">203</a> <em>     expected by {@link SimpleDateFormat}. This options determines the</em>
+<a name="204" href="#204">204</a> <em>     rollover schedule.</em>
+<a name="205" href="#205">205</a> <em>   */</em>
+<a name="206" href="#206">206</a>   <strong>public</strong> <strong>void</strong> setDatePattern(String pattern) {
+<a name="207" href="#207">207</a>     datePattern = pattern;
+<a name="208" href="#208">208</a>   }
+<a name="209" href="#209">209</a> 
+<a name="210" href="#210">210</a>   <em>/**<em>* Returns the value of the &lt;b>DatePattern&lt;/b> option. */</em></em>
+<a name="211" href="#211">211</a>   <strong>public</strong> String getDatePattern() {
+<a name="212" href="#212">212</a>     <strong>return</strong> datePattern;
+<a name="213" href="#213">213</a>   }
+<a name="214" href="#214">214</a> 
+<a name="215" href="#215">215</a>   <strong>public</strong> <strong>void</strong> activateOptions() {
+<a name="216" href="#216">216</a>     <strong>super</strong>.activateOptions();
+<a name="217" href="#217">217</a>     <strong>if</strong>(datePattern != <strong>null</strong> &amp;&amp; fileName != <strong>null</strong>) {
+<a name="218" href="#218">218</a>       now.setTime(System.currentTimeMillis());
+<a name="219" href="#219">219</a>       sdf = <strong>new</strong> SimpleDateFormat(datePattern);
+<a name="220" href="#220">220</a>       <strong>int</strong> type = computeCheckPeriod();
+<a name="221" href="#221">221</a>       printPeriodicity(type);
+<a name="222" href="#222">222</a>       rc.setType(type);
+<a name="223" href="#223">223</a>       File file = <strong>new</strong> File(fileName);
+<a name="224" href="#224">224</a>       scheduledFilename = fileName+sdf.format(<strong>new</strong> Date(file.lastModified()));
+<a name="225" href="#225">225</a> 
+<a name="226" href="#226">226</a>     } <strong>else</strong> {
+<a name="227" href="#227">227</a>       LogLog.error(<span class="string">"Either File or DatePattern options are not set for appender ["</span>
+<a name="228" href="#228">228</a> 		   +name+<span class="string">"]."</span>);
+<a name="229" href="#229">229</a>     }
+<a name="230" href="#230">230</a>   }
+<a name="231" href="#231">231</a> 
+<a name="232" href="#232">232</a>   <strong>void</strong> pr<strong>int</strong>Periodicity(<strong>int</strong> type) {
+<a name="233" href="#233">233</a>     <strong>switch</strong>(type) {
+<a name="234" href="#234">234</a>     <strong>case</strong> TOP_OF_MINUTE:
+<a name="235" href="#235">235</a>       LogLog.debug(<span class="string">"Appender ["</span>+name+<span class="string">"] to be rolled every minute."</span>);
+<a name="236" href="#236">236</a>       <strong>break</strong>;
+<a name="237" href="#237">237</a>     <strong>case</strong> TOP_OF_HOUR:
+<a name="238" href="#238">238</a>       LogLog.debug(<span class="string">"Appender ["</span>+name
+<a name="239" href="#239">239</a> 		   +<span class="string">"] to be rolled on top of every hour."</span>);
+<a name="240" href="#240">240</a>       <strong>break</strong>;
+<a name="241" href="#241">241</a>     <strong>case</strong> HALF_DAY:
+<a name="242" href="#242">242</a>       LogLog.debug(<span class="string">"Appender ["</span>+name
+<a name="243" href="#243">243</a> 		   +<span class="string">"] to be rolled at midday and midnight."</span>);
+<a name="244" href="#244">244</a>       <strong>break</strong>;
+<a name="245" href="#245">245</a>     <strong>case</strong> TOP_OF_DAY:
+<a name="246" href="#246">246</a>       LogLog.debug(<span class="string">"Appender ["</span>+name
+<a name="247" href="#247">247</a> 		   +<span class="string">"] to be rolled at midnight."</span>);
+<a name="248" href="#248">248</a>       <strong>break</strong>;
+<a name="249" href="#249">249</a>     <strong>case</strong> TOP_OF_WEEK:
+<a name="250" href="#250">250</a>       LogLog.debug(<span class="string">"Appender ["</span>+name
+<a name="251" href="#251">251</a> 		   +<span class="string">"] to be rolled at start of week."</span>);
+<a name="252" href="#252">252</a>       <strong>break</strong>;
+<a name="253" href="#253">253</a>     <strong>case</strong> TOP_OF_MONTH:
+<a name="254" href="#254">254</a>       LogLog.debug(<span class="string">"Appender ["</span>+name
+<a name="255" href="#255">255</a> 		   +<span class="string">"] to be rolled at start of every month."</span>);
+<a name="256" href="#256">256</a>       <strong>break</strong>;
+<a name="257" href="#257">257</a>     <strong>default</strong>:
+<a name="258" href="#258">258</a>       LogLog.warn(<span class="string">"Unknown periodicity for appender ["</span>+name+<span class="string">"]."</span>);
+<a name="259" href="#259">259</a>     }
+<a name="260" href="#260">260</a>   }
+<a name="261" href="#261">261</a> 
+<a name="262" href="#262">262</a> 
+<a name="263" href="#263">263</a>   <em class="comment">// This method computes the roll over period by looping over the</em>
+<a name="264" href="#264">264</a>   <em class="comment">// periods, starting with the shortest, and stopping when the r0 is</em>
+<a name="265" href="#265">265</a>   <em class="comment">// different from from r1, where r0 is the epoch formatted according</em>
+<a name="266" href="#266">266</a>   <em class="comment">// the datePattern (supplied by the user) and r1 is the</em>
+<a name="267" href="#267">267</a>   <em class="comment">// epoch+nextMillis(i) formatted according to datePattern. All date</em>
+<a name="268" href="#268">268</a>   <em class="comment">// formatting is done in GMT and not local format because the test</em>
+<a name="269" href="#269">269</a>   <em class="comment">// logic is based on comparisons relative to 1970-01-01 00:00:00</em>
+<a name="270" href="#270">270</a>   <em class="comment">// GMT (the epoch).</em>
+<a name="271" href="#271">271</a> 
+<a name="272" href="#272">272</a>   <strong>int</strong> computeCheckPeriod() {
+<a name="273" href="#273">273</a>     RollingCalendar rollingCalendar = <strong>new</strong> RollingCalendar(gmtTimeZone, Locale.ENGLISH);
+<a name="274" href="#274">274</a>     <em class="comment">// set sate to 1970-01-01 00:00:00 GMT</em>
+<a name="275" href="#275">275</a>     Date epoch = <strong>new</strong> Date(0);
+<a name="276" href="#276">276</a>     <strong>if</strong>(datePattern != <strong>null</strong>) {
+<a name="277" href="#277">277</a>       <strong>for</strong>(<strong>int</strong> i = TOP_OF_MINUTE; i &lt;= TOP_OF_MONTH; i++) {
+<a name="278" href="#278">278</a> 	SimpleDateFormat simpleDateFormat = <strong>new</strong> SimpleDateFormat(datePattern);
+<a name="279" href="#279">279</a> 	simpleDateFormat.setTimeZone(gmtTimeZone); <em class="comment">// do all date formatting in GMT</em>
+<a name="280" href="#280">280</a> 	String r0 = simpleDateFormat.format(epoch);
+<a name="281" href="#281">281</a> 	rollingCalendar.setType(i);
+<a name="282" href="#282">282</a> 	Date next = <strong>new</strong> Date(rollingCalendar.getNextCheckMillis(epoch));
+<a name="283" href="#283">283</a> 	String r1 =  simpleDateFormat.format(next);
+<a name="284" href="#284">284</a> 	<em class="comment">//System.out.println("Type = "+i+", r0 = "+r0+", r1 = "+r1);</em>
+<a name="285" href="#285">285</a> 	<strong>if</strong>(r0 != <strong>null</strong> &amp;&amp; r1 != <strong>null</strong> &amp;&amp; !r0.equals(r1)) {
+<a name="286" href="#286">286</a> 	  <strong>return</strong> i;
+<a name="287" href="#287">287</a> 	}
+<a name="288" href="#288">288</a>       }
+<a name="289" href="#289">289</a>     }
+<a name="290" href="#290">290</a>     <strong>return</strong> TOP_OF_TROUBLE; <em class="comment">// Deliberately head for trouble...</em>
+<a name="291" href="#291">291</a>   }
+<a name="292" href="#292">292</a> 
+<a name="293" href="#293">293</a>   <em>/**<em>*</em></em>
+<a name="294" href="#294">294</a> <em>     Rollover the current file to a new file.</em>
+<a name="295" href="#295">295</a> <em>  */</em>
+<a name="296" href="#296">296</a>   <strong>void</strong> rollOver() throws IOException {
+<a name="297" href="#297">297</a> 
+<a name="298" href="#298">298</a>     <em class="comment">/*<em class="comment"> Compute filename, but only if datePattern is specified */</em></em>
+<a name="299" href="#299">299</a>     <strong>if</strong> (datePattern == <strong>null</strong>) {
+<a name="300" href="#300">300</a>       errorHandler.error(<span class="string">"Missing DatePattern option in rollOver()."</span>);
+<a name="301" href="#301">301</a>       <strong>return</strong>;
+<a name="302" href="#302">302</a>     }
+<a name="303" href="#303">303</a> 
+<a name="304" href="#304">304</a>     String datedFilename = fileName+sdf.format(now);
+<a name="305" href="#305">305</a>     <em class="comment">// It is too early to roll over because we are still within the</em>
+<a name="306" href="#306">306</a>     <em class="comment">// bounds of the current interval. Rollover will occur once the</em>
+<a name="307" href="#307">307</a>     <em class="comment">// next interval is reached.</em>
+<a name="308" href="#308">308</a>     <strong>if</strong> (scheduledFilename.equals(datedFilename)) {
+<a name="309" href="#309">309</a>       <strong>return</strong>;
+<a name="310" href="#310">310</a>     }
+<a name="311" href="#311">311</a> 
+<a name="312" href="#312">312</a>     <em class="comment">// close current file, and rename it to datedFilename</em>
+<a name="313" href="#313">313</a>     <strong>this</strong>.closeFile();
+<a name="314" href="#314">314</a> 
+<a name="315" href="#315">315</a>     File target  = <strong>new</strong> File(scheduledFilename);
+<a name="316" href="#316">316</a>     <strong>if</strong> (target.exists()) {
+<a name="317" href="#317">317</a>       target.delete();
+<a name="318" href="#318">318</a>     }
+<a name="319" href="#319">319</a> 
+<a name="320" href="#320">320</a>     File file = <strong>new</strong> File(fileName);
+<a name="321" href="#321">321</a>     <strong>boolean</strong> result = file.renameTo(target);
+<a name="322" href="#322">322</a>     <strong>if</strong>(result) {
+<a name="323" href="#323">323</a>       LogLog.debug(fileName +<span class="string">" -> "</span>+ scheduledFilename);
+<a name="324" href="#324">324</a>     } <strong>else</strong> {
+<a name="325" href="#325">325</a>       LogLog.error(<span class="string">"Failed to rename ["</span>+fileName+<span class="string">"] to ["</span>+scheduledFilename+<span class="string">"]."</span>);
+<a name="326" href="#326">326</a>     }
+<a name="327" href="#327">327</a> 
+<a name="328" href="#328">328</a>     <strong>try</strong> {
+<a name="329" href="#329">329</a>       <em class="comment">// This will also close the file. This is OK since multiple</em>
+<a name="330" href="#330">330</a>       <em class="comment">// close operations are safe.</em>
+<a name="331" href="#331">331</a>       <strong>this</strong>.setFile(fileName, false, <strong>this</strong>.bufferedIO, <strong>this</strong>.bufferSize);
+<a name="332" href="#332">332</a>     }
+<a name="333" href="#333">333</a>     <strong>catch</strong>(IOException e) {
+<a name="334" href="#334">334</a>       errorHandler.error(<span class="string">"setFile("</span>+fileName+<span class="string">", false) call failed."</span>);
+<a name="335" href="#335">335</a>     }
+<a name="336" href="#336">336</a>     scheduledFilename = datedFilename;
+<a name="337" href="#337">337</a>   }
+<a name="338" href="#338">338</a> 
+<a name="339" href="#339">339</a>   <em>/**<em>*</em></em>
+<a name="340" href="#340">340</a> <em>   * This method differentiates DailyRollingFileAppender from its</em>
+<a name="341" href="#341">341</a> <em>   * super class.</em>
+<a name="342" href="#342">342</a> <em>   *</em>
+<a name="343" href="#343">343</a> <em>   * &lt;p>Before actually logging, this method will check whether it is</em>
+<a name="344" href="#344">344</a> <em>   * time to do a rollover. If it is, it will schedule the next</em>
+<a name="345" href="#345">345</a> <em>   * rollover time and then rollover.</em>
+<a name="346" href="#346">346</a> <em>   * */</em>
+<a name="347" href="#347">347</a>   <strong>protected</strong> <strong>void</strong> subAppend(<a href="../../../org/apache/log4j/spi/LoggingEvent.html">LoggingEvent</a> event) {
+<a name="348" href="#348">348</a>     <strong>long</strong> n = System.currentTimeMillis();
+<a name="349" href="#349">349</a>     <strong>if</strong> (n >= nextCheck) {
+<a name="350" href="#350">350</a>       now.setTime(n);
+<a name="351" href="#351">351</a>       nextCheck = rc.getNextCheckMillis(now);
+<a name="352" href="#352">352</a>       <strong>try</strong> {
+<a name="353" href="#353">353</a> 	rollOver();
+<a name="354" href="#354">354</a>       }
+<a name="355" href="#355">355</a>       <strong>catch</strong>(IOException ioe) {
+<a name="356" href="#356">356</a> 	LogLog.error(<span class="string">"rollOver() failed."</span>, ioe);
+<a name="357" href="#357">357</a>       }
+<a name="358" href="#358">358</a>     }
+<a name="359" href="#359">359</a>     <strong>super</strong>.subAppend(event);
+<a name="360" href="#360">360</a>    }
+<a name="361" href="#361">361</a> }
+<a name="362" href="#362">362</a> 
+<a name="363" href="#363">363</a> <em>/**<em>*</em></em>
+<a name="364" href="#364">364</a> <em> *  RollingCalendar is a helper class to DailyRollingFileAppender.</em>
+<a name="365" href="#365">365</a> <em> *  Given a periodicity type and the current time, it computes the</em>
+<a name="366" href="#366">366</a> <em> *  start of the next interval.  </em>
+<a name="367" href="#367">367</a> <em> * */</em>
+<a name="368" href="#368">368</a> <strong>class</strong> RollingCalendar <strong>extends</strong> GregorianCalendar {
+<a name="369" href="#369">369</a>   <strong>private</strong> <strong>static</strong> <strong>final</strong> <strong>long</strong> serialVersionUID = -3560331770601814177L;
+<a name="370" href="#370">370</a> 
+<a name="371" href="#371">371</a>   <strong>int</strong> type = DailyRollingFileAppender.TOP_OF_TROUBLE;
+<a name="372" href="#372">372</a> 
+<a name="373" href="#373">373</a>   RollingCalendar() {
+<a name="374" href="#374">374</a>     <strong>super</strong>();
+<a name="375" href="#375">375</a>   }  
+<a name="376" href="#376">376</a> 
+<a name="377" href="#377">377</a>   RollingCalendar(TimeZone tz, Locale locale) {
+<a name="378" href="#378">378</a>     <strong>super</strong>(tz, locale);
+<a name="379" href="#379">379</a>   }  
+<a name="380" href="#380">380</a> 
+<a name="381" href="#381">381</a>   <strong>void</strong> setType(<strong>int</strong> type) {
+<a name="382" href="#382">382</a>     <strong>this</strong>.type = type;
+<a name="383" href="#383">383</a>   }
+<a name="384" href="#384">384</a> 
+<a name="385" href="#385">385</a>   <strong>public</strong> <strong>long</strong> getNextCheckMillis(Date now) {
+<a name="386" href="#386">386</a>     <strong>return</strong> getNextCheckDate(now).getTime();
+<a name="387" href="#387">387</a>   }
+<a name="388" href="#388">388</a> 
+<a name="389" href="#389">389</a>   <strong>public</strong> Date getNextCheckDate(Date now) {
+<a name="390" href="#390">390</a>     <strong>this</strong>.setTime(now);
+<a name="391" href="#391">391</a> 
+<a name="392" href="#392">392</a>     <strong>switch</strong>(type) {
+<a name="393" href="#393">393</a>     <strong>case</strong> DailyRollingFileAppender.TOP_OF_MINUTE:
+<a name="394" href="#394">394</a> 	<strong>this</strong>.set(Calendar.SECOND, 0);
+<a name="395" href="#395">395</a> 	<strong>this</strong>.set(Calendar.MILLISECOND, 0);
+<a name="396" href="#396">396</a> 	<strong>this</strong>.add(Calendar.MINUTE, 1);
+<a name="397" href="#397">397</a> 	<strong>break</strong>;
+<a name="398" href="#398">398</a>     <strong>case</strong> DailyRollingFileAppender.TOP_OF_HOUR:
+<a name="399" href="#399">399</a> 	<strong>this</strong>.set(Calendar.MINUTE, 0);
+<a name="400" href="#400">400</a> 	<strong>this</strong>.set(Calendar.SECOND, 0);
+<a name="401" href="#401">401</a> 	<strong>this</strong>.set(Calendar.MILLISECOND, 0);
+<a name="402" href="#402">402</a> 	<strong>this</strong>.add(Calendar.HOUR_OF_DAY, 1);
+<a name="403" href="#403">403</a> 	<strong>break</strong>;
+<a name="404" href="#404">404</a>     <strong>case</strong> DailyRollingFileAppender.HALF_DAY:
+<a name="405" href="#405">405</a> 	<strong>this</strong>.set(Calendar.MINUTE, 0);
+<a name="406" href="#406">406</a> 	<strong>this</strong>.set(Calendar.SECOND, 0);
+<a name="407" href="#407">407</a> 	<strong>this</strong>.set(Calendar.MILLISECOND, 0);
+<a name="408" href="#408">408</a> 	<strong>int</strong> hour = get(Calendar.HOUR_OF_DAY);
+<a name="409" href="#409">409</a> 	<strong>if</strong>(hour &lt; 12) {
+<a name="410" href="#410">410</a> 	  <strong>this</strong>.set(Calendar.HOUR_OF_DAY, 12);
+<a name="411" href="#411">411</a> 	} <strong>else</strong> {
+<a name="412" href="#412">412</a> 	  <strong>this</strong>.set(Calendar.HOUR_OF_DAY, 0);
+<a name="413" href="#413">413</a> 	  <strong>this</strong>.add(Calendar.DAY_OF_MONTH, 1);
+<a name="414" href="#414">414</a> 	}
+<a name="415" href="#415">415</a> 	<strong>break</strong>;
+<a name="416" href="#416">416</a>     <strong>case</strong> DailyRollingFileAppender.TOP_OF_DAY:
+<a name="417" href="#417">417</a> 	<strong>this</strong>.set(Calendar.HOUR_OF_DAY, 0);
+<a name="418" href="#418">418</a> 	<strong>this</strong>.set(Calendar.MINUTE, 0);
+<a name="419" href="#419">419</a> 	<strong>this</strong>.set(Calendar.SECOND, 0);
+<a name="420" href="#420">420</a> 	<strong>this</strong>.set(Calendar.MILLISECOND, 0);
+<a name="421" href="#421">421</a> 	<strong>this</strong>.add(Calendar.DATE, 1);
+<a name="422" href="#422">422</a> 	<strong>break</strong>;
+<a name="423" href="#423">423</a>     <strong>case</strong> DailyRollingFileAppender.TOP_OF_WEEK:
+<a name="424" href="#424">424</a> 	<strong>this</strong>.set(Calendar.DAY_OF_WEEK, getFirstDayOfWeek());
+<a name="425" href="#425">425</a> 	<strong>this</strong>.set(Calendar.HOUR_OF_DAY, 0);
+<a name="426" href="#426">426</a> 	<strong>this</strong>.set(Calendar.MINUTE, 0);
+<a name="427" href="#427">427</a> 	<strong>this</strong>.set(Calendar.SECOND, 0);
+<a name="428" href="#428">428</a> 	<strong>this</strong>.set(Calendar.MILLISECOND, 0);
+<a name="429" href="#429">429</a> 	<strong>this</strong>.add(Calendar.WEEK_OF_YEAR, 1);
+<a name="430" href="#430">430</a> 	<strong>break</strong>;
+<a name="431" href="#431">431</a>     <strong>case</strong> DailyRollingFileAppender.TOP_OF_MONTH:
+<a name="432" href="#432">432</a> 	<strong>this</strong>.set(Calendar.DATE, 1);
+<a name="433" href="#433">433</a> 	<strong>this</strong>.set(Calendar.HOUR_OF_DAY, 0);
+<a name="434" href="#434">434</a> 	<strong>this</strong>.set(Calendar.MINUTE, 0);
+<a name="435" href="#435">435</a> 	<strong>this</strong>.set(Calendar.SECOND, 0);
+<a name="436" href="#436">436</a> 	<strong>this</strong>.set(Calendar.MILLISECOND, 0);
+<a name="437" href="#437">437</a> 	<strong>this</strong>.add(Calendar.MONTH, 1);
+<a name="438" href="#438">438</a> 	<strong>break</strong>;
+<a name="439" href="#439">439</a>     <strong>default</strong>:
+<a name="440" href="#440">440</a> 	<strong>throw</strong> <strong>new</strong> IllegalStateException(<span class="string">"Unknown periodicity type."</span>);
+<a name="441" href="#441">441</a>     }
+<a name="442" href="#442">442</a>     <strong>return</strong> getTime();
+<a name="443" href="#443">443</a>   }
+<a name="444" href="#444">444</a> }
+</pre>
+<hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
+</html>
+
