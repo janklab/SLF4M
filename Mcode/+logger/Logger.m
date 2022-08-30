@@ -106,8 +106,14 @@ classdef Logger
       if ~this.jLogger.isErrorEnabled()
         return
       end
-      msgStr = formatMessage(msg, varargin{:});
-      this.jLogger.error(msgStr);
+      try
+        msgStr = formatMessage(msg, varargin{:});
+        this.jLogger.error(msgStr);
+      catch ME
+        if logger.raiseExceptions
+          throw(ME)
+        end
+      end
     end
     
     function warn(this, msg, varargin)
@@ -115,8 +121,14 @@ classdef Logger
       if ~this.jLogger.isWarnEnabled()
         return
       end
-      msgStr = formatMessage(msg, varargin{:});
-      this.jLogger.warn(msgStr);
+      try
+        msgStr = formatMessage(msg, varargin{:});
+        this.jLogger.warn(msgStr);
+      catch ME
+        if logger.raiseExceptions
+          throw(ME)
+        end
+      end
     end
     
     function info(this, msg, varargin)
@@ -124,8 +136,14 @@ classdef Logger
       if ~this.jLogger.isInfoEnabled()
         return
       end
-      msgStr = formatMessage(msg, varargin{:});
-      this.jLogger.info(msgStr);
+      try
+        msgStr = formatMessage(msg, varargin{:});
+        this.jLogger.info(msgStr);
+      catch ME
+        if logger.raiseExceptions
+          throw(ME)
+        end
+      end
     end
     
     function debug(this, msg, varargin)
@@ -133,8 +151,14 @@ classdef Logger
       if ~this.jLogger.isDebugEnabled()
         return
       end
-      msgStr = formatMessage(msg, varargin{:});
-      this.jLogger.debug(msgStr);
+      try
+        msgStr = formatMessage(msg, varargin{:});
+        this.jLogger.debug(msgStr);
+      catch ME
+        if logger.raiseExceptions
+          throw(ME)
+        end
+      end
     end
     
     function trace(this, msg, varargin)
@@ -142,8 +166,14 @@ classdef Logger
       if ~this.jLogger.isTraceEnabled()
         return
       end
-      msgStr = formatMessage(msg, varargin{:});
-      this.jLogger.trace(msgStr);
+      try
+        msgStr = formatMessage(msg, varargin{:});
+        this.jLogger.trace(msgStr);
+      catch ME
+        if logger.raiseExceptions
+          throw(ME)
+        end
+      end
     end
     
     function errorj(this, msg, varargin)
