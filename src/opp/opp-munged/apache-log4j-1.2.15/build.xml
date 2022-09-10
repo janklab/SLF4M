@@ -26,8 +26,7 @@
   <!-- The build.properties file defines the path to local jar files -->
   <property file="build.properties"/>               
 
-  <!--   if a Maven build has been attempted,
-              the Maven repository can provide all the dependencies.  -->
+  <!-- If a Maven build has been attempted, the local Maven repository can provide all the dependencies.  -->
   <property name="m2_repo" location="${user.home}/.m2/repository"/>
   <property name="javamail.jar" location="${m2_repo}/javax/mail/mail/1.4/mail-1.4.jar"/>
   <property name="jms.jar" location="${m2_repo}/javax/jms/jms/1.1/jms-1.1.jar"/>
@@ -39,7 +38,7 @@
   <!-- prefixed with "env". -->
   <property environment="env"/>
 
-  <property name="version" value="1.2.15"/>
+  <property name="version" value="1.2.15-janklab.1"/>
 
   <!-- The base directory relative to which most targets are built -->
   <property name="base" value="."/>
@@ -88,7 +87,7 @@
   <!-- The stem where most log4j source code is located. -->
   <property name="stem" value="org/apache/log4j"/>
 
-  <!-- Some targets needs a more precise stem. -->
+  <!-- Some targets need a more precise stem. -->
   <property name="BSTEM" value="${java.source.dir}/${stem}"/>
 
   <!-- Directory where release images go. -->
@@ -97,8 +96,8 @@
   <!-- Directory for temporary files. -->
   <property name="dist.tmp" value="${dist.dir}/tmp"/>
   
-  <property name="javac.source" value="1.2"/>
-  <property name="javac.target" value="1.1"/>
+  <property name="javac.source" value="1.8"/>
+  <property name="javac.target" value="1.8"/>
   
   <!--  destination for generated documentation on Apache web host  -->
   <property name="apache.javadoc_dest" value="/www/logging.apache.org/log4j/docs"/>
@@ -106,9 +105,9 @@
   <property name="apache.host" value="people.apache.org"/>
   
   <!--  destination for Maven generated documentation -->
-    <property name="svnrepo.url" value="https://svn.apache.org/repos/asf"/>
-	<property name="svnsite.url" value="${svnrepo.url}/logging/site/trunk/docs/log4j/1.2"/>
-	<available property="svn-available" file="target/site-deploy/.svn"/>
+  <property name="svnrepo.url" value="https://svn.apache.org/repos/asf"/>
+  <property name="svnsite.url" value="${svnrepo.url}/logging/site/trunk/docs/log4j/1.2"/>
+  <available property="svn-available" file="target/site-deploy/.svn"/>
   
 
 
@@ -218,7 +217,7 @@
   <!-- ================================================================= -->
   <target name="init">
     <tstamp />
-    <property name="javac.includeAntRuntime" value="true"/>
+    <property name="javac.includeAntRuntime" value="false"/>
     <property name="javac.includeJavaRuntime" value="false"/>
     <property name="javac.fork" value="false"/>
   </target>
@@ -243,8 +242,8 @@
                     ${stem}/or/jms/*.java"
            target="${javac.target}"
            source="${javac.source}"
-           includeAntRuntime="${javac.includeAntRuntime}"
-           includeJavaRuntime="${javac.includeJavaRuntime}"
+           includeantruntime="${javac.includeAntRuntime}"
+           includejavaruntime="${javac.includeJavaRuntime}"
            fork="${javac.fork}"
            deprecation="${deprecation}"
            debug="on">
@@ -266,8 +265,8 @@
            excludes="misc/*"
            target="${javac.target}"
            source="${javac.source}"
-           includeAntRuntime="${javac.includeAntRuntime}"
-           includeJavaRuntime="${javac.includeJavaRuntime}"
+           includeantruntime="${javac.includeAntRuntime}"
+           includejavaruntime="${javac.includeJavaRuntime}"
            fork="${javac.fork}"
            deprecation="${deprecation}"
            debug="on">
@@ -293,8 +292,8 @@
                      ${stem}/xml/Transform.java"
            target="${javac.target}"
            source="${javac.source}"
-           includeAntRuntime="${javac.includeAntRuntime}"
-           includeJavaRuntime="${javac.includeJavaRuntime}"
+           includeantruntime="${javac.includeAntRuntime}"
+           includejavaruntime="${javac.includeJavaRuntime}"
            fork="${javac.fork}"
            deprecation="${deprecation}"
            classpath="${classpath}">
@@ -310,8 +309,8 @@
            includes="${stem}/net/SMTPAppender.java"
            target="${javac.target}"
            source="${javac.source}"
-           includeAntRuntime="${javac.includeAntRuntime}"
-           includeJavaRuntime="${javac.includeJavaRuntime}"
+           includeantruntime="${javac.includeAntRuntime}"
+           includejavaruntime="${javac.includeJavaRuntime}"
            fork="${javac.fork}"
            deprecation="${deprecation}">
       <classpath refid="compile.classpath"/>
@@ -324,8 +323,8 @@
            includes="${stem}/net/JMS*.java, ${stem}/or/jms/*.java"
            target="${javac.target}"
            source="${javac.source}"
-           includeAntRuntime="${javac.includeAntRuntime}"
-           includeJavaRuntime="${javac.includeJavaRuntime}"
+           includeantruntime="${javac.includeAntRuntime}"
+           includejavaruntime="${javac.includeJavaRuntime}"
            fork="${javac.fork}"
            deprecation="${deprecation}">
       <classpath refid="compile.classpath"/>
@@ -339,8 +338,8 @@
            excludes="${stem}/jmx/T.java"
            target="${javac.target}"
            source="${javac.source}"
-           includeAntRuntime="${javac.includeAntRuntime}"
-           includeJavaRuntime="${javac.includeJavaRuntime}"
+           includeantruntime="${javac.includeAntRuntime}"
+           includejavaruntime="${javac.includeJavaRuntime}"
            fork="${javac.fork}"
            deprecation="${deprecation}">
       <classpath refid="compile.classpath"/>
@@ -435,8 +434,8 @@
 		<manifest>
 			<section name="org/apache/log4j">
 				<attribute name="Implementation-Title" value="log4j"/>
-				<attribute name="Implementation-Version" value="${version}"/> 
-				<attribute name="Implementation-Vendor" value='"Apache Software Foundation"'/>
+				<attribute name="Implementation-Version" value="${version}"/>
+				<attribute name="Implementation-Vendor" value='"Janklab"'/>
 			</section>
 		</manifest>         
          <metainf dir="." includes="NOTICE,LICENSE"/>
@@ -459,7 +458,7 @@
 			<section name="org/apache/log4j">
 				<attribute name="Implementation-Title" value="log4j"/>
 				<attribute name="Implementation-Version" value="${version}"/> 
-				<attribute name="Implementation-Vendor" value='"Apache Software Foundation"'/>
+				<attribute name="Implementation-Vendor" value='"Janklab"'/>
 			</section>
 		</manifest>         
 		<metainf dir="." includes="NOTICE,LICENSE"/>
@@ -498,9 +497,9 @@
              author="true"
              use="true"
              overview="${docs.dest}/overview.html"
-             doctitle="log4j version ${version}&lt;br&gt;API Specification"
-             windowtitle="Log4j Version ${version}"
-             header='&lt;b&gt;Log4j ${version}&lt;/b&gt;&lt;!--  Licensed to the Apache Software Foundation (ASF) under one or more
+             doctitle="log4j (Janklab Munged) version ${version}&lt;br&gt;API Specification"
+             windowtitle="Log4j (Janklab Munged) Version ${version}"
+             header='&lt;b&gt;Log4j (Janklab Munged) ${version}&lt;/b&gt;&lt;!--  Licensed to the Apache Software Foundation (ASF) under one or more
  contributor license agreements.  See the NOTICE file distributed with
  this work for additional information regarding copyright ownership.
  The ASF licenses this file to You under the Apache License, Version 2.0
@@ -515,10 +514,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 --&gt;'
-             bottom="Copyright 2000-2007 Apache Software Foundation.">
+             bottom="Copyright 2000-2007 Apache Software Foundation, 2022 Andrew Janke.">
 
-      <link href="http://java.sun.com/j2se/1.3/docs/api/"/>
-      <link href="http://java.sun.com/j2ee/sdk_1.3/techdocs/api/"/>
+      <link href="https://www.oracle.com/java/technologies/java-archive-13docs-downloads.html"/>
       <classpath refid="compile.classpath"/>
     </javadoc>
 
@@ -755,7 +753,6 @@
 	</target>
 
 	<target name="post-site" depends="checkout-site, update-site"/>
-	
 
         <target name="mime=html">
             <exec executable="svn">
@@ -774,7 +771,6 @@
                 <arg value="${src.css}"/>
             </exec>
         </target>
-	
 	
 	<target name="site-deploy">
 		<!-- Add any new files (and generate innocuous warnings for the existing content)  -->
@@ -800,4 +796,3 @@
 	</target>
 
 </project>
-

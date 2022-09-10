@@ -52,8 +52,8 @@
   <property name="tests.source.home" value="./src/java/"/>
   <property name="excludes" value=""/>
   
-  <property name="javac.source" value="1.1"/>
-  <property name="javac.target" value="1.1"/>
+  <property name="javac.source" value="1.8"/>
+  <property name="javac.target" value="1.8"/>
 
   <path id="tests.classpath">
     <pathelement location="${log4j.jar}"/>
@@ -134,12 +134,13 @@
   <target name="build" depends="parentBuild, prepare">
     <property name="haltonfailure" value="yes"/>
     <javac srcdir="${tests.source.home}"
-            destdir="./classes"
+           destdir="./classes"
            deprecation="${deprecation}"
            target="${javac.target}"
            source="${javac.source}"
            debug="on"
-           excludes="${excludes}">        
+           excludes="${excludes}"
+           includeantruntime="false">
       <classpath refid="tests.classpath"/>
     </javac>
   </target>
