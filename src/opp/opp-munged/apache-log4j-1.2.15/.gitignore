@@ -9,3 +9,5 @@ tests/junit*.properties
 *.class
 
 tmp/
+target/
+

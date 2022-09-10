@@ -22,7 +22,10 @@ else
    MVN="mvn"
 fi
 
-"$MVN" install:install-file -DgroupId=com.sun.jdmk -DartifactId=jmxri -Dversion=1.2.1 \
+# Note the different groupIds here! That is intentional, for consistency with log4j's
+# original naming choices.
+
+"$MVN" install:install-file -DgroupId=com.sun.jmx -DartifactId=jmxri -Dversion=1.2.1 \
   -Dpackaging=jar -Dfile=./tmp/jmxri-1.2.1.jar
 "$MVN" install:install-file -DgroupId=com.sun.jdmk -DartifactId=jmxtools -Dversion=1.2.1 \
   -Dpackaging=jar -Dfile=./tmp/jmxtools-1.2.1.jar
