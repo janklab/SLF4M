@@ -4,6 +4,7 @@ tmp/
 target/
 tests/output/
 tests/junit*.properties
+tests/temp
 build.properties
 !tests/witness/*.log
 !tests/witness/*.log
