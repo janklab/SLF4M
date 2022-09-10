@@ -25,6 +25,8 @@
   <version>1.2.15</version>
   <properties>
     <currentVersion>1.2.15</currentVersion>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
   <description>Janklab-munged Apache Log4j 1.2, with package names modified, so it can run side-by-side with other instances.</description>
   <url>https://slf4m.janklab.net/</url>
@@ -369,7 +371,7 @@
       <url>https://repo1.maven.org/maven2</url>
     </pluginRepository>
     <pluginRepository>
-      <id>apache-maven-https</id>
+      <id>maven-apache-https</id>
       <url>https://repo.maven.apache.org/maven2</url>
     </pluginRepository>
   </pluginRepositories>
@@ -388,7 +390,7 @@
       <url>https://repo1.maven.org/maven2</url>
     </repository>
     <repository>
-      <id>apache-maven-https</id>
+      <id>maven-apache-https</id>
       <url>https://repo.maven.apache.org/maven2</url>
     </repository>
     <!-- JBoss is used javax.jms:jms. -->
@@ -438,8 +440,9 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
-        <!-- 2.7 is the last version that supports Maven 2? -->
-        <version>2.7</version>
+        <!-- 2.9 is the last version that supports Maven 2. -->
+        <!-- But versions newer than 2.1.2 throw ArrayIndexOutOfBoundsExceptions during the dependency report. -->
+        <version>2.1.2</version>
         <reportSets>
           <reportSet>
             <reports>
