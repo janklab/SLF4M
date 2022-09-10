@@ -5,9 +5,6 @@ target/
 tests/output/
 build.properties
 tests/junit*.properties
+build.properties
 
 *.class
-
-tmp/
-target/
-
