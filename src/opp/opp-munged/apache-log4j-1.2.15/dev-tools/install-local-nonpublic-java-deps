@@ -1,0 +1,28 @@
+#!/bin/bash
+#
+# install-local-nonpublic-java-deps
+#
+# Installs downloaded nonpublic (due to restrictive licensing) JAR dependencies into your local
+# Maven repo.
+#
+# To make this work, you need to download the JMX Reference Implementation from Oracle, unzip it,
+# rename the JAR files to include the version number, and place them into the "tmp/" directory under
+# the root of this munged log4j source tree.
+#
+# Oracle download page: https://www.oracle.com/java/technologies/java-archive-downloads-java-plat-downloads.html
+# Renames:
+#   * jmxri.jar -> jmxri-1.2.1.jar
+#   * jmxtools.jar -> jmxtools-1.2.1.jar
+
+set -e
+
+if which mvn2 &>/dev/null; then
+  MVN="mvn2"
+else
+   MVN="mvn"
+fi
+
+"$MVN" install:install-file -DgroupId=com.sun.jdmk -DartifactId=jmxri -Dversion=1.2.1 \
+  -Dpackaging=jar -Dfile=./tmp/jmxri-1.2.1.jar
+"$MVN" install:install-file -DgroupId=com.sun.jdmk -DartifactId=jmxtools -Dversion=1.2.1 \
+  -Dpackaging=jar -Dfile=./tmp/jmxtools-1.2.1.jar
