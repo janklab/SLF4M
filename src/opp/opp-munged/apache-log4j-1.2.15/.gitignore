@@ -1,3 +1,5 @@
 # Custom gitignore for Janklab-munged log4j repo
 
 tmp/
+target/
+
