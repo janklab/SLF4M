@@ -26,12 +26,10 @@
   <!-- The build.properties file defines the path to local jar files -->
   <property file="build.properties"/>               
 
-  <!--   if a Maven build has been attempted,
-              the Maven repository can provide all the dependencies.  -->
+  <!-- If a Maven build has been attempted, the local Maven repository can provide all the dependencies.  -->
   <property name="m2_repo" location="${user.home}/.m2/repository"/>
   <property name="javamail.jar" location="${m2_repo}/javax/mail/mail/1.4/mail-1.4.jar"/>
   <property name="jms.jar" location="${m2_repo}/javax/jms/jms/1.1/jms-1.1.jar"/>
-  <!-- Original log4j used the "com/sun/jmx" identifier for jmxri, but it's com.sun.jdmk in pom.xml and elsewhere -->
   <property name="jmx.jar" location="${m2_repo}/com/sun/jmx/jmxri/1.2.1/jmxri-1.2.1.jar"/>
   <property name="jmx-extra.jar" location="${m2_repo}/com/sun/jdmk/jmxtools/1.2.1/jmxtools-1.2.1.jar"/>
 
