@@ -7,3 +7,5 @@ build.properties
 tests/junit*.properties
 
 *.class
+
+tmp/
