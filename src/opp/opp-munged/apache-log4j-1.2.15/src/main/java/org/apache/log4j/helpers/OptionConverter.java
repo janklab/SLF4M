@@ -366,7 +366,7 @@ public class OptionConverter {
      <code>val</code> contains a start delimeter "${" which is not
      balanced by a stop delimeter "}". </p>
 
-     <p><b>Author</b> Avy Sharell</a></p>
+     <p><b>Author</b> Avy Sharell</p>
 
      @param val The string on which variable substitution is performed.
      @throws IllegalArgumentException if <code>val</code> is malformed.

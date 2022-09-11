@@ -128,7 +128,9 @@ public class LF5SwingUtils {
 
   /**
    * Work around for JTable/viewport bug.
-   * @link http://developer.java.sun.com/developer/bugParade/bugs/4205145.html
+   *
+   * @see <a href="http://developer.java.sun.com/developer/bugParade/bugs/4205145.html">
+   * Sun Java Bug 4205145</a>
    */
   protected static void repaintLater(final JComponent component) {
     SwingUtilities.invokeLater(new Runnable() {

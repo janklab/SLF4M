@@ -45,8 +45,8 @@ import java.util.Vector;
 
 
 /**
-  * <font color="#AA2222"><b>This class has been deprecated and
-  * replaced by the {@link Logger} <em>subclass</em></b></font>. It
+  * <b>This class has been deprecated and
+  * replaced by the {@link Logger} <em>subclass</em></b>. It
   * will be kept around to preserve backward compatibility until mid
   * 2003.
   * 
@@ -63,7 +63,7 @@ import java.util.Vector;
   * <p>For example, the following are all legal and will work as
   * expected.
   * 
-   <pre>
+  * <pre>
     &nbsp;&nbsp;&nbsp;// Deprecated form:
     &nbsp;&nbsp;&nbsp;Category cat = Category.getInstance("foo.bar")
    

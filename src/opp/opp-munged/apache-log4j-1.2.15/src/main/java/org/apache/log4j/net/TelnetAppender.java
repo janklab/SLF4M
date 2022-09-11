@@ -36,6 +36,7 @@ import org.apache.log4j.helpers.LogLog;
   <p>Here is a list of the available configuration options:
 
   <table border=1>
+  <caption>Configuration Options</caption>
    <tr>
    <th>Name</th>
    <th>Requirement</th>

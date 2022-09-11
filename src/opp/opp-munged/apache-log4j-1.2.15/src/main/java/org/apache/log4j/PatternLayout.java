@@ -74,8 +74,11 @@ import org.apache.log4j.helpers.PatternConverter;
 
    <p>
    <table border="1" CELLPADDING="8">
-   <th>Conversion Character</th>
-   <th>Effect</th>
+   <caption>Conversion Character Descriptions</caption>
+   <tr>
+     <th>Conversion Character</th>
+     <th>Effect</th>
+   </tr>
 
    <tr>
      <td align=center><b>c</b></td>
@@ -315,12 +318,15 @@ import org.apache.log4j.helpers.PatternConverter;
    conversion specifier.
 
    <p>
-   <TABLE BORDER=1 CELLPADDING=8>
+   <table border=1 cellpadding=8>
+   <caption>Format Modifier Descriptions</caption>
+   <tr>
    <th>Format modifier
    <th>left justify
    <th>minimum width
    <th>maximum width
    <th>comment
+   </tr>
 
    <tr>
    <td align=center>%20c</td>
@@ -370,12 +376,12 @@ import org.apache.log4j.helpers.PatternConverter;
 
    <dl>
 
-   <p><dt><b>%r [%t] %-5p %c %x - %m%n</b>
-   <p><dd>This is essentially the TTCC layout.
+   <dt><b>%r [%t] %-5p %c %x - %m%n</b>
+   <dd>This is essentially the TTCC layout.
 
-   <p><dt><b>%-6r [%15.15t] %-5p %30.30c %x - %m%n</b>
+   <dt><b>%-6r [%15.15t] %-5p %30.30c %x - %m%n</b>
 
-   <p><dd>Similar to the TTCC layout except that the relative time is
+   <dd>Similar to the TTCC layout except that the relative time is
    right padded if less than 6 digits, thread name is right padded if
    less than 15 characters and truncated if longer and the category
    name is left padded if shorter than 30 characters and truncated if
