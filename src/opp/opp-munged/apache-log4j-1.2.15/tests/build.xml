@@ -139,7 +139,7 @@
            target="${javac.target}"
            source="${javac.source}"
            debug="on"
-           excludes="${excludes}">        
+           excludes="${excludes}">
       <classpath refid="tests.classpath"/>
     </javac>
   </target>
