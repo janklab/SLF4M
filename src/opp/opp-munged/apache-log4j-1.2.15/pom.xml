@@ -154,6 +154,19 @@
               <goal>run</goal>
             </goals>
           </execution>
+          <!--   copy NTEventLogAppender.dll to target dir for packaging   -->
+          <execution>
+            <phase>prepare-package</phase>
+            <id>ntdll-to-target</id>
+            <configuration>
+              <target name="ntdll-to-target">
+                <echo message="ANTRUN: running ntdll-to-target"/>
+                <copy todir="${basedir}/target">
+                  <fileset dir="${basedir}" includes="NTEventLogAppender.dll"/>
+                </copy>
+              </target>
+            </configuration>
+          </execution>
           <!--   create tests/output prior to test run    -->
           <execution>
             <phase>test-compile</phase>
