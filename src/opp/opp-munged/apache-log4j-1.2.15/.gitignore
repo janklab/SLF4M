@@ -1,0 +1,9 @@
+# Custom gitignore for Janklab-munged log4j 1.2.15 repo
+
+tmp/
+target/
+tests/output/
+build.properties
+tests/junit*.properties
+
+*.class
