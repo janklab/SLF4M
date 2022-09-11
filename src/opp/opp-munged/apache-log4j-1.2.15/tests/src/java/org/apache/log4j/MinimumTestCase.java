@@ -95,12 +95,14 @@ public class MinimumTestCase extends TestCase {
        EXCEPTION3, EXCEPTION4, EXCEPTION5 });
 
     Transformer.transform(
-      "output/ttcc", FILTERED,
-      new Filter[] {
-        cf1, new LineNumberFilter(), 
-        new AbsoluteDateAndTimeFilter(),
-        new SunReflectFilter(), new JunitTestRunnerFilter()
-      });
+        "output/ttcc", FILTERED,
+        new Filter[] {
+            cf1,
+            new LineNumberFilter(),
+            new AbsoluteDateAndTimeFilter(),
+            new SunReflectFilter(),
+            new JunitTestRunnerFilter()
+        });
 
     assertTrue(Compare.compare(FILTERED, "witness/ttcc"));
   }
