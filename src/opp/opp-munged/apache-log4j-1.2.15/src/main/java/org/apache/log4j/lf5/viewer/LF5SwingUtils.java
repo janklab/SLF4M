@@ -128,6 +128,7 @@ public class LF5SwingUtils {
 
   /**
    * Work around for JTable/viewport bug.
+   *
    * @link http://developer.java.sun.com/developer/bugParade/bugs/4205145.html
    */
   protected static void repaintLater(final JComponent component) {

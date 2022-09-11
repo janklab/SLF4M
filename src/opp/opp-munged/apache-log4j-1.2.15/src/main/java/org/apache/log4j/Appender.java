@@ -83,6 +83,7 @@ public interface Appender {
   /**
      Set the {@link ErrorHandler} for this appender.
 
+     @param errorHandler The new ErrorHandler to use.
      @since 0.9.0
    */
   public

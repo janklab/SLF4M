@@ -53,6 +53,7 @@ import org.apache.log4j.spi.LoggingEvent;
    hourly, or minutely rollover schedules.
 
    <p><table border="1" cellpadding="2">
+   <caption>Date Pattern Examples</caption>
    <tr>
    <th>DatePattern</th>
    <th>Rollover schedule</th>

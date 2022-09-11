@@ -74,8 +74,11 @@ import org.apache.log4j.helpers.PatternConverter;
 
    <p>
    <table border="1" CELLPADDING="8">
-   <th>Conversion Character</th>
-   <th>Effect</th>
+   <caption>Conversion Character Descriptions</caption>
+   <tr>
+     <th>Conversion Character</th>
+     <th>Effect</th>
+   </tr>
 
    <tr>
      <td align=center><b>c</b></td>
@@ -315,12 +318,15 @@ import org.apache.log4j.helpers.PatternConverter;
    conversion specifier.
 
    <p>
-   <TABLE BORDER=1 CELLPADDING=8>
+   <table border=1 cellpadding=8>
+   <caption>Format Modifier Descriptions</caption>
+   <tr>
    <th>Format modifier
    <th>left justify
    <th>minimum width
    <th>maximum width
    <th>comment
+   </tr>
 
    <tr>
    <td align=center>%20c</td>
