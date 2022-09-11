@@ -55,10 +55,12 @@ public class WriterAppender extends AppenderSkeleton {
   protected boolean immediateFlush = true;
 
   /**
-     The encoding to use when writing.  <p>The
-     <code>encoding</code> variable is set to <code>null</null> by
+     The encoding to use when writing.
+
+     <p>The <code>encoding</code> variable is set to <code>null</code> by
      default which results in the utilization of the system's default
-     encoding.  */
+     encoding.
+   */
   protected String encoding;
 
   /**
