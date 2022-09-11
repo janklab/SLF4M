@@ -45,48 +45,48 @@ public class SyslogAppender extends AppenderSkeleton {
   // I hope nobody at Berkley gets offended.
 
   /** Kernel messages */
-  final static public int LOG_KERN     = 0;
+  public static final int LOG_KERN     = 0;
   /** Random user-level messages */
-  final static public int LOG_USER     = 1<<3;
+  public static final int LOG_USER     = 1<<3;
   /** Mail system */
-  final static public int LOG_MAIL     = 2<<3;
+  public static final int LOG_MAIL     = 2<<3;
   /** System daemons */
-  final static public int LOG_DAEMON   = 3<<3;
+  public static final int LOG_DAEMON   = 3<<3;
   /** security/authorization messages */
-  final static public int LOG_AUTH     = 4<<3;
+  public static final int LOG_AUTH     = 4<<3;
   /** messages generated internally by syslogd */
-  final static public int LOG_SYSLOG   = 5<<3;
+  public static final int LOG_SYSLOG   = 5<<3;
 
   /** line printer subsystem */
-  final static public int LOG_LPR      = 6<<3;
+  public static final int LOG_LPR      = 6<<3;
   /** network news subsystem */
-  final static public int LOG_NEWS     = 7<<3;
+  public static final int LOG_NEWS     = 7<<3;
   /** UUCP subsystem */
-  final static public int LOG_UUCP     = 8<<3;
+  public static final int LOG_UUCP     = 8<<3;
   /** clock daemon */
-  final static public int LOG_CRON     = 9<<3;
+  public static final int LOG_CRON     = 9<<3;
   /** security/authorization  messages (private) */
-  final static public int LOG_AUTHPRIV = 10<<3;
+  public static final int LOG_AUTHPRIV = 10<<3;
   /** ftp daemon */
-  final static public int LOG_FTP      = 11<<3;
+  public static final int LOG_FTP      = 11<<3;
 
   // other codes through 15 reserved for system use
   /** reserved for local use */
-  final static public int LOG_LOCAL0 = 16<<3;
+  public static final int LOG_LOCAL0 = 16<<3;
   /** reserved for local use */
-  final static public int LOG_LOCAL1 = 17<<3;
+  public static final int LOG_LOCAL1 = 17<<3;
   /** reserved for local use */
-  final static public int LOG_LOCAL2 = 18<<3;
+  public static final int LOG_LOCAL2 = 18<<3;
   /** reserved for local use */
-  final static public int LOG_LOCAL3 = 19<<3;
+  public static final int LOG_LOCAL3 = 19<<3;
   /** reserved for local use */
-  final static public int LOG_LOCAL4 = 20<<3;
+  public static final int LOG_LOCAL4 = 20<<3;
   /** reserved for local use */
-  final static public int LOG_LOCAL5 = 21<<3;
+  public static final int LOG_LOCAL5 = 21<<3;
   /** reserved for local use */
-  final static public int LOG_LOCAL6 = 22<<3;
+  public static final int LOG_LOCAL6 = 22<<3;
   /** reserved for local use*/
-  final static public int LOG_LOCAL7 = 23<<3;
+  public static final int LOG_LOCAL7 = 23<<3;
 
   protected static final int SYSLOG_HOST_OI = 0;
   protected static final int FACILITY_OI = 1;

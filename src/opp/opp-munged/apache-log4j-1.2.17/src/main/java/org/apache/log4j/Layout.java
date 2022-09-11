@@ -24,19 +24,18 @@ import org.apache.log4j.spi.LoggingEvent;
    Extend this abstract class to create your own log layout format.
    
    @author Ceki G&uuml;lc&uuml;
-
 */
-  
 public abstract class Layout implements OptionHandler {
 
   // Note that the line.separator property can be looked up even by
   // applets.
-  public final static String LINE_SEP = System.getProperty("line.separator");
-  public final static int LINE_SEP_LEN  = LINE_SEP.length();
+  public static final String LINE_SEP = System.getProperty("line.separator");
+  public static final int LINE_SEP_LEN  = LINE_SEP.length();
 
 
   /**
      Implement this method to create your own layout format.
+     @return The formatted message.
   */
   abstract
   public
@@ -44,7 +43,9 @@ public abstract class Layout implements OptionHandler {
 
   /**
      Returns the content type output by this layout. The base class
-     returns "text/plain". 
+     returns "text/plain".
+     
+     @return The content type (as a MIME type specifier?).
   */
   public
   String getContentType() {
@@ -53,7 +54,10 @@ public abstract class Layout implements OptionHandler {
 
   /**
      Returns the header for the layout format. The base class returns
-     <code>null</code>.  */
+     <code>null</code>.
+
+     @return The layout format header, or null.
+     */
   public
   String getHeader() {
     return null;
@@ -61,13 +65,14 @@ public abstract class Layout implements OptionHandler {
 
   /**
      Returns the footer for the layout format. The base class returns
-     <code>null</code>.  */
+     <code>null</code>.
+
+     @return The layout format footer, or null.
+     */
   public
   String getFooter() {
     return null;
   }
-
-
 
   /**
      If the layout handles the throwable object contained within
@@ -81,7 +86,9 @@ public abstract class Layout implements OptionHandler {
      PatternLayout} all return <code>true</code>. The {@link
      org.apache.log4j.xml.XMLLayout} returns <code>false</code>.
 
-     @since 0.8.4 */
+     @return Whether this ignores throwables.
+     @since 0.8.4
+     */
   abstract
   public
   boolean ignoresThrowable();

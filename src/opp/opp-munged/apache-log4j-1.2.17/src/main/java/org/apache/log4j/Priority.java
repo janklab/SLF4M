@@ -23,46 +23,47 @@ package org.apache.log4j;
    <font color="#AA4444">Refrain from using this class directly, use
    the {@link Level} class instead</font>.
 
-   @author Ceki G&uuml;lc&uuml; */
+   @author Ceki G&uuml;lc&uuml;
+   */
 public class Priority {
 
   transient int level;
   transient String levelStr;
   transient int syslogEquivalent;
 
-  public final static int OFF_INT = Integer.MAX_VALUE;
-  public final static int FATAL_INT = 50000;
-  public final static int ERROR_INT = 40000;
-  public final static int WARN_INT  = 30000;
-  public final static int INFO_INT  = 20000;
-  public final static int DEBUG_INT = 10000;
-    //public final static int FINE_INT = DEBUG_INT;
-  public final static int ALL_INT = Integer.MIN_VALUE;
+  public static final int OFF_INT = Integer.MAX_VALUE;
+  public static final int FATAL_INT = 50000;
+  public static final int ERROR_INT = 40000;
+  public static final int WARN_INT  = 30000;
+  public static final int INFO_INT  = 20000;
+  public static final int DEBUG_INT = 10000;
+    //public static final int FINE_INT = DEBUG_INT;
+  public static final int ALL_INT = Integer.MIN_VALUE;
 
   /**
    * @deprecated Use {@link Level#FATAL} instead.
    */
-  final static public Priority FATAL = new Level(FATAL_INT, "FATAL", 0);
+  public static final Priority FATAL = new Level(FATAL_INT, "FATAL", 0);
 
   /**
    * @deprecated Use {@link Level#ERROR} instead.
    */
-  final static public Priority ERROR = new Level(ERROR_INT, "ERROR", 3);
+  public static final Priority ERROR = new Level(ERROR_INT, "ERROR", 3);
 
   /**
    * @deprecated Use {@link Level#WARN} instead.
    */
-  final static public Priority WARN  = new Level(WARN_INT, "WARN",  4);
+  public static final Priority WARN  = new Level(WARN_INT, "WARN",  4);
 
   /**
    * @deprecated Use {@link Level#INFO} instead.
    */
-  final static public Priority INFO  = new Level(INFO_INT, "INFO",  6);
+  public static final Priority INFO  = new Level(INFO_INT, "INFO",  6);
 
   /**
    * @deprecated Use {@link Level#DEBUG} instead.
    */
-  final static public Priority DEBUG = new Level(DEBUG_INT, "DEBUG", 7);
+  public static final Priority DEBUG = new Level(DEBUG_INT, "DEBUG", 7);
 
 
   /**
@@ -75,7 +76,10 @@ public class Priority {
   }
 
   /**
-     Instantiate a level object.
+     Instantiate a priority object.
+     @param level The numeric level of this priority.
+     @param levelStr The name of this priority.
+     @param syslogEquivalent The numeric syslog level this priority is like.
    */
   protected
   Priority(int level, String levelStr, int syslogEquivalent) {
@@ -86,6 +90,7 @@ public class Priority {
 
   /**
      Two priorities are equal if their level fields are equal.
+     @param o The other priority to compare to.
      @since 1.2
    */
   public
@@ -100,23 +105,24 @@ public class Priority {
 
   /**
      Return the syslog equivalent of this priority as an integer.
+     @return A syslog level value.
    */
   public
   final
   int getSyslogEquivalent() {
     return syslogEquivalent;
   }
-
-
    
   /**
-     Returns <code>true</code> if this level has a higher or equal
-     level than the level passed as argument, <code>false</code>
+     Returns <code>true</code> if this priority has a higher or equal
+     level than the priority passed as argument, <code>false</code>
      otherwise.  
      
      <p>You should think twice before overriding the default
      implementation of <code>isGreaterOrEqual</code> method.
 
+     @param r The priority to compare against.
+     @return A boolean.
   */
   public
   boolean isGreaterOrEqual(Priority r) {
@@ -127,6 +133,7 @@ public class Priority {
      Return all possible priorities as an array of Level objects in
      descending order.
 
+     @return A descending-ordered Priority[] array.
      @deprecated This method will be removed with no replacement.
   */
   public
@@ -136,9 +143,9 @@ public class Priority {
 			   Priority.INFO, Priority.DEBUG};
   }
 
-
   /**
      Returns the string representation of this priority.
+     @return A priority name.
    */
   final
   public
@@ -147,7 +154,8 @@ public class Priority {
   }
 
   /**
-     Returns the integer representation of this level.
+     Returns the integer representation of this priority.
+     @return An integer priority identifier.
    */
   public
   final
@@ -156,6 +164,7 @@ public class Priority {
   }
 
   /**
+   * @param sArg A name identifying a priority.
    * @deprecated Please use the {@link Level#toLevel(String)} method instead.
   */
   public
@@ -165,6 +174,7 @@ public class Priority {
   }
 
   /**
+   * @param val A numeric level identifier.
    * @deprecated Please use the {@link Level#toLevel(int)} method instead.   
    */
   public
@@ -174,6 +184,8 @@ public class Priority {
   }
 
   /**
+   * @param val A numeric level identifier.
+   * @param defaultPriority The priority to fall back to if level resolution fails.
    * @deprecated Please use the {@link Level#toLevel(int, Level)} method instead.   
   */
   public
@@ -183,6 +195,8 @@ public class Priority {
   }
 
   /**
+   * @param sArg A name identifying a priority.
+   * @param defaultPriority The priority to fall back to if name resolution fails.
    * @deprecated Please use the {@link Level#toLevel(String, Level)} method instead.   
    */
   public

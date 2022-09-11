@@ -34,15 +34,15 @@ public class LogTableColumn implements java.io.Serializable {
   private static final long serialVersionUID = -4275827753626456547L;
 
   // log4j table columns.
-  public final static LogTableColumn DATE = new LogTableColumn("Date");
-  public final static LogTableColumn THREAD = new LogTableColumn("Thread");
-  public final static LogTableColumn MESSAGE_NUM = new LogTableColumn("Message #");
-  public final static LogTableColumn LEVEL = new LogTableColumn("Level");
-  public final static LogTableColumn NDC = new LogTableColumn("NDC");
-  public final static LogTableColumn CATEGORY = new LogTableColumn("Category");
-  public final static LogTableColumn MESSAGE = new LogTableColumn("Message");
-  public final static LogTableColumn LOCATION = new LogTableColumn("Location");
-  public final static LogTableColumn THROWN = new LogTableColumn("Thrown");
+  public static final LogTableColumn DATE = new LogTableColumn("Date");
+  public static final LogTableColumn THREAD = new LogTableColumn("Thread");
+  public static final LogTableColumn MESSAGE_NUM = new LogTableColumn("Message #");
+  public static final LogTableColumn LEVEL = new LogTableColumn("Level");
+  public static final LogTableColumn NDC = new LogTableColumn("NDC");
+  public static final LogTableColumn CATEGORY = new LogTableColumn("Category");
+  public static final LogTableColumn MESSAGE = new LogTableColumn("Message");
+  public static final LogTableColumn LOCATION = new LogTableColumn("Location");
+  public static final LogTableColumn THROWN = new LogTableColumn("Thrown");
 
 
   //--------------------------------------------------------------------------

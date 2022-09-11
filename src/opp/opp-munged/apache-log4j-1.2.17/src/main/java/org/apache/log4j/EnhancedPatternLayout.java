@@ -40,7 +40,6 @@ import org.apache.log4j.spi.LoggingEvent;
   * is to {@link #format format} a {@link LoggingEvent} and return the results
   * in a {@link StringBuffer}. The format of the result depends on the
   * <em>conversion pattern</em>.
-  * <p>
   *
   * <p>The conversion pattern is closely related to the conversion
   * pattern of the printf function in C. A conversion pattern is
@@ -48,8 +47,7 @@ import org.apache.log4j.spi.LoggingEvent;
   * <em>conversion specifiers</em>.
   *
   * <p><i>Note that you are free to insert any literal text within the
-  * conversion pattern.</i>
-  * </p>
+  * conversion pattern.</i></p>
 
    <p>Each conversion specifier starts with a percent sign (%) and is
    followed by optional <em>format modifiers</em> and a <em>conversion
@@ -66,7 +64,7 @@ import org.apache.log4j.spi.LoggingEvent;
    root.debug("Message 1");
    root.warn("Message 2");
    </pre>
-   would yield the output
+   would yield the output:
    <pre>
    DEBUG [main]: Message 1
    WARN  [main]: Message 2
@@ -79,9 +77,8 @@ import org.apache.log4j.spi.LoggingEvent;
    <b>%-5p</b> means the priority of the logging event should be left
    justified to a width of five characters.
 
-   The recognized conversion characters are
+   The recognized conversion characters are:
 
-   <p>
    <table border="1" cellpadding="8">
    <caption>Conversion Character Effects</caption>
    <tr>
@@ -522,6 +519,7 @@ public class EnhancedPatternLayout extends Layout {
       may override this to return a subclass of PatternParser which recognize
       custom conversion characters.
 
+      @return A PatternParser.
       @since 0.9.0
     */
     protected org.apache.log4j.helpers.PatternParser createPatternParser(String pattern) {
@@ -539,8 +537,9 @@ public class EnhancedPatternLayout extends Layout {
 
 
   /**
-   *  Formats a logging event to a writer.
+   * Formats a logging event to a writer.
    * @param event logging event to be formatted.
+   * @return The formatted log message string.
   */
   public String format(final LoggingEvent event) {
       StringBuffer buf = new StringBuffer();

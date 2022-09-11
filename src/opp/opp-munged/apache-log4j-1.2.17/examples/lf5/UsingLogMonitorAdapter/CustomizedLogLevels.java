@@ -37,11 +37,11 @@ public class CustomizedLogLevels {
     //--------------------------------------------------------------------------
     //   Constants:
     //--------------------------------------------------------------------------
-    public final static LogLevel LEVEL_ONE = new LogLevel("LEVEL 1", 1);
-    public final static LogLevel LEVEL_TWO = new LogLevel("LEVEL 2", 2);
-    public final static LogLevel LEVEL_THREE = new LogLevel("LEVEL 3", 3);
-    public final static LogLevel LEVEL_FOUR = new LogLevel("LEVEL 4", 4);
-    public final static LogLevel DEFAULT = new LogLevel("DEFAULT", 0);
+    public static final LogLevel LEVEL_ONE = new LogLevel("LEVEL 1", 1);
+    public static final LogLevel LEVEL_TWO = new LogLevel("LEVEL 2", 2);
+    public static final LogLevel LEVEL_THREE = new LogLevel("LEVEL 3", 3);
+    public static final LogLevel LEVEL_FOUR = new LogLevel("LEVEL 4", 4);
+    public static final LogLevel DEFAULT = new LogLevel("DEFAULT", 0);
 
     //--------------------------------------------------------------------------
     //   Protected Variables:

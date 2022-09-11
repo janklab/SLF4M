@@ -86,6 +86,10 @@ public class FileAppender extends WriterAppender {
     <p>If the <code>bufferedIO</code> parameter is <code>true</code>,
     then buffered IO will be used to write to the output file.
 
+    @param layout The layout to use.
+    @param filename The name of the file to append to.
+    @param append Whether to append (???).
+    @param bufferedIO Whether to use buffered IO.
   */
   public
   FileAppender(Layout layout, String filename, boolean append, boolean bufferedIO,
@@ -102,6 +106,12 @@ public class FileAppender extends WriterAppender {
     <p>If the <code>append</code> parameter is true, the file will be
     appended to. Otherwise, the file designated by
     <code>filename</code> will be truncated before being opened.
+
+    BufferedIO will be false when using this constructor.
+
+    @param layout The layout to use.
+    @param filename The name of the file to append to.
+    @param append Whether to append (???).
   */
   public
   FileAppender(Layout layout, String filename, boolean append)
@@ -115,7 +125,11 @@ public class FileAppender extends WriterAppender {
     <code>filename</code>. The opened filename will become the output
     destination for this appender.
 
-    <p>The file will be appended to.  */
+    <p>The file will be appended to.
+    
+    @param layout The layout to use.
+    @param filename The name of the file to append to.    
+    */
   public
   FileAppender(Layout layout, String filename) throws IOException {
     this(layout, filename, true);
@@ -129,7 +143,10 @@ public class FileAppender extends WriterAppender {
      "System.out" or "System.err" are no longer honored.</b></font>
 
      <p>Note: Actual opening of the file is made when {@link
-     #activateOptions} is called, not when the options are set.  */
+     #activateOptions} is called, not when the options are set.
+     
+     @param file The new file's name.
+     */
   public void setFile(String file) {
     // Trim spaces from both ends. The users probably does not want
     // trailing spaces in file names.
@@ -139,6 +156,8 @@ public class FileAppender extends WriterAppender {
 
   /**
       Returns the value of the <b>Append</b> option.
+
+      @return The current Append setting.
    */
   public
   boolean getAppend() {
@@ -146,7 +165,9 @@ public class FileAppender extends WriterAppender {
   }
 
 
-  /** Returns the value of the <b>File</b> option. */
+  /** Returns the value of the <b>File</b> option.
+   * @return The current File setting.
+   */
   public
   String getFile() {
     return fileName;
@@ -198,9 +219,10 @@ public class FileAppender extends WriterAppender {
   /**
      Get the value of the <b>BufferedIO</b> option.
 
-     <p>BufferedIO will significatnly increase performance on heavily
+     <p>BufferedIO will significantly increase performance on heavily
      loaded systems.
 
+     @return Whether buffered IO is active.
   */
   public
   boolean getBufferedIO() {
@@ -210,6 +232,8 @@ public class FileAppender extends WriterAppender {
 
   /**
      Get the size of the IO buffer.
+
+     @return The size of the IO buffer as an int (in bytes?).
   */
   public
   int getBufferSize() {
@@ -227,6 +251,8 @@ public class FileAppender extends WriterAppender {
 
      <p>Note: Actual opening of the file is made when {@link
      #activateOptions} is called, not when the options are set.
+
+     @param flag The new Append value to use.
    */
   public
   void setAppend(boolean flag) {
@@ -242,6 +268,7 @@ public class FileAppender extends WriterAppender {
      BufferedIO will significatnly increase performance on heavily
      loaded systems.
 
+     @param bufferedIO The new BufferedIO value to use.
   */
   public
   void setBufferedIO(boolean bufferedIO) {
@@ -254,6 +281,7 @@ public class FileAppender extends WriterAppender {
 
   /**
      Set the size of the IO buffer.
+     @param bufferSize The new buffer size to use.
   */
   public
   void setBufferSize(int bufferSize) {
@@ -272,8 +300,11 @@ public class FileAppender extends WriterAppender {
     call activateOptions.</b>
 
     @param fileName The path to the log file.
-    @param append   If true will append to fileName. Otherwise will
-        truncate fileName.  */
+    @param append If true will append to fileName. Otherwise will
+        truncate fileName.
+    @param bufferedIO Whether to use buffered IO.
+    @param bufferSize The size of the buffer to use.
+        */
   public
   synchronized
   void setFile(String fileName, boolean append, boolean bufferedIO, int bufferSize)
@@ -328,6 +359,8 @@ public class FileAppender extends WriterAppender {
      Sets the quiet writer being used.
 
      This method is overriden by {@link RollingFileAppender}.
+
+     @param writer The new quiet writer to use.
    */
   protected
   void setQWForFiles(Writer writer) {
@@ -337,7 +370,9 @@ public class FileAppender extends WriterAppender {
 
   /**
      Close any previously opened file and call the parent's
-     <code>reset</code>.  */
+     <code>reset</code>.
+     
+     */
   protected
   void reset() {
     closeFile();

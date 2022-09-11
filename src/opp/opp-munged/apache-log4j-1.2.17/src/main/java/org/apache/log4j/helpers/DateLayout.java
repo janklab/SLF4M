@@ -40,13 +40,13 @@ abstract public class DateLayout extends Layout {
      this constant is <b>NULL</b>.
      
   */
-  public final static String NULL_DATE_FORMAT = "NULL";
+  public static final String NULL_DATE_FORMAT = "NULL";
 
   /**
      String constant designating relative time. Current value of
      this constant is <b>RELATIVE</b>.
    */
-  public final static String RELATIVE_TIME_DATE_FORMAT = "RELATIVE";
+  public static final String RELATIVE_TIME_DATE_FORMAT = "RELATIVE";
 
   protected FieldPosition pos = new FieldPosition(0);
 
@@ -55,14 +55,14 @@ abstract public class DateLayout extends Layout {
      This constant is not longer needed and will be removed in the
      <em>near</em> term.
   */
-  final static public String DATE_FORMAT_OPTION = "DateFormat";
+  public static final String DATE_FORMAT_OPTION = "DateFormat";
   
   /**
      @deprecated Options are now handled using the JavaBeans paradigm.
      This constant is not longer needed and will be removed in the
      <em>near</em> term.
   */
-  final static public String TIMEZONE_OPTION = "TimeZone";  
+  public static final String TIMEZONE_OPTION = "TimeZone";  
 
   private String timeZoneID;
   private String dateFormatOption;  

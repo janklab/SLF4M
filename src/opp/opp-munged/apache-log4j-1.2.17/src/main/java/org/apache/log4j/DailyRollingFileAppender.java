@@ -187,7 +187,8 @@ public class DailyRollingFileAppender extends FileAppender {
 
 
   /**
-     The default constructor does nothing. */
+   * The default constructor does nothing.
+   */
   public DailyRollingFileAppender() {
   }
 
@@ -196,6 +197,9 @@ public class DailyRollingFileAppender extends FileAppender {
     file designated by <code>filename</code>. The opened filename will
     become the ouput destination for this appender.
 
+    @param layout The layout to use.
+    @param filename The name of the file to write to.
+    @param datePattern The date pattern to use.
     */
   public DailyRollingFileAppender (Layout layout, String filename,
 				   String datePattern) throws IOException {
@@ -208,12 +212,16 @@ public class DailyRollingFileAppender extends FileAppender {
      The <b>DatePattern</b> takes a string in the same format as
      expected by {@link SimpleDateFormat}. This options determines the
      rollover schedule.
+
+     @param pattern The new date pattern to use.
    */
   public void setDatePattern(String pattern) {
     datePattern = pattern;
   }
 
-  /** Returns the value of the <b>DatePattern</b> option. */
+  /** Returns the value of the <b>DatePattern</b> option.
+   * @return The current date pattern.
+  */
   public String getDatePattern() {
     return datePattern;
   }
@@ -264,7 +272,6 @@ public class DailyRollingFileAppender extends FileAppender {
       LogLog.warn("Unknown periodicity for appender ["+name+"].");
     }
   }
-
 
   // This method computes the roll over period by looping over the
   // periods, starting with the shortest, and stopping when the r0 is

@@ -48,35 +48,35 @@ public class Level extends Priority implements Serializable {
   /**
      The <code>OFF</code> has the highest possible rank and is
      intended to turn off logging.  */
-  final static public Level OFF = new Level(OFF_INT, "OFF", 0);
+  public static final Level OFF = new Level(OFF_INT, "OFF", 0);
 
   /**
      The <code>FATAL</code> level designates very severe error
      events that will presumably lead the application to abort.
    */
-  final static public Level FATAL = new Level(FATAL_INT, "FATAL", 0);
+  public static final Level FATAL = new Level(FATAL_INT, "FATAL", 0);
 
   /**
      The <code>ERROR</code> level designates error events that
      might still allow the application to continue running.  */
-  final static public Level ERROR = new Level(ERROR_INT, "ERROR", 3);
+  public static final Level ERROR = new Level(ERROR_INT, "ERROR", 3);
 
   /**
      The <code>WARN</code> level designates potentially harmful situations.
   */
-  final static public Level WARN  = new Level(WARN_INT, "WARN",  4);
+  public static final Level WARN  = new Level(WARN_INT, "WARN",  4);
 
   /**
      The <code>INFO</code> level designates informational messages
      that highlight the progress of the application at coarse-grained
      level.  */
-  final static public Level INFO  = new Level(INFO_INT, "INFO",  6);
+  public static final Level INFO  = new Level(INFO_INT, "INFO",  6);
 
   /**
      The <code>DEBUG</code> Level designates fine-grained
      informational events that are most useful to debug an
      application.  */
-  final static public Level DEBUG = new Level(DEBUG_INT, "DEBUG", 7);
+  public static final Level DEBUG = new Level(DEBUG_INT, "DEBUG", 7);
 
   /**
     * The <code>TRACE</code> Level designates finer-grained
@@ -89,7 +89,7 @@ public class Level extends Priority implements Serializable {
   /**
      The <code>ALL</code> has the lowest possible rank and is intended to
      turn on all logging.  */
-  final static public Level ALL = new Level(ALL_INT, "ALL", 7);
+  public static final Level ALL = new Level(ALL_INT, "ALL", 7);
 
   /**
    * Serialization version id.
@@ -98,6 +98,10 @@ public class Level extends Priority implements Serializable {
 
   /**
      Instantiate a Level object.
+
+     @param level The level.
+     @param levelStr The name (or description?) of the level.
+     @param syslogEquivalent ???
    */
   protected
   Level(int level, String levelStr, int syslogEquivalent) {
@@ -108,6 +112,8 @@ public class Level extends Priority implements Serializable {
   /**
      Convert the string passed as argument to a level. If the
      conversion fails, then this method returns {@link #DEBUG}. 
+
+     @param sArg The name or description of a level (???).
   */
   public
   static
@@ -119,6 +125,7 @@ public class Level extends Priority implements Serializable {
     Convert an integer passed as argument to a level. If the
     conversion fails, then this method returns {@link #DEBUG}.
 
+    @param val A numeric level value that identifies a level.
   */
   public
   static
@@ -129,6 +136,9 @@ public class Level extends Priority implements Serializable {
   /**
     Convert an integer passed as argument to a level. If the
     conversion fails, then this method returns the specified default.
+
+    @param val A numeric level value that identifies a level.
+    @param defaultLevel The level to fall back to if conversion fails.
   */
   public
   static
@@ -149,7 +159,10 @@ public class Level extends Priority implements Serializable {
   /**
      Convert the string passed as argument to a level. If the
      conversion fails, then this method returns the value of
-     <code>defaultLevel</code>.  
+     <code>defaultLevel</code>.
+
+    @param sArg A string that identifies a level.
+    @param defaultLevel The level to fall back to if conversion fails.
   */
   public
   static
@@ -176,9 +189,10 @@ public class Level extends Priority implements Serializable {
 
     /**
      * Custom deserialization of Level.
+     * 
      * @param s serialization stream.
-     * @throws IOException if IO exception.
-     * @throws ClassNotFoundException if class not found.
+     * @throws IOException if and IO error ocrrus.
+     * @throws ClassNotFoundException if a class definition is not found.
      */
     private void readObject(final ObjectInputStream s) throws IOException, ClassNotFoundException {
       s.defaultReadObject();
@@ -191,9 +205,10 @@ public class Level extends Priority implements Serializable {
     }
 
     /**
-     * Serialize level.
+     * Custom serialization of Level.
+     * 
      * @param s serialization stream.
-     * @throws IOException if exception during serialization.
+     * @throws IOException if an IO error occurs during serialization.
      */
     private void writeObject(final ObjectOutputStream s) throws IOException {
         s.defaultWriteObject();
@@ -205,8 +220,9 @@ public class Level extends Priority implements Serializable {
     /**
      * Resolved deserialized level to one of the stock instances.
      * May be overriden in classes derived from Level.
+     * 
      * @return resolved object.
-     * @throws ObjectStreamException if exception during resolution.
+     * @throws ObjectStreamException if an error occurs during resolution.
      */
     private Object readResolve() throws ObjectStreamException {
         //
