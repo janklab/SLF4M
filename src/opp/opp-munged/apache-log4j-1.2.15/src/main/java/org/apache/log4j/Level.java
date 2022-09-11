@@ -80,7 +80,7 @@ public class Level extends Priority implements Serializable {
 
   /**
     * The <code>TRACE</code> Level designates finer-grained
-    * informational events than the <code>DEBUG</code level.
+    * informational events than the <code>DEBUG</code> level.
    *  @since 1.2.12
     */
   public static final Level TRACE = new Level(TRACE_INT, "TRACE", 7);
