@@ -1,0 +1,15 @@
+# Custom gitignore for Janklab-munged SLF4J 1.5.8 repo
+
+tmp/
+target/
+tests/output/
+tests/junit*.properties
+tests/temp
+!tests/witness/*.log
+!tests/witness/*.log
+!tests/resources/**/*.log
+!examples/**/*.log
+
+*.class
+
+.vscode/
