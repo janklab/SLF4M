@@ -119,6 +119,7 @@ public class RendererMap {
      added to the map.
 
      <p><table border="1">
+     <caption>Renderer Behavior</caption>
      <tr><th>Added renderers</th><th>Value returned by <code>get(A2.class)</code></th>
 
      <tr><td><code>A0Renderer</code>
