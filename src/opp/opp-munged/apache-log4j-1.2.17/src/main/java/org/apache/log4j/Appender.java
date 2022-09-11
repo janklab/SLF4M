@@ -83,6 +83,7 @@ public interface Appender {
   /**
      Set the {@link ErrorHandler} for this appender.
 
+     @param errorHandler The ErrorHandler to use.
      @since 0.9.0
    */
   public
@@ -123,14 +124,14 @@ public interface Appender {
   void setName(String name);
 
   /**
-     Configurators call this method to determine if the appender
+    Configurators call this method to determine if the appender
     requires a layout. If this method returns <code>true</code>,
     meaning that layout is required, then the configurator will
     configure an layout using the configuration information at its
     disposal.  If this method returns <code>false</code>, meaning that
     a layout is not required, then layout configuration will be
     skipped even if there is available layout configuration
-    information at the disposal of the configurator..
+    information at the disposal of the configurator.
 
      <p>In the rather exceptional case, where the appender
      implementation admits a layout but can also work without it, then

@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-
-
 package org.apache.log4j;
 
 import java.io.IOException;

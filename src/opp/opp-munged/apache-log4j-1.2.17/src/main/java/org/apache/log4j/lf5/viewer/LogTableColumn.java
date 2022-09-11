@@ -134,7 +134,7 @@ public class LogTableColumn implements java.io.Serializable {
   }
 
   /**
-   * @return A <code>List</code> of <code>LogTableColumn/code> objects that map
+   * @return A <code>List</code> of <code>LogTableColumn</code> objects that map
    * to log4j <code>Column</code> objects.
    */
   public static List getLogTableColumns() {

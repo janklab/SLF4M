@@ -59,7 +59,8 @@ import org.apache.log4j.spi.LoggingEvent;
    <p>Is is possible to specify monthly, weekly, half-daily, daily,
    hourly, or minutely rollover schedules.
 
-   <p><table border="1" cellpadding="2">
+   <table border="1" cellpadding="2">
+   <caption>Date Pattern Examples</caption>
    <tr>
    <th>DatePattern</th>
    <th>Rollover schedule</th>
@@ -141,7 +142,6 @@ import org.apache.log4j.spi.LoggingEvent;
    @author Ceki G&uuml;lc&uuml;*/
 public class DailyRollingFileAppender extends FileAppender {
 
-
   // The code assumes that the following constants are in a increasing
   // sequence.
   static final int TOP_OF_TROUBLE=-1;
@@ -151,7 +151,6 @@ public class DailyRollingFileAppender extends FileAppender {
   static final int TOP_OF_DAY    = 3;
   static final int TOP_OF_WEEK   = 4;
   static final int TOP_OF_MONTH  = 5;
-
 
   /**
      The date pattern. By default, the pattern is set to

@@ -118,7 +118,8 @@ public class RendererMap {
      <code>get(A2.class)</code> method depending on the renderers
      added to the map.
 
-     <p><table border="1">
+     <table border="1">
+     <caption>Renderer Effects</caption>
      <tr><th>Added renderers</th><th>Value returned by <code>get(A2.class)</code></th>
 
      <tr><td><code>A0Renderer</code>

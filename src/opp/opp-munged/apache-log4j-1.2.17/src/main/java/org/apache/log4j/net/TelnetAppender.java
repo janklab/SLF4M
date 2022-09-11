@@ -41,6 +41,7 @@ import java.util.Vector;
   <p>Here is a list of the available configuration options:
 
   <table border=1>
+   <caption>Available Configuration Options</caption>
    <tr>
    <th>Name</th>
    <th>Requirement</th>
