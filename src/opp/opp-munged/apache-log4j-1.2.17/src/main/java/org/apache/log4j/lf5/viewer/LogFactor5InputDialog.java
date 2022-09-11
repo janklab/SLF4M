@@ -85,7 +85,7 @@ public class LogFactor5InputDialog extends LogFactor5Dialog {
     addKeyListener(new KeyAdapter() {
       public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-          hide();
+          dispose();
         }
       }
     });
@@ -93,14 +93,14 @@ public class LogFactor5InputDialog extends LogFactor5Dialog {
     JButton ok = new JButton("Ok");
     ok.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        hide();
+        dispose();
       }
     });
 
     JButton cancel = new JButton("Cancel");
     cancel.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        hide();
+        dispose();
         // set the text field to blank just in case
         // a file was selected before the Cancel
         // button was pressed.

@@ -71,7 +71,7 @@ public class PropertyConfiguratorTest extends TestCase {
         FileWriter writer = new FileWriter(file);
         writer.write("log4j.rootLogger=debug");
         writer.close();
-        URL url = file.toURL();
+        URL url = file.toURI().toURL();
         PropertyConfigurator.configure(url);
         assertTrue(file.delete());
         assertFalse(file.exists());
@@ -88,7 +88,7 @@ public class PropertyConfiguratorTest extends TestCase {
         FileWriter writer = new FileWriter(file);
         writer.write("log4j.rootLogger=\\uXX41");
         writer.close();
-        URL url = file.toURL();
+        URL url = file.toURI().toURL();
         PropertyConfigurator.configure(url);
         assertTrue(file.delete());
         assertFalse(file.exists());
@@ -142,7 +142,7 @@ public class PropertyConfiguratorTest extends TestCase {
         zos.write("log4j.rootLogger=debug".getBytes());
         zos.closeEntry();
         zos.close();
-        URL url = new URL("jar:" + file.toURL() + "!/" +
+        URL url = new URL("jar:" + file.toURI().toURL() + "!/" +
                 LogManager.DEFAULT_CONFIGURATION_FILE);
         PropertyConfigurator.configure(url);
         assertTrue(file.delete());
