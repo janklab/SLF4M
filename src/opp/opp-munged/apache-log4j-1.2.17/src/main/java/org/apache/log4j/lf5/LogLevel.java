@@ -45,19 +45,19 @@ public class LogLevel implements java.io.Serializable {
   //--------------------------------------------------------------------------
 
   // log4j log levels.
-  public final static LogLevel FATAL = new LogLevel("FATAL", 0);
-  public final static LogLevel ERROR = new LogLevel("ERROR", 1);
-  public final static LogLevel WARN = new LogLevel("WARN", 2);
-  public final static LogLevel INFO = new LogLevel("INFO", 3);
-  public final static LogLevel DEBUG = new LogLevel("DEBUG", 4);
+  public static final LogLevel FATAL = new LogLevel("FATAL", 0);
+  public static final LogLevel ERROR = new LogLevel("ERROR", 1);
+  public static final LogLevel WARN = new LogLevel("WARN", 2);
+  public static final LogLevel INFO = new LogLevel("INFO", 3);
+  public static final LogLevel DEBUG = new LogLevel("DEBUG", 4);
 
   // jdk1.4 log levels NOTE: also includes INFO
-  public final static LogLevel SEVERE = new LogLevel("SEVERE", 1);
-  public final static LogLevel WARNING = new LogLevel("WARNING", 2);
-  public final static LogLevel CONFIG = new LogLevel("CONFIG", 4);
-  public final static LogLevel FINE = new LogLevel("FINE", 5);
-  public final static LogLevel FINER = new LogLevel("FINER", 6);
-  public final static LogLevel FINEST = new LogLevel("FINEST", 7);
+  public static final LogLevel SEVERE = new LogLevel("SEVERE", 1);
+  public static final LogLevel WARNING = new LogLevel("WARNING", 2);
+  public static final LogLevel CONFIG = new LogLevel("CONFIG", 4);
+  public static final LogLevel FINE = new LogLevel("FINE", 5);
+  public static final LogLevel FINER = new LogLevel("FINER", 6);
+  public static final LogLevel FINEST = new LogLevel("FINEST", 7);
 
   //--------------------------------------------------------------------------
   //   Protected Variables:

@@ -112,6 +112,7 @@ public abstract class AppenderSkeleton implements Appender, OptionHandler {
      method to perform actual logging. See also {@link #doAppend
      AppenderSkeleton.doAppend} method.
 
+     @param event The LoggingEvent to append.
      @since 0.9.0
   */
   abstract
@@ -149,6 +150,7 @@ public abstract class AppenderSkeleton implements Appender, OptionHandler {
       Return the currently set {@link ErrorHandler} for this
       Appender.  
 
+      @return The current ErrorHandler.
       @since 0.9.0 */
   public
   ErrorHandler getErrorHandler() {
@@ -159,6 +161,7 @@ public abstract class AppenderSkeleton implements Appender, OptionHandler {
   /**
      Returns the head Filter.
      
+     @return The current head Filter.
      @since 1.1
   */
   public
@@ -171,6 +174,7 @@ public abstract class AppenderSkeleton implements Appender, OptionHandler {
       Appender. The return value may be <code>null</code> if no is
       filter is set.
       
+      @return The current first Filter.
   */
   public
   final
@@ -180,6 +184,8 @@ public abstract class AppenderSkeleton implements Appender, OptionHandler {
 
   /**
      Returns the layout of this appender. The value may be null.
+
+     @return The current Layout.
   */
   public
   Layout getLayout() {
@@ -201,6 +207,7 @@ public abstract class AppenderSkeleton implements Appender, OptionHandler {
      Returns this appenders threshold level. See the {@link
      #setThreshold} method for the meaning of this option.
      
+     @return The current threshold, as a Priority.
      @since 1.1 */
   public
   Priority getThreshold() {
@@ -213,6 +220,8 @@ public abstract class AppenderSkeleton implements Appender, OptionHandler {
      threshold. If there is no threshold set, then the return value is
      always <code>true</code>.
 
+     @param priority The priority level to compare against.
+     @return A boolean.
   */
   public
   boolean isAsSevereAsThreshold(Priority priority) {
@@ -224,6 +233,7 @@ public abstract class AppenderSkeleton implements Appender, OptionHandler {
     * This method performs threshold checks and invokes filters before
     * delegating actual logging to the subclasses specific {@link
     * AppenderSkeleton#append} method.
+    @param event The LoggingEvent to append.
     * */
   public
   synchronized 
@@ -253,6 +263,8 @@ public abstract class AppenderSkeleton implements Appender, OptionHandler {
 
   /** 
       Set the {@link ErrorHandler} for this Appender.
+
+      @param eh The new ErrorHandler to use.
       @since 0.9.0
   */
   public
@@ -271,7 +283,9 @@ public abstract class AppenderSkeleton implements Appender, OptionHandler {
      Set the layout for this appender. Note that some appenders have
      their own (fixed) layouts or do not use one. For example, the
      {@link org.apache.log4j.net.SocketAppender} ignores the layout set
-     here. 
+     here.
+
+     @param layout The new Layout to use.
   */
   public
   void setLayout(Layout layout) {
@@ -281,6 +295,8 @@ public abstract class AppenderSkeleton implements Appender, OptionHandler {
   
   /**
      Set the name of this Appender.
+
+     @param name The new name to use.
    */
   public
   void setName(String name) {
@@ -296,6 +312,7 @@ public abstract class AppenderSkeleton implements Appender, OptionHandler {
      value of the <b>Threshold</b> option to a level
      string, such as "DEBUG", "INFO" and so on.
      
+     @param threshold The new threshold, as a Priority.
      @since 0.8.3 */
   public
   void setThreshold(Priority threshold) {

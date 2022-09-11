@@ -39,7 +39,7 @@ import org.apache.log4j.spi.LoggingEvent;
   the buffer is filled each log event is placed in a sql statement
   (configurable) and executed.
 
-  <b>BufferSize</b>, <b>db URL</b>, <b>User</b>, & <b>Password</b> are
+  <b>BufferSize</b>, <b>db URL</b>, <b>User</b>, &amp; <b>Password</b> are
   configurable options in the standard log4j ways.
 
   <p>The <code>setSql(String sql)</code> sets the SQL statement to be
@@ -154,11 +154,10 @@ public class JDBCAppender extends org.apache.log4j.AppenderSkeleton
    * information related to the event. As a result, the event that will be
    * ultimately logged will likely to contain the wrong location information
    * (if present in the log format).
-   * <p/>
-   * <p/>
+   *
    * Location information extraction is comparatively very slow and should be
    * avoided unless performance is not a concern.
-   * </p>
+   *
    * @since 1.2.16
    * @param flag true if location information should be extracted.
    */

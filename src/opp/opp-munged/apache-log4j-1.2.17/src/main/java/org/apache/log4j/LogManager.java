@@ -40,7 +40,7 @@ import java.io.PrintWriter;
  * instances or to operate on the current {@link
  * LoggerRepository}. When the <code>LogManager</code> class is loaded
  * into memory the default initalzation procedure is inititated. The
- * default intialization procedure</a> is described in the <a
+ * default intialization procedure is described in the <a
  * href="../../../../manual.html#defaultInit">short log4j manual</a>.
  *
  * @author Ceki G&uuml;lc&uuml; */

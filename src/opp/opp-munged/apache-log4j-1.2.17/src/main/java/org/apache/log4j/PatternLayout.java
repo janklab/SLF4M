@@ -76,10 +76,12 @@ import org.apache.log4j.helpers.PatternConverter;
 
    The recognized conversion characters are
 
-   <p>
-   <table border="1" CELLPADDING="8">
+   <table border="1" cellpadding="8">
+   <caption>Conversion Characters</caption>
+   <tr>
    <th>Conversion Character</th>
    <th>Effect</th>
+   </tr>
 
    <tr>
      <td align=center><b>c</b></td>
@@ -318,13 +320,16 @@ import org.apache.log4j.helpers.PatternConverter;
    <p>Below are various format modifier examples for the category
    conversion specifier.
 
-   <p>
-   <TABLE BORDER=1 CELLPADDING=8>
+   <table border=1 cellpadding=8>
+   <caption>Format Modifier Examples</caption>
+
+   <tr>
    <th>Format modifier
    <th>left justify
    <th>minimum width
    <th>maximum width
    <th>comment
+   </tr>
 
    <tr>
    <td align=center>%20c</td>
@@ -374,18 +379,18 @@ import org.apache.log4j.helpers.PatternConverter;
 
    <dl>
 
-   <p><dt><b>%r [%t] %-5p %c %x - %m%n</b>
-   <p><dd>This is essentially the TTCC layout.
+   <dt><b>%r [%t] %-5p %c %x - %m%n</b>
+   <dd>This is essentially the TTCC layout.
 
-   <p><dt><b>%-6r [%15.15t] %-5p %30.30c %x - %m%n</b>
+   <dt><b>%-6r [%15.15t] %-5p %30.30c %x - %m%n</b>
 
-   <p><dd>Similar to the TTCC layout except that the relative time is
+   <dd>Similar to the TTCC layout except that the relative time is
    right padded if less than 6 digits, thread name is right padded if
    less than 15 characters and truncated if longer and the category
    name is left padded if shorter than 30 characters and truncated if
    longer.
 
-  </dl>
+   </dl>
 
    <p>The above text is largely inspired from Peter A. Darnell and
    Philip E. Margolis' highly recommended book "C -- a Software
@@ -402,11 +407,11 @@ public class PatternLayout extends Layout {
   /** Default pattern string for log output. Currently set to the
       string <b>"%m%n"</b> which just prints the application supplied
       message. */
-  public final static String DEFAULT_CONVERSION_PATTERN ="%m%n";
+  public static final String DEFAULT_CONVERSION_PATTERN ="%m%n";
 
   /** A conversion pattern equivalent to the TTCCCLayout.
       Current value is <b>%r [%t] %p %c %x - %m%n</b>. */
-  public final static String TTCC_CONVERSION_PATTERN
+  public static final String TTCC_CONVERSION_PATTERN
                                              = "%r [%t] %p %c %x - %m%n";
 
 

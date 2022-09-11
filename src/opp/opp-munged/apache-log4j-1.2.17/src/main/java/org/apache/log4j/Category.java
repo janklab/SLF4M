@@ -45,8 +45,8 @@ import java.util.Vector;
 
 
 /**
-  * <font color="#AA2222"><b>This class has been deprecated and
-  * replaced by the {@link Logger} <em>subclass</em></b></font>. It
+  * <b>This class has been deprecated and
+  * replaced by the {@link Logger} <em>subclass</em></b>. It
   * will be kept around to preserve backward compatibility until mid
   * 2003.
   * 
@@ -99,7 +99,7 @@ public class Category implements AppenderAttachable {
   /**
      The name of this category.
   */
-  protected String   name;
+  protected String name;
 
   /**
      The assigned level of this category.  The
@@ -173,7 +173,7 @@ public class Category implements AppenderAttachable {
      <code>assertLog</code> because <code>assert</code> is a language
      reserved word in JDK 1.4.
 
-     @param assertion
+     @param assertion The result of the assertion condition evaluation.
      @param msg The message to print if <code>assertion</code> is
      false.
 
@@ -194,7 +194,7 @@ public class Category implements AppenderAttachable {
      hierarchy circumventing any evaluation of whether to log or not
      to log the particular log request.
 
-     @param event the event to log.  */
+     @param event The event to log.  */
   public
   void callAppenders(LoggingEvent event) {
     int writes = 0;
@@ -251,7 +251,7 @@ public class Category implements AppenderAttachable {
     stack trace. To print a stack trace use the {@link #debug(Object,
     Throwable)} form instead.
 
-    @param message the message object to log. */
+    @param message The message object to log. */
   public
   void debug(Object message) {
     if(repository.isDisabled(Level.DEBUG_INT))
@@ -269,8 +269,9 @@ public class Category implements AppenderAttachable {
 
    <p>See {@link #debug(Object)} form for more detailed information.
 
-   @param message the message object to log.
-   @param t the exception to log, including its stack trace.  */
+   @param message The message object to log.
+   @param t The exception to log, including its stack trace.
+   */
   public
   void debug(Object message, Throwable t) {
     if(repository.isDisabled(Level.DEBUG_INT))
@@ -296,7 +297,8 @@ public class Category implements AppenderAttachable {
     stack trace. To print a stack trace use the {@link #error(Object,
     Throwable)} form instead.
 
-    @param message the message object to log */
+    @param message The message object to log.
+    */
   public
   void error(Object message) {
     if(repository.isDisabled(Level.ERROR_INT))
@@ -312,8 +314,9 @@ public class Category implements AppenderAttachable {
 
    <p>See {@link #error(Object)} form for more detailed information.
 
-   @param message the message object to log.
-   @param t the exception to log, including its stack trace.  */
+   @param message The message object to log.
+   @param t The exception to log, including its stack trace.
+   */
   public
   void error(Object message, Throwable t) {
     if(repository.isDisabled(Level.ERROR_INT))
@@ -331,7 +334,10 @@ public class Category implements AppenderAttachable {
 
      @deprecated Please use {@link LogManager#exists} instead.
 
-     @since 0.8.5 */
+     @param name The name of the category to query about.
+     @return The logger for a category, or null.
+     @since 0.8.5
+     */
   public
   static
   Logger exists(String name) {
@@ -356,7 +362,8 @@ public class Category implements AppenderAttachable {
     print a stack trace use the {@link #fatal(Object, Throwable)} form
     instead.
 
-    @param message the message object to log */
+    @param message The message object to log.
+     */
   public
   void fatal(Object message) {
     if(repository.isDisabled(Level.FATAL_INT))
@@ -373,7 +380,8 @@ public class Category implements AppenderAttachable {
    <p>See {@link #fatal(Object)} for more detailed information.
 
    @param message the message object to log.
-   @param t the exception to log, including its stack trace.  */
+   @param t The exception to log, including its stack trace.
+   */
   public
   void fatal(Object message, Throwable t) {
     if(repository.isDisabled(Level.FATAL_INT))
@@ -385,7 +393,13 @@ public class Category implements AppenderAttachable {
 
   /**
      This method creates a new logging event and logs the event
-     without further checks.  */
+     without further checks.
+
+     @param fqcn A name.
+     @param level The event's level.
+     @param message The message to log.
+     @param t An exception to log with the message.
+     */
   protected
   void forcedLog(String fqcn, Priority level, Object message, Throwable t) {
     callAppenders(new LoggingEvent(fqcn, this, level, message, t));
@@ -394,6 +408,8 @@ public class Category implements AppenderAttachable {
 
   /**
      Get the additivity flag for this Category instance.
+
+     @return A boolean indicating whether additivity is on.
   */
   public
   boolean getAdditivity() {
@@ -405,9 +421,10 @@ public class Category implements AppenderAttachable {
      Enumeration}. If no appenders can be found, then a {@link NullEnumeration}
      is returned.
 
-     @return Enumeration An enumeration of the appenders in this category.  */
-  synchronized
+     @return Enumeration An enumeration of the appenders in this category.
+     */
   public
+  synchronized
   Enumeration getAllAppenders() {
     if(aai == null)
       return NullEnumeration.getInstance();
@@ -419,9 +436,12 @@ public class Category implements AppenderAttachable {
      Look for the appender named as <code>name</code>.
 
      <p>Return the appender with that name if in the list. Return
-     <code>null</code> otherwise.  */
-  synchronized
+     <code>null</code> otherwise.
+     
+     @param name The name of the appender to get.
+     */
   public
+  synchronized
   Appender getAppender(String name) {
      if(aai == null || name == null)
       return null;
@@ -436,6 +456,8 @@ public class Category implements AppenderAttachable {
 
      <p>The Category class is designed so that this method executes as
      quickly as possible.
+
+     @return The logging level.
    */
   public
   Level getEffectiveLevel() {
@@ -449,7 +471,9 @@ public class Category implements AppenderAttachable {
   /**
     *
     * @deprecated Please use the the {@link #getEffectiveLevel} method
-    * instead.  
+    * instead.
+    *
+    * @return A Priority.
     * */
   public
   Priority getChainedPriority() {
@@ -469,6 +493,8 @@ public class Category implements AppenderAttachable {
      {@link Enumeration}.
 
      @deprecated Please use {@link LogManager#getCurrentLoggers()} instead.
+
+     @return An Enumeration.
   */
   public
   static
@@ -482,6 +508,7 @@ public class Category implements AppenderAttachable {
 
      @deprecated Please use {@link LogManager#getLoggerRepository()} instead.
 
+     @return A LoggerRepository.
      @since 1.0
    */
   public
@@ -496,9 +523,10 @@ public class Category implements AppenderAttachable {
 
      @deprecated Please use {@link #getLoggerRepository} instead.
 
+     @return A LoggerRepository.
      @since 1.1 */
   public
-  LoggerRepository  getHierarchy() {
+  LoggerRepository getHierarchy() {
     return repository;
   }
 
@@ -506,15 +534,18 @@ public class Category implements AppenderAttachable {
      Return the the {@link LoggerRepository} where this
      <code>Category</code> is attached.
 
+     @return A LoggerRepository.
      @since 1.2 */
   public
-  LoggerRepository  getLoggerRepository() {
+  LoggerRepository getLoggerRepository() {
     return repository;
   }
 
 
  /**
   * @deprecated Make sure to use {@link Logger#getLogger(String)} instead.
+  * @param name Name of the requested logger, maybe?
+  * @return A Category.
   */
   public
   static
@@ -524,6 +555,8 @@ public class Category implements AppenderAttachable {
 
  /**
   * @deprecated Please make sure to use {@link Logger#getLogger(Class)} instead.
+  * @param clazz The class to get an instance for.
+  * @return A Category.
   */ 
   public
   static
@@ -533,7 +566,9 @@ public class Category implements AppenderAttachable {
 
 
   /**
-     Return the category name.  */
+     Return the category name.
+     @return The name as a String.
+     */
   public
   final
   String getName() {
@@ -547,10 +582,11 @@ public class Category implements AppenderAttachable {
 
      <p>The root category will return <code>null</code>.
 
+     @return A Category.
      @since 1.2
   */
-  final
   public
+  final
   Category getParent() {
     return this.parent;
   }
@@ -561,27 +597,29 @@ public class Category implements AppenderAttachable {
 
      @return Level - the assigned Level, can be <code>null</code>.
   */
-  final
   public
+  final
   Level getLevel() {
     return this.level;
   }
 
   /**
      @deprecated Please use {@link #getLevel} instead.
+     @return A Level.
   */
-  final
   public
+  final
   Level getPriority() {
     return this.level;
   }
 
 
   /**
-   *  @deprecated Please use {@link Logger#getRootLogger()} instead.
+   * @deprecated Please use {@link Logger#getRootLogger()} instead.
+   * @return A Category.
    */
-  final
   public
+  final
   static
   Category getRoot() {
     return LogManager.getRootLogger();
@@ -597,6 +635,7 @@ public class Category implements AppenderAttachable {
      priorities are searched. In case there is no bundle in the
      hierarchy then <code>null</code> is returned.
 
+     @return A ResourceBundle.
      @since 0.9.0 */
   public
   ResourceBundle getResourceBundle() {
@@ -615,6 +654,9 @@ public class Category implements AppenderAttachable {
 
      <p>If the resource cannot be found, then an {@link #error error}
      message will be logged complaining about the missing resource.
+
+     @param key The key of the resource bundle to get.
+     @return A resource bundle string.
   */
   protected
   String getResourceBundleString(String key) {
@@ -684,7 +726,9 @@ public class Category implements AppenderAttachable {
   }
 
   /**
-     Is the appender passed as parameter attached to this category?
+     Is the given appender attached to this category?
+
+     @return A boolean, true if the given appender is attached.
    */
   public
   boolean isAttached(Appender appender) {
@@ -742,6 +786,7 @@ public class Category implements AppenderAttachable {
 
      See also {@link #isDebugEnabled}.
 
+     @param level The category to check for.
      @return boolean True if this category is enabled for <code>level</code>.
   */
   public
@@ -773,6 +818,10 @@ public class Category implements AppenderAttachable {
 
      @see #setResourceBundle
 
+     @param priority A Priority.
+     @param key A key as a string.
+     @param t A Throwable.
+
      @since 0.8.4 */
   public
   void l7dlog(Priority priority, String key, Throwable t) {
@@ -789,12 +838,18 @@ public class Category implements AppenderAttachable {
       forcedLog(FQCN, priority, msg, t);
     }
   }
+
   /**
      Log a localized and parameterized message. First, the user
      supplied <code>key</code> is searched in the resource
      bundle. Next, the resulting pattern is formatted using
      {@link java.text.MessageFormat#format(String,Object[])} method with the
      user supplied object array <code>params</code>.
+
+     @param priority A Priority.
+     @param key A key as a string.
+     @param params Extra parameters to be interpolated into the message.
+     @param t A Throwable.
 
      @since 0.8.4
   */
@@ -816,6 +871,11 @@ public class Category implements AppenderAttachable {
 
   /**
      This generic form is intended to be used by wrappers.
+
+     @param priority A Priority.
+     @param message The message to log.
+     @param t A Throwable.
+
    */
   public
   void log(Priority priority, Object message, Throwable t) {
@@ -828,6 +888,9 @@ public class Category implements AppenderAttachable {
 
  /**
     This generic form is intended to be used by wrappers.
+
+     @param priority A Priority.
+     @param message The message to log.
  */
   public
   void log(Priority priority, Object message) {
@@ -880,8 +943,8 @@ public class Category implements AppenderAttachable {
 
      <p>This is useful when re-reading configuration information.
   */
-  synchronized
   public
+  synchronized
   void removeAllAppenders() {
     if(aai != null) {
       Vector appenders = new Vector();
@@ -900,10 +963,11 @@ public class Category implements AppenderAttachable {
   /**
      Remove the appender passed as parameter form the list of appenders.
 
+     @param appender The appender to remove.
      @since 0.8.2
   */
-  synchronized
   public
+  synchronized
   void removeAppender(Appender appender) {
     if(appender == null || aai == null)
       return;
@@ -918,9 +982,10 @@ public class Category implements AppenderAttachable {
      Remove the appender with the name passed as parameter form the
      list of appenders.
 
+     @param name The name of the appender to remove.
      @since 0.8.2 */
-  synchronized
   public
+  synchronized
   void removeAppender(String name) {
     if(name == null || aai == null) return;
     Appender appender = aai.getAppender(name);
@@ -932,6 +997,7 @@ public class Category implements AppenderAttachable {
 
   /**
      Set the additivity flag for this Category instance.
+     @param additive The new additivity value.
      @since 0.8.1
    */
   public
@@ -941,7 +1007,9 @@ public class Category implements AppenderAttachable {
 
   /**
      Only the Hiearchy class can set the hiearchy of a
-     category. Default package access is MANDATORY here.  */
+     category. Default package access is MANDATORY here.
+     @param repository The new LoggerRepository to use as the hierarchy.
+     */
   final
   void setHierarchy(LoggerRepository repository) {
     this.repository = repository;
@@ -957,7 +1025,8 @@ public class Category implements AppenderAttachable {
      <p>As in <pre> &nbsp;&nbsp;&nbsp;logger.setLevel((Level) Level.DEBUG); </pre>
 
 
-     <p>Null values are admitted.  */
+     @param level The new level to use. Null values are admitted.
+     */
   public
   void setLevel(Level level) {
     this.level = level;
@@ -970,6 +1039,7 @@ public class Category implements AppenderAttachable {
      <p>Null values are admitted.
 
      @deprecated Please use {@link #setLevel} instead.
+     @param priority The new lvel to use.
   */
   public
   void setPriority(Priority priority) {
@@ -982,6 +1052,7 @@ public class Category implements AppenderAttachable {
      methods {@link #l7dlog(Priority,String,Throwable)} and {@link
      #l7dlog(Priority,String,Object[],Throwable)}.
 
+     @param bundle The new resource bundle to use.
      @since 0.8.4
    */
   public
@@ -1033,7 +1104,8 @@ public class Category implements AppenderAttachable {
     print a stack trace use the {@link #warn(Object, Throwable)} form
     instead.  <p>
 
-    @param message the message object to log.  */
+    @param message the message object to log.
+    */
   public
   void warn(Object message) {
     if(repository.isDisabled( Level.WARN_INT))
@@ -1051,7 +1123,8 @@ public class Category implements AppenderAttachable {
    <p>See {@link #warn(Object)} for more detailed information.
 
    @param message the message object to log.
-   @param t the exception to log, including its stack trace.  */
+   @param t the exception to log, including its stack trace.
+   */
   public
   void warn(Object message, Throwable t) {
     if(repository.isDisabled(Level.WARN_INT))

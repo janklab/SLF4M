@@ -58,7 +58,8 @@ public class ConsoleAppender extends WriterAppender {
   }
 
     /**
-     *   Creates a configured appender.
+     * Creates a configured appender.
+     * 
      * @param layout layout, may not be null.
      * @param target target, either "System.err" or "System.out".
      */
@@ -71,7 +72,9 @@ public class ConsoleAppender extends WriterAppender {
   /**
    *  Sets the value of the <b>Target</b> option. Recognized values
    *  are "System.out" and "System.err". Any other value will be
-   *  ignored.  
+   *  ignored.
+   * 
+   * @param value The new target value.
    * */
   public
   void setTarget(String value) {
@@ -91,7 +94,8 @@ public class ConsoleAppender extends WriterAppender {
    * default value of the option is "System.out".
    *
    * See also {@link #setTarget}.
-   * */
+   * @return The target string value.
+   */
   public
   String getTarget() {
     return target;

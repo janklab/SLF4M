@@ -32,6 +32,8 @@ public interface Appender {
   /**
      Add a filter to the end of the filter list.
 
+     @param newFilter The Filter to add.
+
      @since 0.9.0
    */
   void addFilter(Filter newFilter);
@@ -68,14 +70,18 @@ public interface Appender {
   /**
      Log in <code>Appender</code> specific way. When appropriate,
      Loggers will call the <code>doAppend</code> method of appender
-     implementations in order to log. */
+     implementations in order to log. 
+
+     @param event The LoggingEvent to append.
+     */
   public
   void doAppend(LoggingEvent event);
 
 
   /**
      Get the name of this appender.
-     @return name, may be null.*/
+     @return name, may be null.
+     */
   public
   String getName();
 
@@ -83,6 +89,7 @@ public interface Appender {
   /**
      Set the {@link ErrorHandler} for this appender.
 
+     @param errorHandler The ErrorHandler to use.
      @since 0.9.0
    */
   public
@@ -91,6 +98,7 @@ public interface Appender {
   /**
      Returns the {@link ErrorHandler} for this appender.
 
+     @return The current error handler.
      @since 1.1
    */
   public
@@ -99,14 +107,16 @@ public interface Appender {
   /**
      Set the {@link Layout} for this appender.
 
+     @param layout The new Layout this appender should use.
      @since 0.8.1
   */
   public
   void setLayout(Layout layout);
 
   /**
-     Returns this appenders layout.
+     Returns this appender's layout.
      
+     @return The current layout.
      @since 1.1
   */
   public
@@ -117,25 +127,27 @@ public interface Appender {
      Set the name of this appender. The name is used by other
      components to identify this appender.
 
+     @param name The new name of this appender.
      @since 0.8.1
   */
   public
   void setName(String name);
 
   /**
-     Configurators call this method to determine if the appender
+    Configurators call this method to determine if the appender
     requires a layout. If this method returns <code>true</code>,
     meaning that layout is required, then the configurator will
     configure an layout using the configuration information at its
     disposal.  If this method returns <code>false</code>, meaning that
     a layout is not required, then layout configuration will be
     skipped even if there is available layout configuration
-    information at the disposal of the configurator..
+    information at the disposal of the configurator.
 
      <p>In the rather exceptional case, where the appender
      implementation admits a layout but can also work without it, then
      the appender should return <code>true</code>.
      
+     @return A boolean.
      @since 0.8.4 */
   public
   boolean requiresLayout();

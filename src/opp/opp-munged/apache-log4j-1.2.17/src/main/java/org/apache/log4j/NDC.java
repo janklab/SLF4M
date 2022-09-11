@@ -54,16 +54,16 @@ import org.apache.log4j.helpers.LogLog;
    information. To build an NDC one uses the {@link #push push}
    operation. Simply put,
 
-   <p><ul>
+   <ul>
      <li>Contexts can be nested.
 
-     <p><li>When entering a context, call <code>NDC.push</code>. As a
+     <li>When entering a context, call <code>NDC.push</code>. As a
      side effect, if there is no nested diagnostic context for the
      current thread, this method will create it.
 
-     <p><li>When leaving a context, call <code>NDC.pop</code>.
+     <li>When leaving a context, call <code>NDC.pop</code>.
 
-     <p><li><b>When exiting a thread make sure to call {@link #remove
+     <li><b>When exiting a thread make sure to call {@link #remove
      NDC.remove()}</b>.  
    </ul>
    
