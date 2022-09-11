@@ -54,7 +54,7 @@
 	</fileSets>
         <files>
         	<file>
-		   <source>target/janklab-opp-log4j-${project.version}.jar</source>
+		   <source>target/log4j-${project.version}.jar</source>
                 </file>
                 <file>
                    <source>target/NTEventLogAppender.dll</source>
