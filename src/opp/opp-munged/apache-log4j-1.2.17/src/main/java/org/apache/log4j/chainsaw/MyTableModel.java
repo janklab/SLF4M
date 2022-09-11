@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.swing.table.AbstractTableModel;
+
+import org.apache.log4j.Level;
 import org.apache.log4j.Priority;
 import org.apache.log4j.Logger;
 
@@ -139,8 +141,7 @@ class MyTableModel
     /** filter for the category **/
     private String mCategoryFilter = "";
     /** filter for the priority **/
-    private Priority mPriorityFilter = Priority.DEBUG;
-
+    private Priority mPriorityFilter = Level.DEBUG;
 
     /**
      * Creates a new <code>MyTableModel</code> instance.
@@ -151,7 +152,6 @@ class MyTableModel
         t.setDaemon(true);
         t.start();
     }
-
 
     ////////////////////////////////////////////////////////////////////////////
     // Table Methods

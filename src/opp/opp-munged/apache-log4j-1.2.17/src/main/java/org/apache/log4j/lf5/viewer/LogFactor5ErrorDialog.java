@@ -57,7 +57,7 @@ public class LogFactor5ErrorDialog extends LogFactor5Dialog {
     JButton ok = new JButton("Ok");
     ok.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        hide();
+        dispose();
       }
     });
 

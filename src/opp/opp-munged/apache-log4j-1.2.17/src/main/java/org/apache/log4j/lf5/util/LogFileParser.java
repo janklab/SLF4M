@@ -168,7 +168,6 @@ public class LogFileParser implements Runnable {
   //   Private Methods:
   //--------------------------------------------------------------------------
   private void destroyDialog() {
-    _loadDialog.hide();
     _loadDialog.dispose();
   }
 

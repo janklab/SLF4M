@@ -410,7 +410,7 @@ public class DOMTestCase extends TestCase {
         }
         zos.closeEntry();
         zos.close();
-        URL url = new URL("jar:" + file.toURL() + "!/log4j.xml");
+        URL url = new URL("jar:" + file.toURI().toURL() + "!/log4j.xml");
         DOMConfigurator.configure(url);
         assertTrue(file.delete());
         assertFalse(file.exists());
