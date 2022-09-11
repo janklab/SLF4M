@@ -52,8 +52,8 @@
   <property name="tests.source.home" value="./src/java/"/>
   <property name="excludes" value=""/>
   
-  <property name="javac.source" value="1.1"/>
-  <property name="javac.target" value="1.1"/>
+  <property name="javac.source" value="1.8"/>
+  <property name="javac.target" value="1.8"/>
 
   <path id="tests.classpath">
     <pathelement location="${log4j.jar}"/>
