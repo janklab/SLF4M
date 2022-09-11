@@ -5,6 +5,7 @@ target/
 tests/output/
 build.properties
 tests/junit*.properties
+tests/temp
 
 *.class
 *.log
@@ -14,4 +15,3 @@ tests/junit*.properties
 !examples/**/*.log
 
 .vscode/
-

@@ -15,6 +15,7 @@
  limitations under the License.
 
 -->
+
 <!--
 Usage notes:
 
@@ -24,50 +25,32 @@ i586-mingw32msvc-gcc and i586-mingw32msvc-windres on other platforms.
 
 To build NTEventLogAppender.dll using Microsoft tools, run the appropriate vcvars for the
 target platform and specify -Dntdll_target=msbuild on the mvn command line.
+-->
 
--->        
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<!--
+It looks like this project builds with Maven 3, while 1.2.15 was still on Maven 2? -apj
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>log4j</groupId>
+  <groupId>net.janklab.opp.log4j</groupId>
   <artifactId>log4j</artifactId>
   <packaging>bundle</packaging>
-  <name>Apache Log4j</name>
-  <version>1.2.17</version>
-  <description>Apache Log4j 1.2</description>
-  <url>http://logging.apache.org/log4j/1.2/</url>
+  <name>Janklab-Munged Apache Log4j</name>
+  <version>1.2.17-janklab.1</version>
+  <description>
+    Janklab-munged Apache Log4j 1.2, with package names modified, so it can run side-by-side with other instances.
+
+    THIS IS A SPECIAL-PURPOSE BUILD FOR USE ONLY WITH CERTAIN MATLAB LIBRARIES. IT IS NOT A DROP-IN REPLACEMENT
+    FOR THE REGULAR LOG4J LIBRARY. THIS IS NOT AN OFFICIAL APACHE LOG4J RELEASE. DO NOT USE THIS UNLESS YOU
+    WHY YOU WANT TO USE THIS PARTICULAR NONSTANDARD VARIANT OF LOG4J IN YOUR SOFTWARE.
+  </description>
+  <url>https://slf4m.janklab.net/</url>
   <issueManagement>
-    <system>Bugzilla</system>
-    <url>https://issues.apache.org/bugzilla/describecomponents.cgi?product=Log4j</url>
+    <system>GitHub</system>
+    <url>https://github.com/janklab/SLF4M/issues</url>
   </issueManagement>
-  <ciManagement>
-    <system>Gump</system>
-    <url>http://vmgump.apache.org/gump/public/logging-log4j-12/logging-log4j-12/index.html</url>
-  </ciManagement>
-  <inceptionYear>1999</inceptionYear>
-  <mailingLists>
-    <mailingList>
-      <name>log4j-user</name>
-      <subscribe>log4j-user-subscribe@logging.apache.org</subscribe>
-      <unsubscribe>log4j-user-unsubscribe@logging.apache.org</unsubscribe>
-      <post>log4j-user@logging.apache.org</post>
-      <archive>http://mail-archives.apache.org/mod_mbox/logging-log4j-user/</archive>
-      <otherArchives>
-        <otherArchive>http://marc.info/?l=log4j-user</otherArchive>
-        <otherArchive>http://dir.gmane.org/gmane.comp.jakarta.log4j.user</otherArchive>
-      </otherArchives>
-    </mailingList>
-    <mailingList>
-      <name>log4j-dev</name>
-      <subscribe>log4j-dev-subscribe@logging.apache.org</subscribe>
-      <unsubscribe>log4j-dev-unsubscribe@logging.apache.org</unsubscribe>
-      <post>log4j-dev@logging.apache.org</post>
-      <archive>http://mail-archives.apache.org/mod_mbox/logging-log4j-dev/</archive>
-      <otherArchives>
-        <otherArchive>http://marc.info/?l=log4j-dev</otherArchive>
-        <otherArchive>http://dir.gmane.org/gmane.comp.jakarta.log4j.devel</otherArchive>
-      </otherArchives>
-    </mailingList>
-  </mailingLists>
+  <inceptionYear>2022</inceptionYear>
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
@@ -76,13 +59,13 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/logging/log4j/tags/v1_2_17_rc3</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/logging/log4j/tags/v1_2_17_rc3</developerConnection>
-    <url>http://svn.apache.org/viewvc/logging/log4j/tags/v1_2_17_rc3</url>
+    <connection>scm:git:https://github.com/janklab/SLF4M</connection>
+    <developerConnection>scm:git:https://github.com/janklab/SLF4M</developerConnection>
+    <url>https://github.com/janklab/SLF4M</url>
   </scm>
   <organization>
-    <name>Apache Software Foundation</name>
-    <url>http://www.apache.org</url>
+    <name>Janklab</name>
+    <url>https://janklab.net/</url>
   </organization>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -93,6 +76,7 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
+        <version>2.7</version>
         <configuration>
           <encoding>UTF-8</encoding>
         </configuration>
@@ -153,10 +137,10 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.1</version>
+        <version>2.5.1</version>
         <configuration>
-          <source>1.4</source>
-          <target>1.4</target>
+          <source>1.8</source>
+          <target>1.8</target>
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
@@ -170,9 +154,9 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
                 <name>org.apache.log4j</name>
                 <manifestEntries>
 		          <DynamicImport-Package>*</DynamicImport-Package>
-                  <Implementation-Title>log4j</Implementation-Title>
+                  <Implementation-Title>log4j-janklab-munged</Implementation-Title>
                   <Implementation-Version>${project.version}</Implementation-Version>
-                  <Implementation-Vendor>"Apache Software Foundation"</Implementation-Vendor>
+                  <Implementation-Vendor>"Janklab"</Implementation-Vendor>
                 </manifestEntries>
               </manifestSection>
             </manifestSections>
@@ -181,21 +165,21 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
       </plugin>
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.2</version>
+        <version>1.8</version>
         <executions>
           <!--   generate NTEventLogAppender.dll    -->
           <execution>
             <phase>process-classes</phase>
             <id>ntdll</id>
             <configuration>
-              <tasks>
+              <target>
                 <ant antfile="src/ntdll/build.xml" target="${ntdll_target}">
                   <property name="target.dir" location="target" />
                   <property name="classes.dir" location="target/classes" />
                   <property name="src.dir" location="src/ntdll" />
                   <property name="jni.include.dir" location="${java.home}/../include" />
                 </ant>
-              </tasks>
+              </target>
             </configuration>
             <goals>
               <goal>run</goal>
@@ -206,9 +190,9 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
             <phase>test-compile</phase>
             <id>mkdir_tests_output</id>
             <configuration>
-              <tasks>
+              <target>
                 <mkdir dir="tests/output" />
-              </tasks>
+              </target>
             </configuration>
             <goals>
               <goal>run</goal>
@@ -218,10 +202,10 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
             <phase>clean</phase>
             <id>rmdir_tests_output</id>
             <configuration>
-              <tasks>
+              <target>
                 <delete dir="tests/output" />
                 <delete dir="tests/classes" />
-              </tasks>
+              </target>
             </configuration>
             <goals>
               <goal>run</goal>
@@ -231,13 +215,13 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
             <phase>test</phase>
             <id>runAll</id>
             <configuration>
-              <tasks>
+              <target>
                  <ant dir="tests" target="runAll">
                   <property name="m2_repo" location="${m2_repo}" />
                   <property name="log4j.jar" location="target/classes" />
                   <property name="project.lib.home" location="target" />
                 </ant>
-              </tasks>
+              </target>
             </configuration>
             <goals>
               <goal>run</goal>
@@ -248,13 +232,13 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
             <phase>site</phase>
             <id>untag-site</id>
             <configuration>
-              <tasks>
+              <target>
                 <taskdef name="replaceregexp" classname="org.apache.tools.ant.taskdefs.optional.ReplaceRegExp" />
                 <replaceregexp file="target/site/source-repository.html" match="/tags/[^ &quot;'&lt;]*" replace="/trunk" flags="g" />
                 <replaceregexp match="-- Generated by (.*) on .*--" replace="-- Generated by \1 --" flags="g">
-                  <fileset dir="target/site/apidocs" includes="**/*.html" />
+                  <fileset dir="target/site/apidocs" includes="**/*.html" erroronmissingdir="false"/>
                 </replaceregexp>
-              </tasks>
+              </target>
             </configuration>
             <goals>
               <goal>run</goal>
@@ -264,9 +248,9 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
             <phase>post-site</phase>
             <id>post-site</id>
             <configuration>
-              <tasks>
+              <target>
                 <ant target="post-site" />
-              </tasks>
+              </target>
             </configuration>
             <goals>
               <goal>run</goal>
@@ -276,9 +260,9 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
             <phase>site-deploy</phase>
             <id>site-deploy</id>
             <configuration>
-              <tasks>
+              <target>
                 <ant target="site-deploy" />
-              </tasks>
+              </target>
             </configuration>
             <goals>
               <goal>run</goal>
@@ -291,105 +275,110 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
               <goal>run</goal>
             </goals>
             <configuration>
-              <tasks>
+              <target>
                 <copy todir="${project.build.directory}/apidocs/META-INF">
                   <fileset dir="${basedir}">
                     <include name="LICENSE" />
                     <include name="NOTICE" />
+                    <include name="README.txt" />
                   </fileset>
                 </copy>
-              </tasks>
+              </target>
             </configuration>
           </execution>
         </executions>
         <dependencies>
           <dependency>
-            <groupId>ant</groupId>
+            <groupId>org.apache.ant</groupId>
             <artifactId>ant-nodeps</artifactId>
-            <version>1.6.5</version>
+            <version>1.7.1</version>
           </dependency>
-          <dependency>
-            <groupId>ant-contrib</groupId>
-            <artifactId>ant-contrib</artifactId>
-            <version>1.0b2</version>
-          </dependency>
-          <dependency>
-            <groupId>ant</groupId>
-            <artifactId>ant-junit</artifactId>
-            <version>1.6.5</version>
-          </dependency>
-          <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>compile</scope>
-          </dependency>
-          <dependency>
-            <groupId>sun.jdk</groupId>
-            <artifactId>tools</artifactId>
-            <version>1.4.2</version>
-            <scope>system</scope>
-            <systemPath>${tools.jar}</systemPath>
-          </dependency>
-        </dependencies>
-      </plugin>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.2-beta-5</version>
-        <configuration>
-          <descriptors>
-            <descriptor>src/assembly/bin.xml</descriptor>
-          </descriptors>
-          <appendAssemblyId>false</appendAssemblyId>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>assembly</goal>
-            </goals>
-          </execution>
-        </executions>
-
-      </plugin>
-      <plugin>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.7</version>
-        <configuration>
-          <docfilessubdirs>true</docfilessubdirs>
-          <excludedocfilessubdir>.svn</excludedocfilessubdir>
-          <encoding>UTF-8</encoding>
-          <docEncoding>UTF-8</docEncoding>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>jar</goal>
-              <goal>javadoc</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>site</id>
-	    <phase>pre-site</phase>
-            <goals>
-              <goal>javadoc</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-release-plugin</artifactId>
-        <version>2.0-beta-9</version>
+        <!-- ant-contrib takes an ant 1.5 dependency; incompatible with us in 2022. -->
         <!--
-          Bug MRELEASE-273 has been throwing NPE during release:perform,
-          typically after deploy so this places it last.
+        <dependency>
+          <groupId>ant-contrib</groupId>
+          <artifactId>ant-contrib</artifactId>
+          <version>1.0b3</version>
+        </dependency>
         -->
+        <dependency>
+          <groupId>org.apache.ant</groupId>
+          <artifactId>ant-junit</artifactId>
+          <version>1.7.1</version>
+        </dependency>
+        <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>3.8.1</version>
+          <scope>compile</scope>
+        </dependency>
+        <dependency>
+          <groupId>sun.jdk</groupId>
+          <artifactId>tools</artifactId>
+          <version>1.8.0</version>
+          <scope>system</scope>
+          <systemPath>${tools.jar}</systemPath>
+        </dependency>
+      </dependencies>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-assembly-plugin</artifactId>
+      <version>2.4.1</version>
+      <configuration>
+        <descriptors>
+          <descriptor>src/assembly/bin.xml</descriptor>
+        </descriptors>
+        <appendAssemblyId>false</appendAssemblyId>
+      </configuration>
+      <executions>
+        <execution>
+          <goals>
+            <goal>assembly</goal>
+          </goals>
+        </execution>
+      </executions>
+
+    </plugin>
+    <plugin>
+      <artifactId>maven-javadoc-plugin</artifactId>
+      <version>2.9.1</version>
+      <configuration>
+        <docfilessubdirs>true</docfilessubdirs>
+        <excludedocfilessubdir>.svn</excludedocfilessubdir>
+        <encoding>UTF-8</encoding>
+        <docencoding>UTF-8</docencoding>
+      </configuration>
+      <executions>
+        <execution>
+          <goals>
+            <goal>jar</goal>
+            <goal>javadoc</goal>
+          </goals>
+        </execution>
+        <execution>
+          <id>site</id>
+      <phase>pre-site</phase>
+          <goals>
+            <goal>javadoc</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    <plugin>
+      <artifactId>maven-release-plugin</artifactId>
+      <version>2.2.2</version>
+      <!--
+        Bug MRELEASE-273 has been throwing NPE during release:perform,
+        typically after deploy so this places it last.
+      -->
         <configuration>
           <goals>package site-deploy assembly:attached deploy</goals>
         </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-source-plugin</artifactId>
-        <version>2.1.1</version>
+        <version>2.2.1</version>
         <executions>
           <execution>
             <goals>
@@ -408,21 +397,9 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>clirr-maven-plugin</artifactId>
-        <version>2.2.2</version>
+        <version>2.8</version>
         <configuration>
           <comparisonVersion>1.2.15</comparisonVersion>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>rat-maven-plugin</artifactId>
-        <version>1.0-alpha-3</version>
-        <configuration>
-            <excludes>
-                <exclude>tests/witness/**</exclude>
-                <exclude>tests/output/**</exclude>
-                <exclude>tests/classes/**</exclude>
-            </excludes>
         </configuration>
       </plugin>
       <plugin>
@@ -450,10 +427,9 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
       </plugin>
       <plugin>
         <artifactId>maven-site-plugin</artifactId>
-        <version>3.1</version>
+        <version>3.8.2</version>
         <configuration>
 	      <templateFile>${basedir}/src/site/maven-site.vm</templateFile>
-          <excludeDefaults>true</excludeDefaults>
           <locales>en</locales>
         </configuration>
         <executions>
@@ -474,10 +450,11 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
     </testResources>
   </build>
   <reporting>
+    <excludeDefaults>true</excludeDefaults>
     <plugins>
     <plugin>
         <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>2.4</version>
+        <version>2.8.1</version>
         <reportSets>
         <reportSet>
             <reports>
@@ -492,17 +469,19 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
         </reportSets>
     </plugin>
     <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jxr-plugin</artifactId>
-        <version>2.1</version>
+        <!-- last version that supports Maven 2 -->
+        <version>2.5</version>
     </plugin>
     <plugin>
         <artifactId>maven-changes-plugin</artifactId>
-        <version>2.7</version>
+        <version>2.9</version>
         <reportSets>
         <reportSet>
-            <reports>
+          <reports>
             <report>changes-report</report>
-            </reports>
+          </reports>
         </reportSet>
         </reportSets>
     </plugin>
@@ -517,7 +496,7 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
         </os>
       </activation>
       <properties>
-        <tools.jar>${java.home}/../Classes/classes.jar</tools.jar>
+        <tools.jar>${java.home}/../lib/tools.jar</tools.jar>
         <m2_repo>${user.home}/.m2/repository</m2_repo>
         <ntdll_target>build</ntdll_target>
       </properties>
@@ -534,12 +513,38 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
       </properties>
     </profile>
   </profiles>
+  <pluginRepositories>
+    <!--
+    Maven2 seems to default to HTTP (not HTTPS) access for the Central repo, which was turned off in
+    January 2020. I don't see a way to configure my maven2 to use a different URL for the
+    Central repo, so I'm adding https access to Maven Central as a "custom" repo here.
+    Not working yet; I see the downloads attempted, but they're still failing. -apj
+    See: https://links.sonatype.com/central/501-https-required
+    -->
+    <pluginRepository>
+      <id>maven-central-https</id>
+      <url>https://repo1.maven.org/maven2</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>maven-apache-https</id>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </pluginRepository>
+  </pluginRepositories>
   <repositories>
+    <!-- HTTPS version of Maven Central repo; see comment above. -->
     <repository>
-      <id>maven2-repository.dev.java.net</id>
-      <name>Java.net Repository for Maven</name>
-      <url>http://download.java.net/maven/2/</url>
-      <layout>default</layout>
+      <id>maven-central-https</id>
+      <url>https://repo1.maven.org/maven2</url>
+    </repository>
+    <repository>
+      <id>maven-apache-https</id>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+    <!-- JBoss is used javax.jms:jms. -->
+    <repository>
+      <id>repository.jboss.org-public</id>
+      <name>JBoss.org Maven repo</name>
+      <url>https://repository.jboss.org/nexus/content/groups/public</url>
     </repository>
   </repositories>
   <dependencies>
@@ -556,14 +561,6 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
       <type>jar</type>
       <scope>provided</scope>
     </dependency>
-    <!--  the following dependency is not needed on JDK 1.5 and higher 
-    <dependency>
-      <groupId>com.sun.jmx</groupId>
-      <artifactId>jmxri</artifactId>
-      <version>1.2.1</version>
-      <optional>true</optional>
-    </dependency>
-    -->
     <dependency>
       <groupId>oro</groupId>
       <artifactId>oro</artifactId>
@@ -579,10 +576,12 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
     <dependency>
       <groupId>org.apache.geronimo.specs</groupId>
       <artifactId>geronimo-jms_1.1_spec</artifactId>
-      <version>1.0</version>
+      <version>1.0.1</version>
       <optional>true</optional>
     </dependency>
  </dependencies>
+  <!-- TODO: Update distributionManagement for Janklab -->
+  <!--
   <distributionManagement>
     <repository>
       <id>logging.repo</id>
@@ -593,5 +592,6 @@ target platform and specify -Dntdll_target=msbuild on the mvn command line.
       <url>scp://localhost/${user.dir}/target/site-deploy</url>
     </site>
   </distributionManagement>
+  -->
 </project>
 

@@ -41,11 +41,10 @@
   <!-- prefixed with "env". -->
   <property environment="env"/>
 
-  <property name="version" value="1.2.17"/>
+  <property name="version" value="1.2.17-janklab.1"/>
 
   <!-- The base directory relative to which most targets are built -->
   <property name="base" value="."/>
-
 
   <property name="deprecation" value="on"/>
 
@@ -90,7 +89,7 @@
   <!-- The stem where most log4j source code is located. -->
   <property name="stem" value="org/apache/log4j"/>
 
-  <!-- Some targets needs a more precise stem. -->
+  <!-- Some targets need a more precise stem. -->
   <property name="BSTEM" value="${java.source.dir}/${stem}"/>
 
   <!-- Directory where release images go. -->
@@ -99,8 +98,8 @@
   <!-- Directory for temporary files. -->
   <property name="dist.tmp" value="${dist.dir}/tmp"/>
   
-  <property name="javac.source" value="1.4"/>
-  <property name="javac.target" value="1.4"/>
+  <property name="javac.source" value="1.8"/>
+  <property name="javac.target" value="1.8"/>
   
   <!--  destination for generated documentation on Apache web host  -->
   <property name="apache.javadoc_dest" value="/www/logging.apache.org/log4j/docs"/>
@@ -108,12 +107,10 @@
   <property name="apache.host" value="people.apache.org"/>
   
   <!--  destination for Maven generated documentation -->
-    <property name="svnrepo.url" value="https://svn.apache.org/repos/asf"/>
-	<property name="svnsite.url" value="${svnrepo.url}/logging/site/trunk/docs/log4j/1.2"/>
-	<available property="svn-available" file="target/site-deploy/.svn"/>
+  <property name="svnrepo.url" value="https://svn.apache.org/repos/asf"/>
+  <property name="svnsite.url" value="${svnrepo.url}/logging/site/trunk/docs/log4j/1.2"/>
+  <available property="svn-available" file="target/site-deploy/.svn"/>
   
-
-
   <!-- Construct compile classpath -->
   <path id="compile.classpath">
     <pathelement location="${build.home}/classes"/>
@@ -218,7 +215,7 @@
   <!-- ================================================================= -->
   <target name="init">
     <tstamp />
-    <property name="javac.includeAntRuntime" value="true"/>
+    <property name="javac.includeAntRuntime" value="false"/>
     <property name="javac.includeJavaRuntime" value="false"/>
     <property name="javac.fork" value="false"/>
   </target>
@@ -350,11 +347,11 @@
     <target name="build.nt" depends="log4j.jar" description="Build NTEventLogAppender.dll">
          <mkdir dir="${dist.dir}/object"/>
          <ant antfile="src/ntdll/build.xml">
-				<property name="target.dir" location="${dist.dir}/lib"/>
-				<property name="object.dir" location="${dist.dir}/object"/>
-				<property name="classes.dir" location="${javac.dest}" />
-				<property name="src.dir" location="src/ntdll" />
-                <property name="jni.include.dir" location="${java.home}/../include" />
+			<property name="target.dir" location="${dist.dir}/lib"/>
+			<property name="object.dir" location="${dist.dir}/object"/>
+			<property name="classes.dir" location="${javac.dest}" />
+			<property name="src.dir" location="src/ntdll" />
+            <property name="jni.include.dir" location="${java.home}/../include" />
 		  </ant>
     </target>
 
@@ -436,7 +433,7 @@
 			<section name="org/apache/log4j">
 				<attribute name="Implementation-Title" value="log4j"/>
 				<attribute name="Implementation-Version" value="${version}"/> 
-				<attribute name="Implementation-Vendor" value='"Apache Software Foundation"'/>
+				<attribute name="Implementation-Vendor" value='"Janklab"'/>
 			</section>
 		</manifest>         
          <metainf dir="." includes="NOTICE,LICENSE"/>
@@ -458,8 +455,8 @@
 		<manifest>
 			<section name="org/apache/log4j">
 				<attribute name="Implementation-Title" value="log4j"/>
-				<attribute name="Implementation-Version" value="${version}"/> 
-				<attribute name="Implementation-Vendor" value='"Apache Software Foundation"'/>
+				<attribute name="Implementation-Version" value="${version}"/>
+                <attribute name="Implementation-Vendor" value='"Janklab"'/>
 			</section>
 		</manifest>         
 		<metainf dir="." includes="NOTICE,LICENSE"/>
@@ -498,9 +495,9 @@
              author="true"
              use="true"
              overview="${docs.dest}/overview.html"
-             doctitle="log4j version ${version}&lt;br&gt;API Specification"
-             windowtitle="Log4j Version ${version}"
-             header='&lt;b&gt;Log4j ${version}&lt;/b&gt;&lt;!--  Licensed to the Apache Software Foundation (ASF) under one or more
+             doctitle="log4j (Janklab Munged) version ${version}&lt;br&gt;API Specification"
+             windowtitle="Log4j (Janklab Munged) Version ${version}"
+             header='&lt;b&gt;Log4j (Janklab Munged) ${version}&lt;/b&gt;&lt;!--  Licensed to the Apache Software Foundation (ASF) under one or more
  contributor license agreements.  See the NOTICE file distributed with
  this work for additional information regarding copyright ownership.
  The ASF licenses this file to You under the Apache License, Version 2.0
@@ -515,10 +512,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 --&gt;'
-             bottom="Copyright 2000-2007 Apache Software Foundation.">
+             bottom="Copyright 2000-2007 Apache Software Foundation 2022 Andrew Janke.">
 
-      <link href="http://java.sun.com/j2se/1.3/docs/api/"/>
-      <link href="http://java.sun.com/j2ee/sdk_1.3/techdocs/api/"/>
+      <link href="https://www.oracle.com/java/technologies/java-archive-13docs-downloads.html"/>
       <classpath refid="compile.classpath"/>
     </javadoc>
 
@@ -756,7 +752,6 @@
 	</target>
 
 	<target name="post-site" depends="checkout-site, update-site"/>
-	
 
         <target name="mime=html">
             <exec executable="svn">
@@ -775,8 +770,7 @@
                 <arg value="${src.css}"/>
             </exec>
         </target>
-	
-	
+
 	<target name="site-deploy">
 		<!-- Add any new files (and generate innocuous warnings for the existing content)  -->
                 <delete file="target/site-deploy/svn-commit.tmp~"/>
