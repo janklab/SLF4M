@@ -246,11 +246,14 @@
             <artifactId>ant-nodeps</artifactId>
             <version>1.7.1</version>
           </dependency>
+          <!-- ant-contrib takes an ant 1.5 dependency; incompatible with us in 2022. -->
+          <!--
           <dependency>
             <groupId>ant-contrib</groupId>
             <artifactId>ant-contrib</artifactId>
             <version>1.0b3</version>
           </dependency>
+          -->
           <dependency>
             <groupId>org.apache.ant</groupId>
             <artifactId>ant-junit</artifactId>
