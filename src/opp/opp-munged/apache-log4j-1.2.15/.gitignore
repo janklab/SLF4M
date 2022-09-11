@@ -4,5 +4,6 @@ tmp/
 target/
 tests/output/
 build.properties
+tests/junit*.properties
 
 *.class
