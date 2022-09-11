@@ -21,7 +21,7 @@ package org.apache.log4j.lf5;
  * to one the LogLevel types, but the string does not have the appropriate
  * format.
  *
- * @author Michael J. Sikorsky<
+ * @author Michael J. Sikorsky
  * @author Robert Shaw
  */
 

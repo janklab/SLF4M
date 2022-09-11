@@ -40,7 +40,7 @@ import java.sql.SQLException;
   the buffer is filled each log event is placed in a sql statement
   (configurable) and executed.
 
-  <b>BufferSize</b>, <b>db URL</b>, <b>User</b>, & <b>Password</b> are
+  <b>BufferSize</b>, <b>db URL</b>, <b>User</b>, &amp; <b>Password</b> are
   configurable options in the standard log4j ways.
 
   <p>The <code>setSql(String sql)</code> sets the SQL statement to be
@@ -73,7 +73,7 @@ import java.sql.SQLException;
 
     </ul>
 
-    @author Kevin Steppe (<A HREF="mailto:ksteppe@pacbell.net">ksteppe@pacbell.net</A>)
+    @author Kevin Steppe (<a href="mailto:ksteppe@pacbell.net">ksteppe@pacbell.net</a>)
 
 */
 public class JDBCAppender extends org.apache.log4j.AppenderSkeleton

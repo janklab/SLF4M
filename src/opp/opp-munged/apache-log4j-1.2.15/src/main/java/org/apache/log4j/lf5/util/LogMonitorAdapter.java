@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * <p>LogMonitorAdapter facilitates the usage of the LogMonitor</p>
+ * <p>LogMonitorAdapter facilitates the usage of the LogMonitor.</p>
  *
  * @author Richard Hurst
  */
@@ -34,22 +34,19 @@ import java.util.List;
 
 public class LogMonitorAdapter {
   //--------------------------------------------------------------------------
-  //   Constants:
+  //   Constants
   //--------------------------------------------------------------------------
   public static final int LOG4J_LOG_LEVELS = 0;
   public static final int JDK14_LOG_LEVELS = 1;
-  //--------------------------------------------------------------------------
-  //   Protected Variables:
-  //--------------------------------------------------------------------------
 
   //--------------------------------------------------------------------------
-  //   Private Variables:
+  //   Private Variables
   //--------------------------------------------------------------------------
   private LogBrokerMonitor _logMonitor;
   private LogLevel _defaultLevel = null;
 
   //--------------------------------------------------------------------------
-  //   Constructors:
+  //   Constructors
   //--------------------------------------------------------------------------
   private LogMonitorAdapter(List userDefinedLevels) {
     super();
@@ -62,13 +59,14 @@ public class LogMonitorAdapter {
     _logMonitor.setFontSize(12);
     _logMonitor.show();
   }
+
   //--------------------------------------------------------------------------
-  //   Public Methods:
+  //   Public Methods
   //--------------------------------------------------------------------------
   /**
    * <p>Creates an instance of LogMonitorAdapter using the
    * log levels inticated by the parameter. Log4J and JDK1.4 both have default
-   * LogLevels which are set but these levels can be overriden.<p>
+   * LogLevels which are set but these levels can be overriden.
    *
    * @param loglevels An integer representing either Log4J or JDK1.4 logging levels
    * @return LogMonitorAdapter
@@ -90,7 +88,7 @@ public class LogMonitorAdapter {
   /**
    * <p>Creates an instance of LogMonitorAdapter using the specified LogLevels.
    * The first LogLevel in the array is used as the default LogLevel unless
-   * changed using the setDefaultLevel method.<p>
+   * changed using the setDefaultLevel method.
    *
    * @param userDefined An array of user defined LogLevel objects.
    * @return LogMonitorAdapter
@@ -105,7 +103,7 @@ public class LogMonitorAdapter {
   /**
    * <p>Creates an instance of LogMonitorAdapter using the specified LogLevels.
    * The first LogLevel in the List is used as the default LogLevel unless
-   * changed using the setDefaultLevel method.<p>
+   * changed using the setDefaultLevel method.
    *
    * @param userDefinedLevels A list of user defined LogLevel objects.
    * @return LogMonitorAdapter
@@ -115,7 +113,7 @@ public class LogMonitorAdapter {
   }
 
   /**
-   * <p>Adds a LogRecord to the LogMonitor.<p>
+   * <p>Adds a LogRecord to the LogMonitor.
    *
    * @param record The LogRecord object to be logged in the logging monitor.
    */
@@ -124,7 +122,7 @@ public class LogMonitorAdapter {
   }
 
   /**
-   * <p>Set the maximum number of records to be displayed in the monitor<p>
+   * Set the maximum number of records to be displayed in the monitor.
    *
    * @param maxNumberOfRecords
    */
@@ -134,7 +132,7 @@ public class LogMonitorAdapter {
 
   /**
    * <p>Set the default log level to be used when logging messages without
-   * specifying a LogLevel.<p>
+   * specifying a LogLevel.
    *
    * @param level
    */
@@ -143,7 +141,7 @@ public class LogMonitorAdapter {
   }
 
   /**
-   * <p>Gets the default LogLevel for the Adapter.<p>
+   * <p>Gets the default LogLevel for the Adapter.
    *
    * @return LogLevel
    */
@@ -161,7 +159,7 @@ public class LogMonitorAdapter {
   }
 
   /**
-   * <p>Gets the current Severe LogLevel <p>
+   * <p>Gets the current Severe LogLevel.
    *
    * @return LogLevel
    */
@@ -170,7 +168,7 @@ public class LogMonitorAdapter {
   }
 
   /**
-   * <p>Log a complete message to the Monitor.<p>
+   * <p>Log a complete message to the Monitor.
    *
    * @param category The category to be used
    * @param level The log level to apply to the message
@@ -197,7 +195,7 @@ public class LogMonitorAdapter {
   }
 
   /**
-   * <p>Log a message to the Monitor and use the default LogLevel.<p>
+   * <p>Log a message to the Monitor and use the default LogLevel.
    *
    * @param category The category to be used
    * @param message The message
@@ -207,19 +205,19 @@ public class LogMonitorAdapter {
   }
 
   /**
-   * <p>Log a message to the Monitor.<p>
+   * <p>Log a message to the Monitor.
    *
    * @param category The category to be used
    * @param level The log level to apply to the message
    * @param message The message
-   * @param NDC
+   * @param NDC ???
    */
   public void log(String category, LogLevel level, String message, String NDC) {
     log(category, level, message, null, NDC);
   }
 
   /**
-   * <p>Log a message to the Monitor.<p>
+   * <p>Log a message to the Monitor.
    *
    * @param category The category to be used
    * @param level The log level to apply to the message
@@ -232,7 +230,7 @@ public class LogMonitorAdapter {
   }
 
   /**
-   * <p>Log a message to the Monitor.<p>
+   * <p>Log a message to the Monitor.
    *
    * @param category The category to be used
    * @param level The log level to apply to the message
@@ -243,11 +241,12 @@ public class LogMonitorAdapter {
   }
 
   //--------------------------------------------------------------------------
-  //   Protected Methods:
+  //   Protected Methods
   //--------------------------------------------------------------------------
+
   /**
-   * @return the screen width from Toolkit.getScreenSize()
-   * if possible, otherwise returns 800
+   * @return the screen width from Toolkit.getScreenSize() if possible;
+   * otherwise returns 800 as a default fallback.
    * @see java.awt.Toolkit
    */
   protected static int getScreenWidth() {
@@ -259,8 +258,8 @@ public class LogMonitorAdapter {
   }
 
   /**
-   * @return the screen height from Toolkit.getScreenSize()
-   * if possible, otherwise returns 600
+   * @return the screen height from Toolkit.getScreenSize() if possible;
+   * otherwise returns 600 as a default fallback.
    * @see java.awt.Toolkit
    */
   protected static int getScreenHeight() {
@@ -278,12 +277,6 @@ public class LogMonitorAdapter {
   protected static int getDefaultMonitorHeight() {
     return (3 * getScreenHeight()) / 4;
   }
-  //--------------------------------------------------------------------------
-  //   Private Methods:
-  //--------------------------------------------------------------------------
 
-  //--------------------------------------------------------------------------
-  //   Nested Top-Level Classes or Interfaces
-  //--------------------------------------------------------------------------
 }
 

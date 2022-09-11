@@ -27,13 +27,17 @@ import java.util.Hashtable;
    Map class objects to an {@link ObjectRenderer}.
 
    @author Ceki G&uuml;lc&uuml;
-   @since version 1.0 */
+   @since version 1.0
+   */
 public class RendererMap {
 
   Hashtable map;
 
   static ObjectRenderer defaultRenderer = new DefaultRenderer();
 
+  /**
+   * Construct a new, empty object.
+   */
   public
   RendererMap() {
     map = new Hashtable();
@@ -41,6 +45,9 @@ public class RendererMap {
 
   /**
      Add a renderer to a hierarchy passed as parameter.
+     @param repository ???
+     @param renderedClassName ???
+     @param renderingClassName ???
   */
   static
   public
@@ -118,7 +125,8 @@ public class RendererMap {
      <code>get(A2.class)</code> method depending on the renderers
      added to the map.
 
-     <p><table border="1">
+     <table border="1">
+     <caption>Renderer Behavior</caption>
      <tr><th>Added renderers</th><th>Value returned by <code>get(A2.class)</code></th>
 
      <tr><td><code>A0Renderer</code>
@@ -141,13 +149,12 @@ public class RendererMap {
      algorithm. However, the present algorithm should be acceptable in
      the vast majority of circumstances.
 
+   @param clazz The class to get the renderer for, as a Class object.
  */
   public
   ObjectRenderer get(Class clazz) {
-    //System.out.println("\nget: "+clazz);
     ObjectRenderer r = null;
     for(Class c = clazz; c != null; c = c.getSuperclass()) {
-      //System.out.println("Searching for class: "+c);
       r = (ObjectRenderer) map.get(c);
       if(r != null) {
 	return r;
@@ -159,9 +166,14 @@ public class RendererMap {
     return defaultRenderer;
   }
 
+  /**
+   * Search for a renderer for a given class. In this context, "search"
+   * means ??? and is distinct from the get() process in that ???.
+   * 
+   * @param c The class to search for, as a Class object.
+   * @return The object renderer for the given class.
+   */
   ObjectRenderer searchInterfaces(Class c) {
-    //System.out.println("Searching interfaces of class: "+c);
-
     ObjectRenderer r = (ObjectRenderer) map.get(c);
     if(r != null) {
       return r;
@@ -177,6 +189,10 @@ public class RendererMap {
   }
 
 
+  /**
+   * Gets the default renderer.
+   * @return The default ObjectRenderer.
+   */
   public
   ObjectRenderer getDefaultRenderer() {
     return defaultRenderer;
@@ -190,6 +206,8 @@ public class RendererMap {
 
   /**
      Register an {@link ObjectRenderer} for <code>clazz</code>.
+     @param clazz The class to be rendered.
+     @param or The object renderer to use for clazz.
   */
   public
   void put(Class clazz, ObjectRenderer or) {

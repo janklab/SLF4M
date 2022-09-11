@@ -124,8 +124,8 @@ public class FileAppender extends WriterAppender {
      The <b>File</b> property takes a string value which should be the
      name of the file to append to.
 
-     <p><font color="#DD0044"><b>Note that the special values
-     "System.out" or "System.err" are no longer honored.</b></font>
+     <p><b>Note that the special values
+     "System.out" or "System.err" are no longer honored.</b>
 
      <p>Note: Actual opening of the file is made when {@link
      #activateOptions} is called, not when the options are set.  */

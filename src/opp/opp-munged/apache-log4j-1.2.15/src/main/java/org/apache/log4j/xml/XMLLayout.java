@@ -44,7 +44,7 @@ import java.util.Arrays;
   &lt;!DOCTYPE log4j:eventSet SYSTEM "log4j.dtd" [&lt;!ENTITY data SYSTEM "abc"&gt;]&gt;
  
   &lt;log4j:eventSet version="1.2" xmlns:log4j="http://jakarta.apache.org/log4j/"&gt;
- 	&nbsp;&nbsp;&data;
+ 	&nbsp;&nbsp;
   &lt;/log4j:eventSet&gt;
   </pre>
  
@@ -67,7 +67,7 @@ import java.util.Arrays;
  * */
 public class XMLLayout extends Layout {
 
-  private  final int DEFAULT_SIZE = 256;
+  private final int DEFAULT_SIZE = 256;
   private final int UPPER_LIMIT = 2048;
 
   private StringBuffer buf = new StringBuffer(DEFAULT_SIZE);

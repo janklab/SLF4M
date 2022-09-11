@@ -56,22 +56,22 @@ import org.apache.log4j.AppenderSkeleton;
   
   <ul>
   
-  <p><li>If sent to a {@link SocketNode}, logging is non-intrusive as
+  <li>If sent to a {@link SocketNode}, logging is non-intrusive as
   far as the log event is concerned. In other words, the event will be
   logged with the same time stamp, {@link org.apache.log4j.NDC},
   location info as if it were logged locally.
   
-  <p><li><code>SocketHubAppender</code> does not use a layout. It
+  <li><code>SocketHubAppender</code> does not use a layout. It
   ships a serialized {@link LoggingEvent} object to the remote side.
   
-  <p><li><code>SocketHubAppender</code> relies on the TCP
+  <li><code>SocketHubAppender</code> relies on the TCP
   protocol. Consequently, if the remote side is reachable, then log
   events will eventually arrive at remote client.
   
-  <p><li>If no remote clients are attached, the logging requests are
+  <li>If no remote clients are attached, the logging requests are
   simply dropped.
   
-  <p><li>Logging events are automatically <em>buffered</em> by the
+  <li>Logging events are automatically <em>buffered</em> by the
   native TCP implementation. This means that if the link to remote
   client is slow but still faster than the rate of (log) event
   production, the application will not be affected by the slow network
@@ -89,7 +89,7 @@ import org.apache.log4j.AppenderSkeleton;
   connections. The rate of logging will be determined by the slowest
   link.
     
-  <p><li>If the JVM hosting the <code>SocketHubAppender</code> exits
+  <li>If the JVM hosting the <code>SocketHubAppender</code> exits
   before the <code>SocketHubAppender</code> is closed either
   explicitly or subsequent to garbage collection, then there might
   be untransmitted data in the pipe which might be lost. This is a

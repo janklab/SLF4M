@@ -22,9 +22,9 @@
   <artifactId>log4j</artifactId>
   <packaging>jar</packaging>
   <name>Janklab-Munged Apache Log4j</name>
-  <version>1.2.15-janklab.1</version>
+  <version>1.2.15-janklab.1-preview</version>
   <properties>
-    <currentVersion>1.2.15-janklab.1</currentVersion>
+    <currentVersion>1.2.15-janklab.1-preview</currentVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
@@ -307,6 +307,10 @@
       </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.5</version>
+        <configuration>
+          <additionalparam>-Xdoclint:html,reference,syntax</additionalparam>
+        </configuration>
         <executions>
           <execution>
             <goals>
