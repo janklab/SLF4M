@@ -1,3 +1,5 @@
 SLF4M is dual-licensed under the Apache 2.0 and BSD 2-clause licenses. You may use whichever one you wish.
 
-See doc/LICENSE-apache.txt and doc/LICENSE-bsd.txt for the full text of the licenses.
+SLF4M contains redistributions of customized forks of third-party libraries licensed under the MIT License (for SLF4J) and the Apache 2.0 License (for Apache log4j).
+
+See docs/LICENSE-*.txt for the full text of the licenses.
