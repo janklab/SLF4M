@@ -1,0 +1,11 @@
+SLF4M-jankalog License
+============================
+
+The slf4m-jankalog project consists of multiple libraries which are licensed under various business-friendly open source licenses. Any code in slf4m-jankalog outside of those component libraries is licensed under the Apache 2.0 license.
+
+| Component Library        | License            |
+| ======================== | ================== |
+| SLF4J (Janklab-Munged)   | MIT License        |
+| log4j (Janklab-Munged)   | Apache License 2.0 |
+
+See docs/LICENSE-*.txt for the full text of the licenses.

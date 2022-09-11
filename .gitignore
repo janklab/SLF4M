@@ -1,0 +1,6 @@
+# Distribution artifacts
+dist/
+
+# Jekyll droppings
+docs/_site
+docs/Gemfile.lock
