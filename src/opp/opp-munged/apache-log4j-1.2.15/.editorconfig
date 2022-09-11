@@ -1,3 +1,5 @@
+# .editorconfig for the munged log4j code.
+#
 # EditorConfig is awesome: https://EditorConfig.org
 
 root = false
@@ -5,12 +7,12 @@ root = false
 [*]
 end_of_line = lf
 insert_final_newline = true
-
-[*.m]
 indent_style = space
 indent_size = 4
 
+[*.java]
+tab_width = 8
+
 [*.xml]
-indent_style = space
 indent_size = 2
 tab_width = 4
