@@ -2,6 +2,7 @@
 
 tmp/
 target/
+!target/site/
 tests/output/
 tests/junit*.properties
 tests/temp

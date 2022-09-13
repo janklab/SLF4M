@@ -3,16 +3,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<parent>
-		<groupId>org.slf4j</groupId>
+		<groupId>net.janklab.shmorg.slf4j</groupId>
 		<artifactId>slf4j-parent</artifactId>
-    <version>1.5.8</version>
+    <version>1.5.8-janklab.1-preview</version>
 	</parent>
 	
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.slf4j</groupId>
+	<groupId>net.janklab.shmorg.slf4j</groupId>
 	<artifactId>slf4j-site</artifactId>
-	<version>${parent.version}</version>
+	<version>1.5.8-janklab.1-preview</version>
 	<packaging>jar</packaging>
 	<name>SLF4J Site</name>
 

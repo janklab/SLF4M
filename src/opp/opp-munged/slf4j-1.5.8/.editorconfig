@@ -19,4 +19,4 @@ tab_width = 4
 indent_size = 2
 # From looking at a couple example .xml files in the original upstream source.
 # Dunno if it was intentional. -apj
-tab_width = 2
+tab_width = 4
