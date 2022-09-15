@@ -58,6 +58,100 @@
     <name>Janklab</name>
     <url>https://janklab.net/</url>
   </organization>
+  <pluginRepositories>
+    <!--
+    Maven2 seems to default to HTTP (not HTTPS) access for the Central repo, which was turned off in
+    January 2020. I don't see a way to configure my maven2 to use a different URL for the
+    Central repo, so I'm adding https access to Maven Central as a "custom" repo here.
+    Not working yet; I see the downloads attempted, but they're still failing. -apj
+    See: https://links.sonatype.com/central/501-https-required
+    -->
+    <pluginRepository>
+      <id>central-https</id>
+      <url>https://repo1.maven.org/maven2/</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>maven-apache-https</id>
+      <url>https://repo.maven.apache.org/maven2/</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>apache-releases</id>
+      <url>https://repository.apache.org/content/repositories/releases/</url>
+    </pluginRepository>
+  </pluginRepositories>
+  <repositories>
+    <!-- HTTPS version of Maven Central repo; see comment above. -->
+    <repository>
+      <id>maven-central-https</id>
+      <url>https://repo1.maven.org/maven2</url>
+    </repository>
+    <repository>
+      <id>maven-apache-https</id>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+    <!-- JBoss is used javax.jms:jms. -->
+    <repository>
+      <id>repository.jboss.org-public</id>
+      <name>JBoss.org Maven repo</name>
+      <url>https://repository.jboss.org/nexus/content/groups/public</url>
+    </repository>
+  </repositories>
+  <dependencies>
+    <dependency>
+      <groupId>javax.mail</groupId>
+      <artifactId>mail</artifactId>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.jms</groupId>
+      <artifactId>jms</artifactId>
+      <version>1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jdmk</groupId>
+      <artifactId>jmxtools</artifactId>
+      <version>1.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jmx</groupId>
+      <artifactId>jmxri</artifactId>
+      <version>1.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>oro</groupId>
+      <artifactId>oro</artifactId>
+      <version>2.0.8</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <profiles>
+    <profile>
+      <id>mac</id>
+      <activation>
+        <os>
+          <family>mac</family>
+        </os>
+      </activation>
+      <properties>
+        <tools.jar>${java.home}/../lib/tools.jar</tools.jar>
+      </properties>
+    </profile>
+    <profile>
+      <id>default</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <tools.jar>${java.home}/../lib/tools.jar</tools.jar>
+      </properties>
+    </profile>
+  </profiles>
   <build>
     <plugins>
       <!-- Explicitly include groupIds bc IntelliJ needs that. -->
@@ -380,100 +474,6 @@
       </testResource>
     </testResources>
   </build>
-  <profiles>
-    <profile>
-      <id>mac</id>
-      <activation>
-        <os>
-          <family>mac</family>
-        </os>
-      </activation>
-      <properties>
-        <tools.jar>${java.home}/../lib/tools.jar</tools.jar>
-      </properties>
-    </profile>
-    <profile>
-      <id>default</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <tools.jar>${java.home}/../lib/tools.jar</tools.jar>
-      </properties>
-    </profile>
-  </profiles>
-  <pluginRepositories>
-    <!--
-    Maven2 seems to default to HTTP (not HTTPS) access for the Central repo, which was turned off in
-    January 2020. I don't see a way to configure my maven2 to use a different URL for the
-    Central repo, so I'm adding https access to Maven Central as a "custom" repo here.
-    Not working yet; I see the downloads attempted, but they're still failing. -apj
-    See: https://links.sonatype.com/central/501-https-required
-    -->
-    <pluginRepository>
-      <id>central-https</id>
-      <url>https://repo1.maven.org/maven2/</url>
-    </pluginRepository>
-    <pluginRepository>
-      <id>maven-apache-https</id>
-      <url>https://repo.maven.apache.org/maven2/</url>
-    </pluginRepository>
-    <pluginRepository>
-      <id>apache-releases</id>
-      <url>https://repository.apache.org/content/repositories/releases/</url>
-    </pluginRepository>
-  </pluginRepositories>
-  <repositories>
-    <!-- HTTPS version of Maven Central repo; see comment above. -->
-    <repository>
-      <id>maven-central-https</id>
-      <url>https://repo1.maven.org/maven2</url>
-    </repository>
-    <repository>
-      <id>maven-apache-https</id>
-      <url>https://repo.maven.apache.org/maven2</url>
-    </repository>
-    <!-- JBoss is used javax.jms:jms. -->
-    <repository>
-      <id>repository.jboss.org-public</id>
-      <name>JBoss.org Maven repo</name>
-      <url>https://repository.jboss.org/nexus/content/groups/public</url>
-    </repository>
-  </repositories>
-  <dependencies>
-    <dependency>
-      <groupId>javax.mail</groupId>
-      <artifactId>mail</artifactId>
-      <version>1.4</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.jms</groupId>
-      <artifactId>jms</artifactId>
-      <version>1.1</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.jdmk</groupId>
-      <artifactId>jmxtools</artifactId>
-      <version>1.2.1</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.jmx</groupId>
-      <artifactId>jmxri</artifactId>
-      <version>1.2.1</version>
-    </dependency>
-    <dependency>
-      <groupId>oro</groupId>
-      <artifactId>oro</artifactId>
-      <version>2.0.8</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.2</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
   <reporting>
     <excludeDefaults>true</excludeDefaults>
     <plugins>
