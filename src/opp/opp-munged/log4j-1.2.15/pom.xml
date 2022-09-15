@@ -431,6 +431,8 @@
           <appendAssemblyId>false</appendAssemblyId>
           <!-- avoid a ton of warnings about long file names -->
           <tarLongFileMode>gnu</tarLongFileMode>
+          <!-- WIP: use undocumted <siteDirectory> to get <includeSiteDirectory> working without warnings. -->
+          <!-- <siteDirectory>/some/nonexistent/bogus/path</siteDirectory> -->
         </configuration>
         <executions>
           <execution>

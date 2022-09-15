@@ -61,4 +61,5 @@
                    <fileMode>0755</fileMode>
                 </file>
         </files>
+  <!-- <includeSiteDirectory>true</includeSiteDirectory> -->
 </assembly>
