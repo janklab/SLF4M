@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,7 +17,7 @@
 
 /*
  * Copyright (C) The Apache Software Foundation. All rights reserved.
-*/
+ */
 
 package com.klopotek.utils.log;
 
@@ -25,18 +25,22 @@ import java.sql.*;
 
 
 /**
-This interface has to be implemented for your own database-connection-handling and its used in class JDBCLogger.
+ * This interface has to be implemented for your own database-connection-handling and its used in class JDBCLogger.
+ *
+ * <p><b>Author : </b><A HREF="mailto:t.fenner@klopotek.de">Thomas Fenner</A></p>
+ *
+ * @since 1.0
+ */
+public interface JDBCConnectionHandler {
+  /**
+   * Get a connection
+   */
+  Connection getConnection();
 
-<p><b>Author : </b><A HREF="mailto:t.fenner@klopotek.de">Thomas Fenner</A></p>
-
-@since 1.0
-*/
-public interface JDBCConnectionHandler
-{
-	/**Get a connection*/
-	Connection getConnection();
-	/**Get a defined connection*/
-   Connection getConnection(String _url, String _username, String _password);
+  /**
+   * Get a defined connection
+   */
+  Connection getConnection(String _url, String _username, String _password);
 }
 
 

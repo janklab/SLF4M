@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -56,6 +56,7 @@ public class LF5SwingUtils {
    * the specified JScrollpane to the newly selected row. More importantly,
    * the call to repaint() delayed long enough to have the table
    * properly paint the newly selected row which may be offscre
+   *
    * @param table should belong to the specified JScrollPane
    */
   public static void selectRow(int row, JTable table, JScrollPane pane) {

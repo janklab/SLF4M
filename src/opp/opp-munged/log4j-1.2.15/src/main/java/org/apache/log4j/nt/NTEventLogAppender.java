@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,17 +25,18 @@ import org.apache.log4j.spi.LoggingEvent;
 
 
 /**
-   Append to the NT event log system.
-
-   <p><b>WARNING</b> This appender can only be installed and used on a
-   Windows system.
-
-   <p>Do not forget to place the file NTEventLogAppender.dll in a
-   directory that is on the PATH of the Windows system. Otherwise, you
-   will get a java.lang.UnsatisfiedLinkError.
-
-   @author <a href="mailto:cstaylor@pacbell.net">Chris Taylor</a>
-   @author <a href="mailto:jim_cakalic@na.biomerieux.com">Jim Cakalic</a> */
+ * Append to the NT event log system.
+ *
+ * <p><b>WARNING</b> This appender can only be installed and used on a
+ * Windows system.
+ *
+ * <p>Do not forget to place the file NTEventLogAppender.dll in a
+ * directory that is on the PATH of the Windows system. Otherwise, you
+ * will get a java.lang.UnsatisfiedLinkError.
+ *
+ * @author <a href="mailto:cstaylor@pacbell.net">Chris Taylor</a>
+ * @author <a href="mailto:jim_cakalic@na.biomerieux.com">Jim Cakalic</a>
+ */
 public class NTEventLogAppender extends AppenderSkeleton {
   private int _handle = 0;
 
@@ -81,19 +82,17 @@ public class NTEventLogAppender extends AppenderSkeleton {
     }
   }
 
-  public
-  void close() {
+  public void close() {
     // unregister ...
   }
 
-  public
-  void activateOptions() {
+  public void activateOptions() {
     if (source != null) {
       try {
-   _handle = registerEventSource(server, source);
+        _handle = registerEventSource(server, source);
       } catch (Exception e) {
-   LogLog.error("Could not register event source.", e);
-   _handle = 0;
+        LogLog.error("Could not register event source.", e);
+        _handle = 0;
       }
     }
   }
@@ -104,13 +103,13 @@ public class NTEventLogAppender extends AppenderSkeleton {
     StringBuffer sbuf = new StringBuffer();
 
     sbuf.append(layout.format(event));
-    if(layout.ignoresThrowable()) {
+    if (layout.ignoresThrowable()) {
       String[] s = event.getThrowableStrRep();
       if (s != null) {
-   int len = s.length;
-   for(int i = 0; i < len; i++) {
-     sbuf.append(s[i]);
-   }
+        int len = s.length;
+        for (int i = 0; i < len; i++) {
+          sbuf.append(s[i]);
+        }
       }
     }
     // Normalize the log message level into the supported categories
@@ -124,36 +123,35 @@ public class NTEventLogAppender extends AppenderSkeleton {
   }
 
 
-  public
-  void finalize() {
+  public void finalize() {
     deregisterEventSource(_handle);
     _handle = 0;
   }
 
   /**
-     The <b>Source</b> option which names the source of the event. The
-     current value of this constant is <b>Source</b>.
+   * The <b>Source</b> option which names the source of the event. The
+   * current value of this constant is <b>Source</b>.
    */
-  public
-  void setSource(String source) {
+  public void setSource(String source) {
     this.source = source.trim();
   }
 
-  public
-  String getSource() {
+  public String getSource() {
     return source;
   }
 
-/**
-     The <code>NTEventLogAppender</code> requires a layout. Hence,
-     this method always returns <code>true</code>. */
-  public
-  boolean requiresLayout() {
+  /**
+   * The <code>NTEventLogAppender</code> requires a layout. Hence,
+   * this method always returns <code>true</code>.
+   */
+  public boolean requiresLayout() {
     return true;
   }
 
   native private int registerEventSource(String server, String source);
+
   native private void reportEvent(int handle, String message, int level);
+
   native private void deregisterEventSource(int handle);
 
   static {

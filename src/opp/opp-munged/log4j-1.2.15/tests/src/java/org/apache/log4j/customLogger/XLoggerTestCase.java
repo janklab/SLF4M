@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,16 +28,16 @@ import junit.framework.TestSuite;
 import junit.framework.Test;
 
 /**
-   Tests handling of custom loggers.
-   
-   @author Ceki G&uuml;lc&uuml;
-*/
+ * Tests handling of custom loggers.
+ *
+ * @author Ceki G&uuml;lc&uuml;
+ */
 public class XLoggerTestCase extends TestCase {
 
   static String FILTERED = "output/filtered";
   static XLogger logger = (XLogger) XLogger.getLogger(XLoggerTestCase.class);
 
-  public XLoggerTestCase(String name){
+  public XLoggerTestCase(String name) {
     super(name);
   }
 
@@ -45,18 +45,23 @@ public class XLoggerTestCase extends TestCase {
     logger.getLoggerRepository().resetConfiguration();
   }
 
-  public void test1()  throws Exception  { common(1); }
-  public void test2()  throws Exception  { common(2); }
+  public void test1() throws Exception {
+    common(1);
+  }
+
+  public void test2() throws Exception {
+    common(2);
+  }
 
   void common(int number) throws Exception {
-    DOMConfigurator.configure("input/xml/customLogger"+number+".xml");
+    DOMConfigurator.configure("input/xml/customLogger" + number + ".xml");
 
     int i = -1;
     Logger root = Logger.getRootLogger();
 
     logger.trace("Message " + ++i);
     logger.debug("Message " + ++i);
-    logger.warn ("Message " + ++i);
+    logger.warn("Message " + ++i);
     logger.error("Message " + ++i);
     logger.fatal("Message " + ++i);
     Exception e = new Exception("Just testing");
@@ -64,11 +69,11 @@ public class XLoggerTestCase extends TestCase {
 
     Transformer.transform(
       "output/temp", FILTERED,
-      new Filter[] {
+      new Filter[]{
         new LineNumberFilter(), new SunReflectFilter(),
         new JunitTestRunnerFilter()
       });
-    assertTrue(Compare.compare(FILTERED, "witness/customLogger."+number));
+    assertTrue(Compare.compare(FILTERED, "witness/customLogger." + number));
 
   }
 

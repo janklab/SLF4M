@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,6 +19,7 @@ package com.psibt.framework.net;
 import java.net.*;
 import java.io.*;
 import java.util.*;
+
 import org.apache.log4j.*;
 
 /**
@@ -123,12 +124,12 @@ public class PluggableHTTPServer implements Runnable {
    */
   public void autoCreateRootPage(int index) {
     if (handler.get(index) instanceof RootRequestHandler) {
-      RootRequestHandler r = (RootRequestHandler)handler.get(index);
-      String html = "<HTML><HEAD><TITLE>"+r.getTitle()+"</TITLE></HEAD>\r\n";
-      html = html + "<BODY><H1>"+r.getDescription()+"</H1>\r\n";
+      RootRequestHandler r = (RootRequestHandler) handler.get(index);
+      String html = "<HTML><HEAD><TITLE>" + r.getTitle() + "</TITLE></HEAD>\r\n";
+      html = html + "<BODY><H1>" + r.getDescription() + "</H1>\r\n";
       for (int i = 0; i < handler.size(); i++) {
-        html = html + "<a href=\"" + ((HTTPRequestHandler)handler.get(i)).getHandledPath();
-        html = html + "\">" + ((HTTPRequestHandler)handler.get(i)).getDescription() + "</a><br>";
+        html = html + "<a href=\"" + ((HTTPRequestHandler) handler.get(i)).getHandledPath();
+        html = html + "\">" + ((HTTPRequestHandler) handler.get(i)).getDescription() + "</a><br>";
       }
       html = html + "</BODY></HTML>\r\n";
       r.setReplyHTML(html);
@@ -144,8 +145,7 @@ public class PluggableHTTPServer implements Runnable {
         Socket s = server.accept();
         Thread t = new ServerThread(s);
         t.start();
-      }
-      catch (IOException e) {
+      } catch (IOException e) {
       }
     }
   }
@@ -167,15 +167,15 @@ public class PluggableHTTPServer implements Runnable {
     public void run() {
       try {
         Writer out = new BufferedWriter(
-                      new OutputStreamWriter(
-                       connection.getOutputStream(), "ASCII"
-                      )
-                     );
+          new OutputStreamWriter(
+            connection.getOutputStream(), "ASCII"
+          )
+        );
         Reader in = new InputStreamReader(
-                     new BufferedInputStream(
-                      connection.getInputStream()
-                     )
-                    );
+          new BufferedInputStream(
+            connection.getInputStream()
+          )
+        );
 
         // read the first line only; that's all we need
         StringBuffer req = new StringBuffer(80);
@@ -195,7 +195,7 @@ public class PluggableHTTPServer implements Runnable {
           boolean served = false;
           for (int i = 0; i < handler.size(); i++) {
             if (handler.get(i) instanceof HTTPRequestHandler) {
-              if (((HTTPRequestHandler)handler.get(i)).handleRequest(request, out)) {
+              if (((HTTPRequestHandler) handler.get(i)).handleRequest(request, out)) {
                 served = true;
                 break;
               }
@@ -203,18 +203,16 @@ public class PluggableHTTPServer implements Runnable {
           }
           if (!served)
             PluggableHTTPServer.replyNotFound(out);
-        }
-        else {
+        } else {
           PluggableHTTPServer.replyMethodNotAllowed(out);
         }
       } // end try
       catch (IOException e) {
-      }
-      finally {
+      } finally {
         try {
           if (connection != null) connection.close();
+        } catch (IOException e) {
         }
-        catch (IOException e) {}
       }
     }  // end run
   }  // end class ServerThread
@@ -237,8 +235,7 @@ public class PluggableHTTPServer implements Runnable {
     // set TCP port number
     try {
       thePort = Integer.parseInt(args[1]);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       thePort = PluggableHTTPServer.DEFAULT_PORT;
     }
 

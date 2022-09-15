@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,6 +19,7 @@ package com.psibt.framework.net;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+
 import org.apache.log4j.*;
 
 /**
@@ -33,7 +34,7 @@ public class Log4jRequestHandler extends RootRequestHandler {
 
   private Priority[] prios = Priority.getAllPossiblePriorities();
 
- /**
+  /**
    * Creates a new Log4jRequestHandler object
    */
   public Log4jRequestHandler() {
@@ -42,11 +43,11 @@ public class Log4jRequestHandler extends RootRequestHandler {
     this.setHandledPath("/log4j/");
   }
 
- /**
+  /**
    * Handles the given request and writes the reply to the given out-stream.
    *
    * @param request - client browser request
-   * @param out - Out stream for sending data to client browser
+   * @param out     - Out stream for sending data to client browser
    * @return if the request was handled by this handler : true, else : false
    */
   public boolean handleRequest(String request, Writer out) {
@@ -55,7 +56,7 @@ public class Log4jRequestHandler extends RootRequestHandler {
     String name;
     try {
       // check request url
-      URL url = new URL("http://localhost"+request);
+      URL url = new URL("http://localhost" + request);
       path = url.getPath();
       query = url.getQuery();
       if (path.startsWith(this.getHandledPath()) == false) {
@@ -79,7 +80,7 @@ public class Log4jRequestHandler extends RootRequestHandler {
           cmd = st.nextToken();
           idx = cmd.indexOf("=");
           catname = cmd.substring(0, idx);
-          catval = cmd.substring(idx+1, cmd.length());
+          catval = cmd.substring(idx + 1, cmd.length());
           if (catname.equalsIgnoreCase("root"))
             Category.getRoot().setPriority(Priority.toPriority(catval));
           else
@@ -88,7 +89,7 @@ public class Log4jRequestHandler extends RootRequestHandler {
       }
 
       // output category information in a form with a simple table
-      out.write("<form name=\"Formular\" ACTION=\""+this.getHandledPath()+"\" METHOD=\"PUT\">");
+      out.write("<form name=\"Formular\" ACTION=\"" + this.getHandledPath() + "\" METHOD=\"PUT\">");
       out.write("<table cellpadding=4>\r\n");
       out.write(" <tr>\r\n");
       out.write("  <td><b>Category</b></td>\r\n");
@@ -100,25 +101,25 @@ public class Log4jRequestHandler extends RootRequestHandler {
       Category cat = Category.getRoot();
       out.write(" <tr><td>root</td>\r\n");
       out.write("  <td>\r\n");
-      out.write("   <select size=1 name=\""+ cat.getName() +"\">");
+      out.write("   <select size=1 name=\"" + cat.getName() + "\">");
       for (int i = 0; i < prios.length; i++) {
         if (cat.getChainedPriority().toString().equals(prios[i].toString()))
-          out.write("<option selected>"+prios[i].toString());
+          out.write("<option selected>" + prios[i].toString());
         else
-          out.write("<option>"+prios[i].toString());
+          out.write("<option>" + prios[i].toString());
       }
       out.write("</select>\r\n");
       out.write("  </td>\r\n");
       out.write("  <td>\r\n");
-      for (Enumeration apds = cat.getAllAppenders(); apds.hasMoreElements();) {
-        Appender apd = (Appender)apds.nextElement();
+      for (Enumeration apds = cat.getAllAppenders(); apds.hasMoreElements(); ) {
+        Appender apd = (Appender) apds.nextElement();
         name = apd.getName();
         if (name == null)
           name = "<i>(no name)</i>";
         out.write(name);
         if (apd instanceof AppenderSkeleton) {
           try {
-            AppenderSkeleton apskel = (AppenderSkeleton)apd;
+            AppenderSkeleton apskel = (AppenderSkeleton) apd;
             out.write(" [" + apskel.getThreshold().toString() + "]");
           } catch (Exception ex) {
           }
@@ -130,30 +131,30 @@ public class Log4jRequestHandler extends RootRequestHandler {
       out.write(" </tr>\r\n");
 
       // output for all other categories
-      for (Enumeration en = Category.getCurrentCategories(); en.hasMoreElements();) {
-        cat = (Category)en.nextElement();
+      for (Enumeration en = Category.getCurrentCategories(); en.hasMoreElements(); ) {
+        cat = (Category) en.nextElement();
         out.write(" <tr>\r\n");
         out.write("  <td>" + cat.getName() + "</td>\r\n");
         out.write("  <td>\r\n");
-        out.write("   <select size=1 name=\""+ cat.getName() +"\">");
+        out.write("   <select size=1 name=\"" + cat.getName() + "\">");
         for (int i = 0; i < prios.length; i++) {
           if (cat.getChainedPriority().toString().equals(prios[i].toString()))
-            out.write("<option selected>"+prios[i].toString());
+            out.write("<option selected>" + prios[i].toString());
           else
-            out.write("<option>"+prios[i].toString());
+            out.write("<option>" + prios[i].toString());
         }
         out.write("</select>\r\n");
         out.write("  </td>\r\n");
         out.write("  <td>\r\n");
-        for (Enumeration apds = cat.getAllAppenders(); apds.hasMoreElements();) {
-          Appender apd = (Appender)apds.nextElement();
+        for (Enumeration apds = cat.getAllAppenders(); apds.hasMoreElements(); ) {
+          Appender apd = (Appender) apds.nextElement();
           name = apd.getName();
           if (name == null)
             name = "<i>(no name)</i>";
           out.write(name);
           if (apd instanceof AppenderSkeleton) {
             try {
-              AppenderSkeleton apskel = (AppenderSkeleton)apd;
+              AppenderSkeleton apskel = (AppenderSkeleton) apd;
               out.write(" [" + apskel.getThreshold().toString() + "]");
             } catch (Exception ex) {
             }

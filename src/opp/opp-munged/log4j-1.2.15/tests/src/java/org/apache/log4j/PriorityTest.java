@@ -31,6 +31,7 @@ import java.util.Locale;
 public class PriorityTest extends TestCase {
   /**
    * Constructs new instance of test.
+   *
    * @param name test name.
    */
   public PriorityTest(final String name) {
@@ -88,6 +89,7 @@ public class PriorityTest extends TestCase {
 
   /**
    * Tests Priority.FATAL.
+   *
    * @deprecated
    */
   public void testFatal() {
@@ -96,6 +98,7 @@ public class PriorityTest extends TestCase {
 
   /**
    * Tests Priority.ERROR.
+   *
    * @deprecated
    */
   public void testERROR() {
@@ -104,6 +107,7 @@ public class PriorityTest extends TestCase {
 
   /**
    * Tests Priority.WARN.
+   *
    * @deprecated
    */
   public void testWARN() {
@@ -112,6 +116,7 @@ public class PriorityTest extends TestCase {
 
   /**
    * Tests Priority.INFO.
+   *
    * @deprecated
    */
   public void testINFO() {
@@ -120,6 +125,7 @@ public class PriorityTest extends TestCase {
 
   /**
    * Tests Priority.DEBUG.
+   *
    * @deprecated
    */
   public void testDEBUG() {
@@ -128,6 +134,7 @@ public class PriorityTest extends TestCase {
 
   /**
    * Tests Priority.equals(null).
+   *
    * @deprecated
    */
   public void testEqualsNull() {
@@ -136,6 +143,7 @@ public class PriorityTest extends TestCase {
 
   /**
    * Tests Priority.equals(Level.DEBUG).
+   *
    * @deprecated
    */
   public void testEqualsLevel() {
@@ -147,6 +155,7 @@ public class PriorityTest extends TestCase {
 
   /**
    * Tests getAllPossiblePriorities().
+   *
    * @deprecated
    */
   public void testGetAllPossiblePriorities() {
@@ -156,6 +165,7 @@ public class PriorityTest extends TestCase {
 
   /**
    * Tests toPriority(String).
+   *
    * @deprecated
    */
   public void testToPriorityString() {
@@ -164,6 +174,7 @@ public class PriorityTest extends TestCase {
 
   /**
    * Tests toPriority(int).
+   *
    * @deprecated
    */
   public void testToPriorityInt() {
@@ -172,6 +183,7 @@ public class PriorityTest extends TestCase {
 
   /**
    * Tests toPriority(String, Priority).
+   *
    * @deprecated
    */
   public void testToPriorityStringPriority() {
@@ -180,33 +192,36 @@ public class PriorityTest extends TestCase {
 
   /**
    * Tests toPriority(int, Priority).
+   *
    * @deprecated
    */
   public void testToPriorityIntPriority() {
     assertTrue(Priority.toPriority(17, Priority.DEBUG) == Priority.DEBUG);
   }
 
-    /**
-     * Test that dotless lower I + "nfo" is recognized as INFO.
-     * @deprecated
-     */
+  /**
+   * Test that dotless lower I + "nfo" is recognized as INFO.
+   *
+   * @deprecated
+   */
   public void testDotlessLowerI() {
-      Priority level = Priority.toPriority("\u0131nfo");
-      assertEquals("INFO", level.toString());
+    Priority level = Priority.toPriority("\u0131nfo");
+    assertEquals("INFO", level.toString());
   }
 
-    /**
-     * Test that dotted lower I + "nfo" is recognized as INFO
-     * even in Turkish locale.
-     * @deprecated
-     */
+  /**
+   * Test that dotted lower I + "nfo" is recognized as INFO
+   * even in Turkish locale.
+   *
+   * @deprecated
+   */
   public void testDottedLowerI() {
-      Locale defaultLocale = Locale.getDefault();
-      Locale turkey = new Locale("tr", "TR");
-      Locale.setDefault(turkey);
-      Priority level = Priority.toPriority("info");
-      Locale.setDefault(defaultLocale);
-      assertEquals("INFO", level.toString());
+    Locale defaultLocale = Locale.getDefault();
+    Locale turkey = new Locale("tr", "TR");
+    Locale.setDefault(turkey);
+    Priority level = Priority.toPriority("info");
+    Locale.setDefault(defaultLocale);
+    assertEquals("INFO", level.toString());
   }
 
 }

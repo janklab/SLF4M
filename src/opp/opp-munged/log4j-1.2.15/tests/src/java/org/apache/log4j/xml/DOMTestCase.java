@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -49,17 +49,16 @@ public class DOMTestCase extends TestCase {
   static String EXCEPTION5 = "\\s*at .*\\(.*libgcj.*\\)";
 
 
-  static String TEST1_1A_PAT = 
-                       "(TRACE|DEBUG|INFO |WARN |ERROR|FATAL) \\w*\\.\\w* - Message \\d";
+  static String TEST1_1A_PAT =
+    "(TRACE|DEBUG|INFO |WARN |ERROR|FATAL) \\w*\\.\\w* - Message \\d";
 
   static String TEST1_1B_PAT = "(TRACE|DEBUG|INFO |WARN |ERROR|FATAL) root - Message \\d";
 
-  static String TEST1_2_PAT = "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3} "+
-                        "\\[main]\\ (TRACE|DEBUG|INFO|WARN|ERROR|FATAL) .* - Message \\d";
+  static String TEST1_2_PAT = "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3} " +
+    "\\[main]\\ (TRACE|DEBUG|INFO|WARN|ERROR|FATAL) .* - Message \\d";
 
 
-
-  Logger root; 
+  Logger root;
   Logger logger;
 
   public DOMTestCase(String name) {
@@ -71,7 +70,7 @@ public class DOMTestCase extends TestCase {
     logger = Logger.getLogger(DOMTestCase.class);
   }
 
-  public void tearDown() {  
+  public void tearDown() {
     root.getLoggerRepository().resetConfiguration();
   }
 
@@ -79,22 +78,22 @@ public class DOMTestCase extends TestCase {
     DOMConfigurator.configure("input/xml/DOMTestCase1.xml");
     common();
 
-    ControlFilter cf1 = new ControlFilter(new String[]{TEST1_1A_PAT, TEST1_1B_PAT, 
-					       EXCEPTION1, EXCEPTION2, EXCEPTION3, EXCEPTION4, EXCEPTION5});
+    ControlFilter cf1 = new ControlFilter(new String[]{TEST1_1A_PAT, TEST1_1B_PAT,
+      EXCEPTION1, EXCEPTION2, EXCEPTION3, EXCEPTION4, EXCEPTION5});
 
-    ControlFilter cf2 = new ControlFilter(new String[]{TEST1_2_PAT, 
-					       EXCEPTION1, EXCEPTION2, EXCEPTION3, EXCEPTION4, EXCEPTION5});
+    ControlFilter cf2 = new ControlFilter(new String[]{TEST1_2_PAT,
+      EXCEPTION1, EXCEPTION2, EXCEPTION3, EXCEPTION4, EXCEPTION5});
 
     Transformer.transform(
       TEMP_A1, FILTERED_A1,
-      new Filter[] {
+      new Filter[]{
         cf1, new LineNumberFilter(), new SunReflectFilter(),
         new JunitTestRunnerFilter()
       });
 
     Transformer.transform(
       TEMP_A2, FILTERED_A2,
-      new Filter[] {
+      new Filter[]{
         cf2, new LineNumberFilter(), new ISO8601Filter(),
         new SunReflectFilter(), new JunitTestRunnerFilter()
       });
@@ -102,30 +101,30 @@ public class DOMTestCase extends TestCase {
     assertTrue(Compare.compare(FILTERED_A1, "witness/dom.A1.1"));
     assertTrue(Compare.compare(FILTERED_A2, "witness/dom.A2.1"));
   }
-  
+
   /**
-   *   Tests processing of external entities in XML file.
+   * Tests processing of external entities in XML file.
    */
   public void test4() throws Exception {
     DOMConfigurator.configure("input/xml/DOMTest4.xml");
     common();
 
-    ControlFilter cf1 = new ControlFilter(new String[]{TEST1_1A_PAT, TEST1_1B_PAT, 
-					       EXCEPTION1, EXCEPTION2, EXCEPTION3, EXCEPTION4, EXCEPTION5});
+    ControlFilter cf1 = new ControlFilter(new String[]{TEST1_1A_PAT, TEST1_1B_PAT,
+      EXCEPTION1, EXCEPTION2, EXCEPTION3, EXCEPTION4, EXCEPTION5});
 
-    ControlFilter cf2 = new ControlFilter(new String[]{TEST1_2_PAT, 
-					       EXCEPTION1, EXCEPTION2, EXCEPTION3, EXCEPTION4, EXCEPTION5});
+    ControlFilter cf2 = new ControlFilter(new String[]{TEST1_2_PAT,
+      EXCEPTION1, EXCEPTION2, EXCEPTION3, EXCEPTION4, EXCEPTION5});
 
     Transformer.transform(
       TEMP_A1 + ".4", FILTERED_A1 + ".4",
-      new Filter[] {
+      new Filter[]{
         cf1, new LineNumberFilter(), new SunReflectFilter(),
         new JunitTestRunnerFilter()
       });
 
     Transformer.transform(
       TEMP_A2 + ".4", FILTERED_A2 + ".4",
-      new Filter[] {
+      new Filter[]{
         cf2, new LineNumberFilter(), new ISO8601Filter(),
         new SunReflectFilter(), new JunitTestRunnerFilter()
       });
@@ -139,171 +138,191 @@ public class DOMTestCase extends TestCase {
     Thread.currentThread().setName("main");
 
     int i = -1;
- 
+
     logger.trace("Message " + ++i);
-    root.trace("Message " + i);  
- 
+    root.trace("Message " + i);
+
     logger.debug("Message " + ++i);
-    root.debug("Message " + i);        
+    root.debug("Message " + i);
 
-    logger.info ("Message " + ++i);
-    root.info("Message " + i);        
+    logger.info("Message " + ++i);
+    root.info("Message " + i);
 
-    logger.warn ("Message " + ++i);
-    root.warn("Message " + i);        
+    logger.warn("Message " + ++i);
+    root.warn("Message " + i);
 
     logger.error("Message " + ++i);
     root.error("Message " + i);
-    
+
     logger.log(Level.FATAL, "Message " + ++i);
-    root.log(Level.FATAL, "Message " + i);    
-    
+    root.log(Level.FATAL, "Message " + i);
+
     Exception e = new Exception("Just testing");
     logger.debug("Message " + ++i, e);
     root.debug("Message " + i, e);
-    
+
     logger.error("Message " + ++i, e);
-    root.error("Message " + i, e);    
+    root.error("Message " + i, e);
 
     Thread.currentThread().setName(oldThreadName);
   }
 
 
-    /**
-     * CustomLogger implementation for testCategoryFactory1 and 2.
-     */
+  /**
+   * CustomLogger implementation for testCategoryFactory1 and 2.
+   */
   private static class CustomLogger extends Logger {
-        /**
-         * Creates new instance.
-         * @param name logger name.
-         */
-      public CustomLogger(final String name) {
-          super(name);
-      }
+    /**
+     * Creates new instance.
+     *
+     * @param name logger name.
+     */
+    public CustomLogger(final String name) {
+      super(name);
+    }
   }
 
-    /**
-     * Creates new instances of CustomLogger.
-     */
+  /**
+   * Creates new instances of CustomLogger.
+   */
   public static class CustomLoggerFactory implements LoggerFactory {
-        /**
-         * Addivity, expected to be set false in configuration file.
-         */
-      private boolean additivity;
-
-        /**
-         * Create new instance of factory.
-         */
-      public CustomLoggerFactory() {
-          additivity = true;
-      }
-
-        /**
-         * Create new logger.
-         * @param name logger name.
-         * @return new logger.
-         */
-      public Logger makeNewLoggerInstance(final String name) {
-          Logger logger = new CustomLogger(name);
-          assertFalse(additivity);
-          return logger;
-      }
-
-        /**
-         * Set additivity.
-         * @param newVal new value of additivity.
-         */
-      public void setAdditivity(final boolean newVal) {
-          additivity = newVal;
-      }
-  }
+    /**
+     * Addivity, expected to be set false in configuration file.
+     */
+    private boolean additivity;
 
     /**
-     * CustomErrorHandler for testCategoryFactory2.
+     * Create new instance of factory.
      */
-  public static class CustomErrorHandler implements ErrorHandler {
-      public CustomErrorHandler() {}
-      public void activateOptions() {}
-      public void setLogger(final Logger logger) {}
-      public void error(String message, Exception e, int errorCode) {}
-      public void error(String message) {}
-      public void error(String message, Exception e, int errorCode, LoggingEvent event) {}
-      public void setAppender(Appender appender) {}
-      public void setBackupAppender(Appender appender) {}
-  }
-
-    /**
-     * Tests that loggers mentioned in logger elements
-     *    use the specified categoryFactory.  See bug 33708.
-     */
-  public void testCategoryFactory1() {
-      DOMConfigurator.configure("input/xml/categoryfactory1.xml");
-      //
-      //   logger explicitly mentioned in configuration,
-      //         should be a CustomLogger
-      Logger logger1 = Logger.getLogger("org.apache.log4j.xml.DOMTestCase.testCategoryFactory1.1");
-      assertTrue(logger1 instanceof CustomLogger);
-      //
-      //   logger not explicitly mentioned in configuration,
-      //         should use default factory
-      Logger logger2 = Logger.getLogger("org.apache.log4j.xml.DOMTestCase.testCategoryFactory1.2");
-      assertFalse(logger2 instanceof CustomLogger);
-  }
-
-    /**
-     * Tests that loggers mentioned in logger-ref elements
-     *    use the specified categoryFactory.  See bug 33708.
-     */
-    public void testCategoryFactory2() {
-        DOMConfigurator.configure("input/xml/categoryfactory2.xml");
-        //
-        //   logger explicitly mentioned in configuration,
-        //         should be a CustomLogger
-        Logger logger1 = Logger.getLogger("org.apache.log4j.xml.DOMTestCase.testCategoryFactory2.1");
-        assertTrue(logger1 instanceof CustomLogger);
-        //
-        //   logger not explicitly mentioned in configuration,
-        //         should use default factory
-        Logger logger2 = Logger.getLogger("org.apache.log4j.xml.DOMTestCase.testCategoryFactory2.2");
-        assertFalse(logger2 instanceof CustomLogger);
+    public CustomLoggerFactory() {
+      additivity = true;
     }
 
     /**
-     * Tests that loggers mentioned in logger elements
-     *    use the specified loggerFactory.  See bug 33708.
+     * Create new logger.
+     *
+     * @param name logger name.
+     * @return new logger.
      */
+    public Logger makeNewLoggerInstance(final String name) {
+      Logger logger = new CustomLogger(name);
+      assertFalse(additivity);
+      return logger;
+    }
+
+    /**
+     * Set additivity.
+     *
+     * @param newVal new value of additivity.
+     */
+    public void setAdditivity(final boolean newVal) {
+      additivity = newVal;
+    }
+  }
+
+  /**
+   * CustomErrorHandler for testCategoryFactory2.
+   */
+  public static class CustomErrorHandler implements ErrorHandler {
+    public CustomErrorHandler() {
+    }
+
+    public void activateOptions() {
+    }
+
+    public void setLogger(final Logger logger) {
+    }
+
+    public void error(String message, Exception e, int errorCode) {
+    }
+
+    public void error(String message) {
+    }
+
+    public void error(String message, Exception e, int errorCode, LoggingEvent event) {
+    }
+
+    public void setAppender(Appender appender) {
+    }
+
+    public void setBackupAppender(Appender appender) {
+    }
+  }
+
+  /**
+   * Tests that loggers mentioned in logger elements
+   * use the specified categoryFactory.  See bug 33708.
+   */
+  public void testCategoryFactory1() {
+    DOMConfigurator.configure("input/xml/categoryfactory1.xml");
+    //
+    //   logger explicitly mentioned in configuration,
+    //         should be a CustomLogger
+    Logger logger1 = Logger.getLogger("org.apache.log4j.xml.DOMTestCase.testCategoryFactory1.1");
+    assertTrue(logger1 instanceof CustomLogger);
+    //
+    //   logger not explicitly mentioned in configuration,
+    //         should use default factory
+    Logger logger2 = Logger.getLogger("org.apache.log4j.xml.DOMTestCase.testCategoryFactory1.2");
+    assertFalse(logger2 instanceof CustomLogger);
+  }
+
+  /**
+   * Tests that loggers mentioned in logger-ref elements
+   * use the specified categoryFactory.  See bug 33708.
+   */
+  public void testCategoryFactory2() {
+    DOMConfigurator.configure("input/xml/categoryfactory2.xml");
+    //
+    //   logger explicitly mentioned in configuration,
+    //         should be a CustomLogger
+    Logger logger1 = Logger.getLogger("org.apache.log4j.xml.DOMTestCase.testCategoryFactory2.1");
+    assertTrue(logger1 instanceof CustomLogger);
+    //
+    //   logger not explicitly mentioned in configuration,
+    //         should use default factory
+    Logger logger2 = Logger.getLogger("org.apache.log4j.xml.DOMTestCase.testCategoryFactory2.2");
+    assertFalse(logger2 instanceof CustomLogger);
+  }
+
+  /**
+   * Tests that loggers mentioned in logger elements
+   * use the specified loggerFactory.  See bug 33708.
+   */
   public void testLoggerFactory1() {
-      DOMConfigurator.configure("input/xml/loggerfactory1.xml");
-      //
-      //   logger explicitly mentioned in configuration,
-      //         should be a CustomLogger
-      Logger logger1 = Logger.getLogger("org.apache.log4j.xml.DOMTestCase.testLoggerFactory1.1");
-      assertTrue(logger1 instanceof CustomLogger);
-      //
-      //   logger not explicitly mentioned in configuration,
-      //         should use default factory
-      Logger logger2 = Logger.getLogger("org.apache.log4j.xml.DOMTestCase.testLoggerFactory1.2");
-      assertFalse(logger2 instanceof CustomLogger);
+    DOMConfigurator.configure("input/xml/loggerfactory1.xml");
+    //
+    //   logger explicitly mentioned in configuration,
+    //         should be a CustomLogger
+    Logger logger1 = Logger.getLogger("org.apache.log4j.xml.DOMTestCase.testLoggerFactory1.1");
+    assertTrue(logger1 instanceof CustomLogger);
+    //
+    //   logger not explicitly mentioned in configuration,
+    //         should use default factory
+    Logger logger2 = Logger.getLogger("org.apache.log4j.xml.DOMTestCase.testLoggerFactory1.2");
+    assertFalse(logger2 instanceof CustomLogger);
   }
 
-    /**
-     * Tests that reset="true" on log4j:configuration element resets
-     * repository before configuration.
-     * @throws Exception thrown on error.
-     */
+  /**
+   * Tests that reset="true" on log4j:configuration element resets
+   * repository before configuration.
+   *
+   * @throws Exception thrown on error.
+   */
   public void testReset() throws Exception {
-      VectorAppender appender = new VectorAppender();
-      appender.setName("V1");
-      Logger.getRootLogger().addAppender(appender);
-      DOMConfigurator.configure("input/xml/testReset.xml");
-      assertNull(Logger.getRootLogger().getAppender("V1"));
+    VectorAppender appender = new VectorAppender();
+    appender.setName("V1");
+    Logger.getRootLogger().addAppender(appender);
+    DOMConfigurator.configure("input/xml/testReset.xml");
+    assertNull(Logger.getRootLogger().getAppender("V1"));
   }
 
 
-    /**
-     * Test checks that configureAndWatch does initial configuration, see bug 33502.
-      * @throws Exception if IO error.
-     */
+  /**
+   * Test checks that configureAndWatch does initial configuration, see bug 33502.
+   *
+   * @throws Exception if IO error.
+   */
   public void testConfigureAndWatch() throws Exception {
     DOMConfigurator.configureAndWatch("input/xml/DOMTestCase1.xml");
     assertNotNull(Logger.getRootLogger().getAppender("A1"));

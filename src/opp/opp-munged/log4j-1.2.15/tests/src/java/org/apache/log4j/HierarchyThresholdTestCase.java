@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,12 +26,12 @@ import org.apache.log4j.util.*;
 import org.apache.log4j.xml.XLevel;
 
 /**
-   Test the configuration of the hierarchy-wide threshold.
-
-   @author  Ceki G&uuml;lc&uuml;
-*/
+ * Test the configuration of the hierarchy-wide threshold.
+ *
+ * @author Ceki G&uuml;lc&uuml;
+ */
 public class HierarchyThresholdTestCase extends TestCase {
-  
+
   static String TEMP = "output/temp";
   static Logger logger = Logger.getLogger(HierarchyThresholdTestCase.class);
 
@@ -41,12 +41,12 @@ public class HierarchyThresholdTestCase extends TestCase {
 
   public void setUp() {
   }
-  
+
   public void tearDown() {
     System.out.println("Tearing down test case.");
     logger.getLoggerRepository().resetConfiguration();
   }
-  
+
   public void test1() throws Exception {
     PropertyConfigurator.configure("input/hierarchyThreshold1.properties");
     common();
@@ -96,8 +96,7 @@ public class HierarchyThresholdTestCase extends TestCase {
   }
 
 
-  static 
-  void common() {
+  static void common() {
     String oldThreadName = Thread.currentThread().getName();
     Thread.currentThread().setName("main");
 

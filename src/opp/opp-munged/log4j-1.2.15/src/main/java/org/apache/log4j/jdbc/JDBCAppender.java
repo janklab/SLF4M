@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,55 +29,54 @@ import java.sql.SQLException;
 
 
 /**
-  <p><b><font color="#FF2222">WARNING: This version of JDBCAppender
-  is very likely to be completely replaced in the future. Moreoever,
-  it does not log exceptions</font></b>.
-
-  The JDBCAppender provides for sending log events to a database.
-  
-  
-  <p>Each append call adds to an <code>ArrayList</code> buffer.  When
-  the buffer is filled each log event is placed in a sql statement
-  (configurable) and executed.
-
-  <b>BufferSize</b>, <b>db URL</b>, <b>User</b>, &amp; <b>Password</b> are
-  configurable options in the standard log4j ways.
-
-  <p>The <code>setSql(String sql)</code> sets the SQL statement to be
-  used for logging -- this statement is sent to a
-  <code>PatternLayout</code> (either created automaticly by the
-  appender or added by the user).  Therefore by default all the
-  conversion patterns in <code>PatternLayout</code> can be used
-  inside of the statement.  (see the test cases for examples)
-
-  <p>Overriding the {@link #getLogStatement} method allows more
-  explicit control of the statement used for logging.
-
-  <p>For use as a base class:
-
-    <ul>
-
-    <li>Override <code>getConnection()</code> to pass any connection
-    you want.  Typically this is used to enable application wide
-    connection pooling.
-
-     <li>Override <code>closeConnection(Connection con)</code> -- if
-     you override getConnection make sure to implement
-     <code>closeConnection</code> to handle the connection you
-     generated.  Typically this would return the connection to the
-     pool it came from.
-
-     <li>Override <code>getLogStatement(LoggingEvent event)</code> to
-     produce specialized or dynamic statements. The default uses the
-     sql option value.
-
-    </ul>
-
-    @author Kevin Steppe (<a href="mailto:ksteppe@pacbell.net">ksteppe@pacbell.net</a>)
-
-*/
+ * <p><b><font color="#FF2222">WARNING: This version of JDBCAppender
+ * is very likely to be completely replaced in the future. Moreoever,
+ * it does not log exceptions</font></b>.
+ * <p>
+ * The JDBCAppender provides for sending log events to a database.
+ *
+ *
+ * <p>Each append call adds to an <code>ArrayList</code> buffer.  When
+ * the buffer is filled each log event is placed in a sql statement
+ * (configurable) and executed.
+ *
+ * <b>BufferSize</b>, <b>db URL</b>, <b>User</b>, &amp; <b>Password</b> are
+ * configurable options in the standard log4j ways.
+ *
+ * <p>The <code>setSql(String sql)</code> sets the SQL statement to be
+ * used for logging -- this statement is sent to a
+ * <code>PatternLayout</code> (either created automaticly by the
+ * appender or added by the user).  Therefore by default all the
+ * conversion patterns in <code>PatternLayout</code> can be used
+ * inside of the statement.  (see the test cases for examples)
+ *
+ * <p>Overriding the {@link #getLogStatement} method allows more
+ * explicit control of the statement used for logging.
+ *
+ * <p>For use as a base class:
+ *
+ * <ul>
+ *
+ * <li>Override <code>getConnection()</code> to pass any connection
+ * you want.  Typically this is used to enable application wide
+ * connection pooling.
+ *
+ * <li>Override <code>closeConnection(Connection con)</code> -- if
+ * you override getConnection make sure to implement
+ * <code>closeConnection</code> to handle the connection you
+ * generated.  Typically this would return the connection to the
+ * pool it came from.
+ *
+ * <li>Override <code>getLogStatement(LoggingEvent event)</code> to
+ * produce specialized or dynamic statements. The default uses the
+ * sql option value.
+ *
+ * </ul>
+ *
+ * @author Kevin Steppe (<a href="mailto:ksteppe@pacbell.net">ksteppe@pacbell.net</a>)
+ */
 public class JDBCAppender extends org.apache.log4j.AppenderSkeleton
-    implements org.apache.log4j.Appender {
+  implements org.apache.log4j.Appender {
 
   /**
    * URL of the DB for default connection handling
@@ -107,9 +106,9 @@ public class JDBCAppender extends org.apache.log4j.AppenderSkeleton
    * Stores the string given to the pattern layout for conversion into a SQL
    * statement, eg: insert into LogTable (Thread, Class, Message) values
    * ("%t", "%c", "%m").
-   *
+   * <p>
    * Be careful of quotes in your messages!
-   *
+   * <p>
    * Also see PatternLayout.
    */
   protected String sqlStatement = "";
@@ -149,37 +148,35 @@ public class JDBCAppender extends org.apache.log4j.AppenderSkeleton
   /**
    * By default getLogStatement sends the event to the required Layout object.
    * The layout will format the given pattern into a workable SQL string.
-   *
+   * <p>
    * Overriding this provides direct access to the LoggingEvent
    * when constructing the logging statement.
-   *
    */
   protected String getLogStatement(LoggingEvent event) {
     return getLayout().format(event);
   }
 
   /**
-   *
    * Override this to provide an alertnate method of getting
    * connections (such as caching).  One method to fix this is to open
    * connections at the start of flushBuffer() and close them at the
    * end.  I use a connection pool outside of JDBCAppender which is
    * accessed in an override of this method.
-   * */
+   */
   protected void execute(String sql) throws SQLException {
 
     Connection con = null;
     Statement stmt = null;
 
     try {
-        con = getConnection();
+      con = getConnection();
 
-        stmt = con.createStatement();
-        stmt.executeUpdate(sql);
+      stmt = con.createStatement();
+      stmt.executeUpdate(sql);
     } catch (SQLException e) {
-       if (stmt != null)
-	     stmt.close();
-       throw e;
+      if (stmt != null)
+        stmt.close();
+      throw e;
     }
     stmt.close();
     closeConnection(con);
@@ -191,7 +188,7 @@ public class JDBCAppender extends org.apache.log4j.AppenderSkeleton
   /**
    * Override this to return the connection to a pool, or to clean up the
    * resource.
-   *
+   * <p>
    * The default behavior holds a single connection open until the appender
    * is closed (typically when garbage collected).
    */
@@ -200,35 +197,34 @@ public class JDBCAppender extends org.apache.log4j.AppenderSkeleton
 
   /**
    * Override this to link with your connection pooling system.
-   *
+   * <p>
    * By default this creates a single connection which is held open
    * until the object is garbage collected.
    */
   protected Connection getConnection() throws SQLException {
-      if (!DriverManager.getDrivers().hasMoreElements())
-	     setDriver("sun.jdbc.odbc.JdbcOdbcDriver");
+    if (!DriverManager.getDrivers().hasMoreElements())
+      setDriver("sun.jdbc.odbc.JdbcOdbcDriver");
 
-      if (connection == null) {
-        connection = DriverManager.getConnection(databaseURL, databaseUser,
-					databasePassword);
-      }
+    if (connection == null) {
+      connection = DriverManager.getConnection(databaseURL, databaseUser,
+        databasePassword);
+    }
 
-      return connection;
+    return connection;
   }
 
   /**
    * Closes the appender, flushing the buffer first then closing the default
    * connection if it is open.
    */
-  public void close()
-  {
+  public void close() {
     flushBuffer();
 
     try {
       if (connection != null && !connection.isClosed())
-          connection.close();
+        connection.close();
     } catch (SQLException e) {
-        errorHandler.error("Error closing connection", e, ErrorCode.GENERIC_FAILURE);
+      errorHandler.error("Error closing connection", e, ErrorCode.GENERIC_FAILURE);
     }
     this.closed = true;
   }
@@ -237,34 +233,35 @@ public class JDBCAppender extends org.apache.log4j.AppenderSkeleton
    * loops through the buffer of LoggingEvents, gets a
    * sql string from getLogStatement() and sends it to execute().
    * Errors are sent to the errorHandler.
-   *
+   * <p>
    * If a statement fails the LoggingEvent stays in the buffer!
    */
   public void flushBuffer() {
     //Do the actual logging
     removes.ensureCapacity(buffer.size());
-    for (Iterator i = buffer.iterator(); i.hasNext();) {
+    for (Iterator i = buffer.iterator(); i.hasNext(); ) {
       try {
-        LoggingEvent logEvent = (LoggingEvent)i.next();
-	    String sql = getLogStatement(logEvent);
-	    execute(sql);
+        LoggingEvent logEvent = (LoggingEvent) i.next();
+        String sql = getLogStatement(logEvent);
+        execute(sql);
         removes.add(logEvent);
-      }
-      catch (SQLException e) {
-	    errorHandler.error("Failed to excute sql", e,
-			   ErrorCode.FLUSH_FAILURE);
+      } catch (SQLException e) {
+        errorHandler.error("Failed to excute sql", e,
+          ErrorCode.FLUSH_FAILURE);
       }
     }
-    
+
     // remove from the buffer any events that were reported
     buffer.removeAll(removes);
-    
+
     // clear the buffer of reported events
     removes.clear();
   }
 
 
-  /** closes the appender before disposal */
+  /**
+   * closes the appender before disposal
+   */
   public void finalize() {
     close();
   }
@@ -272,7 +269,7 @@ public class JDBCAppender extends org.apache.log4j.AppenderSkeleton
 
   /**
    * JDBCAppender requires a layout.
-   * */
+   */
   public boolean requiresLayout() {
     return true;
   }
@@ -284,10 +281,9 @@ public class JDBCAppender extends org.apache.log4j.AppenderSkeleton
   public void setSql(String s) {
     sqlStatement = s;
     if (getLayout() == null) {
-        this.setLayout(new PatternLayout(s));
-    }
-    else {
-        ((PatternLayout)getLayout()).setConversionPattern(s);
+      this.setLayout(new PatternLayout(s));
+    } else {
+      ((PatternLayout) getLayout()).setConversionPattern(s);
     }
   }
 
@@ -351,7 +347,7 @@ public class JDBCAppender extends org.apache.log4j.AppenderSkeleton
       Class.forName(driverClass);
     } catch (Exception e) {
       errorHandler.error("Failed to load driver", e,
-			 ErrorCode.GENERIC_FAILURE);
+        ErrorCode.GENERIC_FAILURE);
     }
   }
 }

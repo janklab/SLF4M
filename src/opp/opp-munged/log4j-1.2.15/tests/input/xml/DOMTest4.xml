@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration  SYSTEM "log4j.dtd" [
-<!ENTITY a1 SYSTEM 'DOMTest4_A1.xml'>
-<!ENTITY a2 SYSTEM 'DOMTest4_A2.xml'>
-]>
+  <!ENTITY a1 SYSTEM 'DOMTest4_A1.xml'>
+  <!ENTITY a2 SYSTEM 'DOMTest4_A2.xml'>
+  ]>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -25,21 +25,31 @@
   &a2;
 
   <!-- Prevent internal log4j DEBUG messages from polluting the output. -->
-  <logger name="org.apache.log4j.joran"><level value="INFO" /></logger>
-  <logger name="org.apache.log4j.joran.action.PriorityAction"><level value="ERROR" /></logger>
-  <logger name="org.apache.log4j.config"><level value="INFO" /></logger>
-  <logger name="org.apache.log4j.FileAppender"><level value="INFO" /></logger>
-  <logger name="org.apache.log4j.xml.DOMConfigurator"><level value="INFO" /></logger>
+  <logger name="org.apache.log4j.joran">
+    <level value="INFO"/>
+  </logger>
+  <logger name="org.apache.log4j.joran.action.PriorityAction">
+    <level value="ERROR"/>
+  </logger>
+  <logger name="org.apache.log4j.config">
+    <level value="INFO"/>
+  </logger>
+  <logger name="org.apache.log4j.FileAppender">
+    <level value="INFO"/>
+  </logger>
+  <logger name="org.apache.log4j.xml.DOMConfigurator">
+    <level value="INFO"/>
+  </logger>
 
   <logger name="org.apache.log4j.xml">
-    <level value="trace" />
-    <appender-ref ref="A1" />
+    <level value="trace"/>
+    <appender-ref ref="A1"/>
   </logger>
 
   <root>
-    <priority value ="trace" />
-    <appender-ref ref="A1" />
-    <appender-ref ref="A2" />
+    <priority value="trace"/>
+    <appender-ref ref="A1"/>
+    <appender-ref ref="A2"/>
   </root>
 
 </log4j:configuration>

@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -55,7 +55,7 @@ public class LogMonitorAdapter {
     _logMonitor = new LogBrokerMonitor(userDefinedLevels);
 
     _logMonitor.setFrameSize(getDefaultMonitorWidth(),
-        getDefaultMonitorHeight());
+      getDefaultMonitorHeight());
     _logMonitor.setFontSize(12);
     _logMonitor.show();
   }
@@ -63,6 +63,7 @@ public class LogMonitorAdapter {
   //--------------------------------------------------------------------------
   //   Public Methods
   //--------------------------------------------------------------------------
+
   /**
    * <p>Creates an instance of LogMonitorAdapter using the
    * log levels inticated by the parameter. Log4J and JDK1.4 both have default
@@ -171,14 +172,14 @@ public class LogMonitorAdapter {
    * <p>Log a complete message to the Monitor.
    *
    * @param category The category to be used
-   * @param level The log level to apply to the message
-   * @param message The message
-   * @param t The throwable content of the message
-   * @param NDC The NDC really only applies to Log4J and the parameter can
-   *            usually be ignored.
+   * @param level    The log level to apply to the message
+   * @param message  The message
+   * @param t        The throwable content of the message
+   * @param NDC      The NDC really only applies to Log4J and the parameter can
+   *                 usually be ignored.
    */
   public void log(String category, LogLevel level, String message,
-      Throwable t, String NDC) {
+                  Throwable t, String NDC) {
     AdapterLogRecord record = new AdapterLogRecord();
     record.setCategory(category);
     record.setMessage(message);
@@ -198,7 +199,7 @@ public class LogMonitorAdapter {
    * <p>Log a message to the Monitor and use the default LogLevel.
    *
    * @param category The category to be used
-   * @param message The message
+   * @param message  The message
    */
   public void log(String category, String message) {
     log(category, null, message);
@@ -208,9 +209,9 @@ public class LogMonitorAdapter {
    * <p>Log a message to the Monitor.
    *
    * @param category The category to be used
-   * @param level The log level to apply to the message
-   * @param message The message
-   * @param NDC ???
+   * @param level    The log level to apply to the message
+   * @param message  The message
+   * @param NDC      ???
    */
   public void log(String category, LogLevel level, String message, String NDC) {
     log(category, level, message, null, NDC);
@@ -220,12 +221,12 @@ public class LogMonitorAdapter {
    * <p>Log a message to the Monitor.
    *
    * @param category The category to be used
-   * @param level The log level to apply to the message
-   * @param message The message
-   * @param t The throwable content of the message
+   * @param level    The log level to apply to the message
+   * @param message  The message
+   * @param t        The throwable content of the message
    */
   public void log(String category, LogLevel level, String message,
-      Throwable t) {
+                  Throwable t) {
     log(category, level, message, t, null);
   }
 
@@ -233,8 +234,8 @@ public class LogMonitorAdapter {
    * <p>Log a message to the Monitor.
    *
    * @param category The category to be used
-   * @param level The log level to apply to the message
-   * @param message The message
+   * @param level    The log level to apply to the message
+   * @param message  The message
    */
   public void log(String category, LogLevel level, String message) {
     log(category, level, message, null, null);

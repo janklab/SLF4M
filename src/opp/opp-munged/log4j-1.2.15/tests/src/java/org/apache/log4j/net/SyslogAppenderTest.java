@@ -38,13 +38,12 @@ import java.util.Calendar;
 
 
 /**
- *    Tests for SyslogAppender
- *
- *
- * */
+ * Tests for SyslogAppender
+ */
 public class SyslogAppenderTest extends TestCase {
   /**
    * Create new instance of SyslogAppenderTest.
+   *
    * @param testName test name
    */
   public SyslogAppenderTest(final String testName) {
@@ -52,8 +51,8 @@ public class SyslogAppenderTest extends TestCase {
   }
 
   /**
-    * Resets configuration after every test.
-  */
+   * Resets configuration after every test.
+   */
   public void tearDown() {
     LogManager.resetConfiguration();
   }
@@ -116,8 +115,8 @@ public class SyslogAppenderTest extends TestCase {
   public void testGetFacilityString() {
     String expected =
       "kern user mail daemon auth syslog lpr news "
-      + "uucp cron authpriv ftp local0 local1 local2 local3 "
-      + "local4 local5 local6 local7 ";
+        + "uucp cron authpriv ftp local0 local1 local2 local3 "
+        + "local4 local5 local6 local7 ";
     StringBuffer actual = new StringBuffer();
 
     for (int i = 0; i <= 11; i++) {
@@ -160,7 +159,7 @@ public class SyslogAppenderTest extends TestCase {
    */
   public void testGetFacilitySystemNames() {
     String[] names =
-      new String[] {
+      new String[]{
         "kErn", "usEr", "MaIL", "daemOn", "auTh", "syslOg", "lPr", "newS",
         "Uucp", "croN", "authprIv", "ftP"
       };
@@ -175,7 +174,7 @@ public class SyslogAppenderTest extends TestCase {
    */
   public void testGetFacilityLocalNames() {
     String[] names =
-      new String[] {
+      new String[]{
         "lOcal0", "LOCAL1", "loCal2", "locAl3", "locaL4", "local5", "LOCal6",
         "loCAL7"
       };
@@ -351,243 +350,247 @@ public class SyslogAppenderTest extends TestCase {
   }
 
   /**
-    *  Tests SyslogAppender with IPv6 address.
-    */
+   * Tests SyslogAppender with IPv6 address.
+   */
   public void testIPv6() {
-      SyslogAppender appender = new SyslogAppender();
-      appender.setSyslogHost("::1");
+    SyslogAppender appender = new SyslogAppender();
+    appender.setSyslogHost("::1");
   }
 
   /**
-    *  Tests SyslogAppender with IPv6 address enclosed in square brackets.
-    */
+   * Tests SyslogAppender with IPv6 address enclosed in square brackets.
+   */
   public void testIPv6InBrackets() {
-      SyslogAppender appender = new SyslogAppender();
-      appender.setSyslogHost("[::1]");
+    SyslogAppender appender = new SyslogAppender();
+    appender.setSyslogHost("[::1]");
   }
 
   /**
-    *  Tests SyslogAppender with IPv6 address enclosed in square brackets
-    *     followed by port specification.
-    */
+   * Tests SyslogAppender with IPv6 address enclosed in square brackets
+   * followed by port specification.
+   */
   public void testIPv6AndPort() {
-      SyslogAppender appender = new SyslogAppender();
-      appender.setSyslogHost("[::1]:1514");
+    SyslogAppender appender = new SyslogAppender();
+    appender.setSyslogHost("[::1]:1514");
   }
 
   /**
-    *  Tests SyslogAppender with host name enclosed in square brackets
-    *     followed by port specification.
-    */
+   * Tests SyslogAppender with host name enclosed in square brackets
+   * followed by port specification.
+   */
   public void testHostNameAndPort() {
-      SyslogAppender appender = new SyslogAppender();
-      appender.setSyslogHost("localhost:1514");
+    SyslogAppender appender = new SyslogAppender();
+    appender.setSyslogHost("localhost:1514");
   }
 
 
   /**
-    *  Tests SyslogAppender with IPv4 address followed by port specification.
-    */
+   * Tests SyslogAppender with IPv4 address followed by port specification.
+   */
   public void testIPv4AndPort() {
-      SyslogAppender appender = new SyslogAppender();
-      appender.setSyslogHost("127.0.0.1:1514");
+    SyslogAppender appender = new SyslogAppender();
+    appender.setSyslogHost("127.0.0.1:1514");
   }
 
-    private static String[] log(final boolean header,
-                                final String msg,
-                                final Exception ex,
-                                final int packets) throws Exception {
-        DatagramSocket ds = new DatagramSocket();
-        ds.setSoTimeout(2000);
+  private static String[] log(final boolean header,
+                              final String msg,
+                              final Exception ex,
+                              final int packets) throws Exception {
+    DatagramSocket ds = new DatagramSocket();
+    ds.setSoTimeout(2000);
 
-      SyslogAppender appender = new SyslogAppender();
-      appender.setSyslogHost("localhost:" + ds.getLocalPort());
-      appender.setName("name");
-      appender.setHeader(header);
-      PatternLayout pl = new PatternLayout("%m");
-      appender.setLayout(pl);
-      appender.activateOptions();
+    SyslogAppender appender = new SyslogAppender();
+    appender.setSyslogHost("localhost:" + ds.getLocalPort());
+    appender.setName("name");
+    appender.setHeader(header);
+    PatternLayout pl = new PatternLayout("%m");
+    appender.setLayout(pl);
+    appender.activateOptions();
 
-      Logger l = Logger.getRootLogger();
-      l.addAppender(appender);
-      if (ex == null) {
-        l.info(msg);
-      } else {
-        l.error(msg, ex);
-      }
-      appender.close();
-      String[] retval = new String[packets];
-      byte[] buf = new byte[1000];
-      for(int i = 0; i < packets; i++) {
-          DatagramPacket p = new DatagramPacket(buf, 0, buf.length);
-          ds.receive(p);
-          retval[i] = new String(p.getData(), 0, p.getLength());
-      }
-      ds.close();
-      return retval;
-    }
-
-    public void testActualLogging() throws Exception {
-      String s = log(false, "greetings", null, 1)[0];
-      StringTokenizer st = new StringTokenizer(s, "<>() ");
-      assertEquals("14", st.nextToken());
-      assertEquals("greetings", st.nextToken());
-    }
-
-    /**
-     * Exception with printStackTrace that breaks earlier SyslogAppender.
-     */
-    private static class MishandledException extends Exception {
-        /*
-         *   Create new instance.
-         */
-        public MishandledException() {
-        }
-
-        /**
-         * Print stack trace.
-         * @param w print writer, may not be null.
-         */
-        public void printStackTrace(final java.io.PrintWriter w) {
-             w.println("Mishandled stack trace follows:");
-             w.println("");
-             w.println("No tab here");
-             w.println("\ttab here");
-             w.println("\t");
-        }
-    }
-
-    /**
-     * Tests fix for bug 40502.
-     * @throws Exception on IOException.
-     */
-    public void testBadTabbing() throws Exception {
-        String[] s = log(false, "greetings", new MishandledException(), 6);
-        StringTokenizer st = new StringTokenizer(s[0], "<>() ");
-        assertEquals("11", st.nextToken());
-        assertEquals("greetings", st.nextToken());
-        assertEquals("<11>Mishandled stack trace follows:", s[1]);
-        assertEquals("<11>", s[2]);
-        assertEquals("<11>No tab here", s[3]);
-        assertEquals("<11>" + SyslogAppender.TAB + "tab here", s[4]);
-        assertEquals("<11>" + SyslogAppender.TAB, s[5]);
-    }
-
-    /**
-     * Tests presence of timestamp if header = true.
-     *
-     * @throws Exception if IOException.
-     */
-    public void testHeaderLogging() throws Exception {
-      Date preDate = new Date();
-      String s = log(true, "greetings", null, 1)[0];
-      Date postDate = new Date();
-      assertEquals("<14>", s.substring(0, 4));
-
-      String syslogDateStr = s.substring(4, 20);
-      SimpleDateFormat fmt = new SimpleDateFormat("MMM dd HH:mm:ss ", Locale.ENGLISH);
-      Date syslogDate = fmt.parse(syslogDateStr);
-      Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-      cal.setTime(syslogDate);
-      int syslogMonth = cal.get(Calendar.MONTH);
-      int syslogDay = cal.get(Calendar.DATE);
-      if (syslogDay < 10) {
-          assertEquals(' ', syslogDateStr.charAt(4));
-      }
-      cal.setTime(preDate);
-      int preMonth = cal.get(Calendar.MONTH);
-      cal.set(Calendar.MILLISECOND, 0);
-      preDate = cal.getTime();
-      int syslogYear;
-      if (preMonth == syslogMonth) {
-          syslogYear = cal.get(Calendar.YEAR);
-      } else {
-          cal.setTime(postDate);
-          syslogYear = cal.get(Calendar.YEAR);
-      }
-      cal.setTime(syslogDate);
-      cal.set(Calendar.YEAR, syslogYear);
-      syslogDate = cal.getTime();
-      assertTrue(syslogDate.compareTo(preDate) >= 0);
-      assertTrue(syslogDate.compareTo(postDate) <= 0);
-    }
-
-
-    /**
-     * Tests that any header or footer in layout is sent.
-     * @throws Exception if exception during test.
-     */
-    public void testLayoutHeader() throws Exception {
-        DatagramSocket ds = new DatagramSocket();
-        ds.setSoTimeout(2000);
-
-      SyslogAppender appender = new SyslogAppender();
-      appender.setSyslogHost("localhost:" + ds.getLocalPort());
-      appender.setName("name");
-      appender.setHeader(false);
-      HTMLLayout pl = new HTMLLayout();
-      appender.setLayout(pl);
-      appender.activateOptions();
-
-      Logger l = Logger.getRootLogger();
-      l.addAppender(appender);
-      l.info("Hello, World");
-      appender.close();
-      String[] s = new String[3];
-      byte[] buf = new byte[1000];
-      for(int i = 0; i < 3; i++) {
-          DatagramPacket p = new DatagramPacket(buf, 0, buf.length);
-          ds.receive(p);
-          s[i] = new String(p.getData(), 0, p.getLength());
-      }
-      ds.close();
-      assertEquals("<14><!DOCTYPE", s[0].substring(0,13));
-      assertEquals("<14></table>", s[2].substring(0,12));
-    }
-
-    /**
-     * Tests that syslog packets do not exceed 1024 bytes.
-     * See bug 42087.
-     * @throws Exception if exception during test.
-     */
-    public void testBigPackets() throws Exception {
-        DatagramSocket ds = new DatagramSocket();
-        ds.setSoTimeout(2000);
-
-      SyslogAppender appender = new SyslogAppender();
-      appender.setSyslogHost("localhost:" + ds.getLocalPort());
-      appender.setName("name");
-      appender.setHeader(false);
-      PatternLayout pl = new PatternLayout("%m");
-      appender.setLayout(pl);
-      appender.activateOptions();
-
-      Logger l = Logger.getRootLogger();
-      l.addAppender(appender);
-      StringBuffer msgbuf = new StringBuffer();
-      while(msgbuf.length() < 8000) {
-          msgbuf.append("0123456789");
-      }
-      String msg = msgbuf.toString();
+    Logger l = Logger.getRootLogger();
+    l.addAppender(appender);
+    if (ex == null) {
       l.info(msg);
-      appender.close();
-      String[] s = new String[8];
-      byte[] buf = new byte[1200];
-      for(int i = 0; i < 8; i++) {
-          DatagramPacket p = new DatagramPacket(buf, 0, buf.length);
-          ds.receive(p);
-          assertTrue(p.getLength() <= 1024);
-          s[i] = new String(p.getData(), 0, p.getLength());
-      }
-      ds.close();
-      StringBuffer rcvbuf = new StringBuffer(s[0]);
-      rcvbuf.delete(0, 4);
-      for(int i = 1; i < 8; i++) {
-          rcvbuf.setLength(rcvbuf.length() - 3);
-          rcvbuf.append(s[i].substring(s[i].indexOf("...") + 3));
-      }
-      assertEquals(msg.length(), rcvbuf.length());
-      assertEquals(msg, rcvbuf.toString());
+    } else {
+      l.error(msg, ex);
     }
+    appender.close();
+    String[] retval = new String[packets];
+    byte[] buf = new byte[1000];
+    for (int i = 0; i < packets; i++) {
+      DatagramPacket p = new DatagramPacket(buf, 0, buf.length);
+      ds.receive(p);
+      retval[i] = new String(p.getData(), 0, p.getLength());
+    }
+    ds.close();
+    return retval;
+  }
+
+  public void testActualLogging() throws Exception {
+    String s = log(false, "greetings", null, 1)[0];
+    StringTokenizer st = new StringTokenizer(s, "<>() ");
+    assertEquals("14", st.nextToken());
+    assertEquals("greetings", st.nextToken());
+  }
+
+  /**
+   * Exception with printStackTrace that breaks earlier SyslogAppender.
+   */
+  private static class MishandledException extends Exception {
+    /*
+     *   Create new instance.
+     */
+    public MishandledException() {
+    }
+
+    /**
+     * Print stack trace.
+     *
+     * @param w print writer, may not be null.
+     */
+    public void printStackTrace(final java.io.PrintWriter w) {
+      w.println("Mishandled stack trace follows:");
+      w.println("");
+      w.println("No tab here");
+      w.println("\ttab here");
+      w.println("\t");
+    }
+  }
+
+  /**
+   * Tests fix for bug 40502.
+   *
+   * @throws Exception on IOException.
+   */
+  public void testBadTabbing() throws Exception {
+    String[] s = log(false, "greetings", new MishandledException(), 6);
+    StringTokenizer st = new StringTokenizer(s[0], "<>() ");
+    assertEquals("11", st.nextToken());
+    assertEquals("greetings", st.nextToken());
+    assertEquals("<11>Mishandled stack trace follows:", s[1]);
+    assertEquals("<11>", s[2]);
+    assertEquals("<11>No tab here", s[3]);
+    assertEquals("<11>" + SyslogAppender.TAB + "tab here", s[4]);
+    assertEquals("<11>" + SyslogAppender.TAB, s[5]);
+  }
+
+  /**
+   * Tests presence of timestamp if header = true.
+   *
+   * @throws Exception if IOException.
+   */
+  public void testHeaderLogging() throws Exception {
+    Date preDate = new Date();
+    String s = log(true, "greetings", null, 1)[0];
+    Date postDate = new Date();
+    assertEquals("<14>", s.substring(0, 4));
+
+    String syslogDateStr = s.substring(4, 20);
+    SimpleDateFormat fmt = new SimpleDateFormat("MMM dd HH:mm:ss ", Locale.ENGLISH);
+    Date syslogDate = fmt.parse(syslogDateStr);
+    Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+    cal.setTime(syslogDate);
+    int syslogMonth = cal.get(Calendar.MONTH);
+    int syslogDay = cal.get(Calendar.DATE);
+    if (syslogDay < 10) {
+      assertEquals(' ', syslogDateStr.charAt(4));
+    }
+    cal.setTime(preDate);
+    int preMonth = cal.get(Calendar.MONTH);
+    cal.set(Calendar.MILLISECOND, 0);
+    preDate = cal.getTime();
+    int syslogYear;
+    if (preMonth == syslogMonth) {
+      syslogYear = cal.get(Calendar.YEAR);
+    } else {
+      cal.setTime(postDate);
+      syslogYear = cal.get(Calendar.YEAR);
+    }
+    cal.setTime(syslogDate);
+    cal.set(Calendar.YEAR, syslogYear);
+    syslogDate = cal.getTime();
+    assertTrue(syslogDate.compareTo(preDate) >= 0);
+    assertTrue(syslogDate.compareTo(postDate) <= 0);
+  }
+
+
+  /**
+   * Tests that any header or footer in layout is sent.
+   *
+   * @throws Exception if exception during test.
+   */
+  public void testLayoutHeader() throws Exception {
+    DatagramSocket ds = new DatagramSocket();
+    ds.setSoTimeout(2000);
+
+    SyslogAppender appender = new SyslogAppender();
+    appender.setSyslogHost("localhost:" + ds.getLocalPort());
+    appender.setName("name");
+    appender.setHeader(false);
+    HTMLLayout pl = new HTMLLayout();
+    appender.setLayout(pl);
+    appender.activateOptions();
+
+    Logger l = Logger.getRootLogger();
+    l.addAppender(appender);
+    l.info("Hello, World");
+    appender.close();
+    String[] s = new String[3];
+    byte[] buf = new byte[1000];
+    for (int i = 0; i < 3; i++) {
+      DatagramPacket p = new DatagramPacket(buf, 0, buf.length);
+      ds.receive(p);
+      s[i] = new String(p.getData(), 0, p.getLength());
+    }
+    ds.close();
+    assertEquals("<14><!DOCTYPE", s[0].substring(0, 13));
+    assertEquals("<14></table>", s[2].substring(0, 12));
+  }
+
+  /**
+   * Tests that syslog packets do not exceed 1024 bytes.
+   * See bug 42087.
+   *
+   * @throws Exception if exception during test.
+   */
+  public void testBigPackets() throws Exception {
+    DatagramSocket ds = new DatagramSocket();
+    ds.setSoTimeout(2000);
+
+    SyslogAppender appender = new SyslogAppender();
+    appender.setSyslogHost("localhost:" + ds.getLocalPort());
+    appender.setName("name");
+    appender.setHeader(false);
+    PatternLayout pl = new PatternLayout("%m");
+    appender.setLayout(pl);
+    appender.activateOptions();
+
+    Logger l = Logger.getRootLogger();
+    l.addAppender(appender);
+    StringBuffer msgbuf = new StringBuffer();
+    while (msgbuf.length() < 8000) {
+      msgbuf.append("0123456789");
+    }
+    String msg = msgbuf.toString();
+    l.info(msg);
+    appender.close();
+    String[] s = new String[8];
+    byte[] buf = new byte[1200];
+    for (int i = 0; i < 8; i++) {
+      DatagramPacket p = new DatagramPacket(buf, 0, buf.length);
+      ds.receive(p);
+      assertTrue(p.getLength() <= 1024);
+      s[i] = new String(p.getData(), 0, p.getLength());
+    }
+    ds.close();
+    StringBuffer rcvbuf = new StringBuffer(s[0]);
+    rcvbuf.delete(0, 4);
+    for (int i = 1; i < 8; i++) {
+      rcvbuf.setLength(rcvbuf.length() - 3);
+      rcvbuf.append(s[i].substring(s[i].indexOf("...") + 3));
+    }
+    assertEquals(msg.length(), rcvbuf.length());
+    assertEquals(msg, rcvbuf.toString());
+  }
 
 }

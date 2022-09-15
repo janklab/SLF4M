@@ -20,9 +20,9 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
   <appender name="A1" class="org.apache.log4j.net.SMTPAppender">
 
-    <param name="from"   value="log4j@example.org" />
-    <param name="to" value="somebody@example.org" />
-    <param name="subject" value="Test message" />
+    <param name="from" value="log4j@example.org"/>
+    <param name="to" value="somebody@example.org"/>
+    <param name="subject" value="Test message"/>
     <param name="SMTPHost" value="localhost"/>
     <triggeringPolicy class="org.apache.log4j.net.SMTPAppenderTest$MockTriggeringEventEvaluator"/>
 
@@ -32,8 +32,8 @@
   </appender>
 
   <root>
-    <priority value ="trace" />
-    <appender-ref ref="A1" />
+    <priority value="trace"/>
+    <appender-ref ref="A1"/>
   </root>
 
 </log4j:configuration>

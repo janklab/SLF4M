@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * The LogLevel class defines a set of standard logging levels.
- *
+ * <p>
  * The logging Level objects are ordered and are specified by ordered
  * integers. Enabling logging at a given level also enables logging at all
  * higher levels.
@@ -77,9 +77,9 @@ public class LogLevel implements java.io.Serializable {
   static {
     _log4JLevels = new LogLevel[]{FATAL, ERROR, WARN, INFO, DEBUG};
     _jdk14Levels = new LogLevel[]{SEVERE, WARNING, INFO,
-                                  CONFIG, FINE, FINER, FINEST};
+      CONFIG, FINE, FINER, FINEST};
     _allDefaultLevels = new LogLevel[]{FATAL, ERROR, WARN, INFO, DEBUG,
-                                       SEVERE, WARNING, CONFIG, FINE, FINER, FINEST};
+      SEVERE, WARNING, CONFIG, FINE, FINER, FINEST};
 
     _logLevelMap = new HashMap();
     for (int i = 0; i < _allDefaultLevels.length; i++) {
@@ -129,10 +129,10 @@ public class LogLevel implements java.io.Serializable {
    * @param level The label of a level to be converted into a LogLevel.
    * @return LogLevel The LogLevel with a label equal to level.
    * @throws LogLevelFormatException Is thrown when the level can not be
-   *         converted into a LogLevel.
+   *                                 converted into a LogLevel.
    */
   public static LogLevel valueOf(String level)
-      throws LogLevelFormatException {
+    throws LogLevelFormatException {
     LogLevel logLevel = null;
     if (level != null) {
       level = level.trim().toUpperCase();
@@ -192,7 +192,7 @@ public class LogLevel implements java.io.Serializable {
 
     if (o instanceof LogLevel) {
       if (this.getPrecedence() ==
-          ((LogLevel) o).getPrecedence()) {
+        ((LogLevel) o).getPrecedence()) {
         equals = true;
       }
 

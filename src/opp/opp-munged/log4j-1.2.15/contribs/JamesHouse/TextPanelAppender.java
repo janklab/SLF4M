@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -39,7 +39,6 @@ import org.apache.log4j.helpers.OptionConverter;
 
 
 /**
- *
  * @author James House
  */
 
@@ -72,8 +71,7 @@ public class TextPanelAppender extends AppenderSkeleton {
     //logPublisher = new LogPublishingThread(logTextPanel, null, 500);
   }
 
-  public
-  void close() {
+  public void close() {
   }
 
   public void append(LoggingEvent event) {
@@ -82,58 +80,51 @@ public class TextPanelAppender extends AppenderSkeleton {
 
     // Print Stacktrace
     // Quick Hack maybe there is a better/faster way?
-    if (event.throwable!=null) {
+    if (event.throwable != null) {
       event.throwable.printStackTrace(tp);
-      for (int i=0; i< sw.getBuffer().length(); i++) {
-        if (sw.getBuffer().charAt(i)=='\t')
-          sw.getBuffer().replace(i,i+1,"        ");
+      for (int i = 0; i < sw.getBuffer().length(); i++) {
+        if (sw.getBuffer().charAt(i) == '\t')
+          sw.getBuffer().replace(i, i + 1, "        ");
       }
       text += sw.toString();
-      sw.getBuffer().delete(0,sw.getBuffer().length());
-    }
-    else
-      if(!text.endsWith("\n"))
-        text += "\n";
+      sw.getBuffer().delete(0, sw.getBuffer().length());
+    } else if (!text.endsWith("\n"))
+      text += "\n";
 
     logPublisher.publishEvent(event.priority, text);
   }
 
-  public
-  JPanel getLogTextPanel() {
+  public JPanel getLogTextPanel() {
     return logTextPanel;
   }
 
-  public
-  String[] getOptionStrings() {
-    return new String[] { COLOR_OPTION_FATAL, COLOR_OPTION_ERROR,
-         COLOR_OPTION_WARN, COLOR_OPTION_INFO, COLOR_OPTION_DEBUG,
-         COLOR_OPTION_BACKGROUND, FONT_NAME_OPTION, FONT_SIZE_OPTION};
+  public String[] getOptionStrings() {
+    return new String[]{COLOR_OPTION_FATAL, COLOR_OPTION_ERROR,
+      COLOR_OPTION_WARN, COLOR_OPTION_INFO, COLOR_OPTION_DEBUG,
+      COLOR_OPTION_BACKGROUND, FONT_NAME_OPTION, FONT_SIZE_OPTION};
   }
 
 
-  public
-  void setName(String name) {
+  public void setName(String name) {
     this.name = name;
   }
 
-  protected
-  void setLogTextPanel(LogTextPanel logTextPanel) {
+  protected void setLogTextPanel(LogTextPanel logTextPanel) {
     this.logTextPanel = logTextPanel;
     logTextPanel.setTextBackground(Color.white);
   }
 
-  public
-  void setOption(String option, String value) {
+  public void setOption(String option, String value) {
     if (option.equalsIgnoreCase(COLOR_OPTION_FATAL))
-      logTextPanel.setTextColor(Priority.FATAL,value);
+      logTextPanel.setTextColor(Priority.FATAL, value);
     if (option.equalsIgnoreCase(COLOR_OPTION_ERROR))
-      logTextPanel.setTextColor(Priority.ERROR,value);
+      logTextPanel.setTextColor(Priority.ERROR, value);
     if (option.equalsIgnoreCase(COLOR_OPTION_WARN))
-      logTextPanel.setTextColor(Priority.WARN,value);
+      logTextPanel.setTextColor(Priority.WARN, value);
     if (option.equalsIgnoreCase(COLOR_OPTION_INFO))
-      logTextPanel.setTextColor(Priority.INFO,value);
+      logTextPanel.setTextColor(Priority.INFO, value);
     if (option.equalsIgnoreCase(COLOR_OPTION_DEBUG))
-      logTextPanel.setTextColor(Priority.DEBUG,value);
+      logTextPanel.setTextColor(Priority.DEBUG, value);
     if (option.equalsIgnoreCase(COLOR_OPTION_BACKGROUND))
       logTextPanel.setTextBackground(value);
     if (option.equalsIgnoreCase(FONT_SIZE_OPTION))
@@ -145,11 +136,9 @@ public class TextPanelAppender extends AppenderSkeleton {
     return;
   }
 
-  public
-  boolean requiresLayout() {
+  public boolean requiresLayout() {
     return true;
   }
-
 
 
   class LogPublishingThread extends Thread {
@@ -169,14 +158,14 @@ public class TextPanelAppender extends AppenderSkeleton {
     }
 
     public void run() {
-      while(true) {
-        synchronized(evts) {
+      while (true) {
+        synchronized (evts) {
           try {
             evts.wait(pubInterval);
+          } catch (InterruptedException e) {
           }
-          catch(InterruptedException e) {}
 
-          logTextPanel.newEvents((EventBufferElement[])evts.toArray(new EventBufferElement[evts.size()]));
+          logTextPanel.newEvents((EventBufferElement[]) evts.toArray(new EventBufferElement[evts.size()]));
 
           evts.clear();
         }
@@ -185,9 +174,9 @@ public class TextPanelAppender extends AppenderSkeleton {
     }
 
     public void publishEvent(Priority prio, String text) {
-      synchronized(evts) {
+      synchronized (evts) {
         evts.add(new EventBufferElement(prio, text));
-        if(triggerPrio != null && prio.isGreaterOrEqual(triggerPrio))
+        if (triggerPrio != null && prio.isGreaterOrEqual(triggerPrio))
           evts.notify();
       }
     }
@@ -208,9 +197,9 @@ class EventBufferElement {
     int pos = pos = text.indexOf('\n', 0);
     int len = text.length() - 1;
 
-    while( (pos > 0) && (pos < len) )
+    while ((pos > 0) && (pos < len))
       numLines++;
-      pos = text.indexOf('\n', pos + 1);
+    pos = text.indexOf('\n', pos + 1);
   }
 }
 

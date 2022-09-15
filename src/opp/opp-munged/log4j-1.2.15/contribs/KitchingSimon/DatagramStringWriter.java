@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -48,8 +48,7 @@ public class DatagramStringWriter extends Writer {
    * on the normal syslog port (514), and uses the default platform character
    * encoding when converting the message string to a byte sequence.
    */
-  public
-  DatagramStringWriter(String host) {
+  public DatagramStringWriter(String host) {
     this(host, SYSLOG_PORT, null, null);
   }
 
@@ -58,8 +57,7 @@ public class DatagramStringWriter extends Writer {
    * uses the default platform character encoding when converting the message
    * string to a byte sequence.
    */
-  public
-  DatagramStringWriter(String host, int port) {
+  public DatagramStringWriter(String host, int port) {
     this(host, port, null, null);
   }
 
@@ -68,18 +66,17 @@ public class DatagramStringWriter extends Writer {
    * uses the specified character encoding when converting the message
    * string to a byte sequence.
    */
-  public
-  DatagramStringWriter(String host, int port, String encoding) {
+  public DatagramStringWriter(String host, int port, String encoding) {
     this(host, port, null, null);
   }
+
   /**
    * This constructor sends messages to the specified host and port, and
    * uses the specified character encoding when converting the message
    * string to a byte sequence; the specified prefix (which may be null)
    * is prepended to each message.
    */
-  public
-  DatagramStringWriter(String host, int port, String encoding, String prefix) {
+  public DatagramStringWriter(String host, int port, String encoding, String prefix) {
     this.host = host;
     this.port = port;
     this.encoding = encoding;
@@ -87,42 +84,35 @@ public class DatagramStringWriter extends Writer {
 
     try {
       this.address = InetAddress.getByName(host);
-    }
-    catch (UnknownHostException e) {
+    } catch (UnknownHostException e) {
       LogLog.error("Could not find " + host +
-			 ". All logging will FAIL.", e);
+        ". All logging will FAIL.", e);
     }
 
     try {
       this.ds = new DatagramSocket();
-    }
-    catch (SocketException e) {
+    } catch (SocketException e) {
       e.printStackTrace();
       LogLog.error("Could not instantiate DatagramSocket to " + host +
-			 ". All logging will FAIL.", e);
+        ". All logging will FAIL.", e);
     }
   }
 
 
-  public
-  void write(char[] buf, int off, int len) throws IOException {
+  public void write(char[] buf, int off, int len) throws IOException {
     this.write(new String(buf, off, len));
   }
 
-  public
-  void write(String string) throws IOException {
+  public void write(String string) throws IOException {
     if (prefix != null) {
       string = prefix + string;
     }
-    
+
     byte[] rawData;
-    if (this.encoding == null)
-    {
+    if (this.encoding == null) {
       // convert to byte sequence using platform's default encoding
       rawData = string.getBytes();
-    }
-    else
-    {
+    } else {
       // convert to specified encoding - which may be sequence of
       // 8-bit chars, or multi-byte encodings like UTF-8 or UTF-16.
       // The receiving end had better be expecting whatever encoding
@@ -132,27 +122,24 @@ public class DatagramStringWriter extends Writer {
 
     DatagramPacket packet =
       new DatagramPacket(
-                 rawData,
-					       rawData.length,
-					       address,
-                 port);
+        rawData,
+        rawData.length,
+        address,
+        port);
 
-    if(this.ds != null)
-    {
+    if (this.ds != null) {
       ds.send(packet);
-    }
-    else
-    {
+    } else {
       LogLog.error(
         "write: failed to create DatagramPacket");
     }
   }
 
-  public
-  void flush() {}
+  public void flush() {
+  }
 
-  public
-  void close() {}
+  public void close() {
+  }
 
   /**
    * Set a string to be prefixed to every message sent by this Writer.
@@ -163,11 +150,11 @@ public class DatagramStringWriter extends Writer {
    * a situation where other threads may be logging messages at the same
    * moment.
    * <p>
+   *
    * @param prefix may be a prefix string, or null which indicates no
-   *  prefix should be added.
+   *               prefix should be added.
    */
-  public
-  void setPrefix(String prefix){
+  public void setPrefix(String prefix) {
     this.prefix = prefix;
   }
 }

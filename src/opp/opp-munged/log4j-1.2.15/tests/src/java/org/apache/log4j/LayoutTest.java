@@ -24,7 +24,6 @@ import org.apache.log4j.spi.LoggingEvent;
 
 /**
  * Tests for Layout.
- *
  */
 public class LayoutTest extends TestCase {
   /**
@@ -43,12 +42,13 @@ public class LayoutTest extends TestCase {
   private final String header;
 
   /**
-    * Expected value for footer.
-    */
+   * Expected value for footer.
+   */
   private final String footer;
 
   /**
    * Construct a new instance of LayoutTest.
+   *
    * @param testName test name.
    */
   public LayoutTest(final String testName) {
@@ -61,11 +61,12 @@ public class LayoutTest extends TestCase {
 
   /**
    * Constructor for use by derived tests.
-   * @param testName name of test.
-   * @param expectedContentType expected value for getContentType().
+   *
+   * @param testName                 name of test.
+   * @param expectedContentType      expected value for getContentType().
    * @param expectedIgnoresThrowable expected value for ignoresThrowable().
-   * @param expectedHeader expected value for getHeader().
-   * @param expectedFooter expected value for getFooter().
+   * @param expectedHeader           expected value for getHeader().
+   * @param expectedFooter           expected value for getFooter().
    */
   protected LayoutTest(
     final String testName, final String expectedContentType,
@@ -94,6 +95,7 @@ public class LayoutTest extends TestCase {
 
   /**
    * Creates layout for test.
+   *
    * @return new instance of Layout.
    */
   protected Layout createLayout() {
@@ -130,6 +132,7 @@ public class LayoutTest extends TestCase {
 
   /**
    * Tests format.
+   *
    * @throws Exception derived tests, particular XMLLayoutTest, may throw exceptions.
    */
   public void testFormat() throws Exception {

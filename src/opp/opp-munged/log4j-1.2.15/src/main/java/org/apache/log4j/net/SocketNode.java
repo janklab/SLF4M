@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,17 +29,16 @@ import org.apache.log4j.spi.*;
 // Contributors:  Moses Hohman <mmhohman@rainbow.uchicago.edu>
 
 /**
-   Read {@link LoggingEvent} objects sent from a remote client using
-   Sockets (TCP). These logging events are logged according to local
-   policy, as if they were generated locally.
-
-   <p>For example, the socket node might decide to log events to a
-   local file and also resent them to a second socket node.
-
-    @author  Ceki G&uuml;lc&uuml;
-
-    @since 0.8.4
-*/
+ * Read {@link LoggingEvent} objects sent from a remote client using
+ * Sockets (TCP). These logging events are logged according to local
+ * policy, as if they were generated locally.
+ *
+ * <p>For example, the socket node might decide to log events to a
+ * local file and also resent them to a second socket node.
+ *
+ * @author Ceki G&uuml;lc&uuml;
+ * @since 0.8.4
+ */
 public class SocketNode implements Runnable {
 
   Socket socket;
@@ -53,10 +52,9 @@ public class SocketNode implements Runnable {
     this.hierarchy = hierarchy;
     try {
       ois = new ObjectInputStream(
-                         new BufferedInputStream(socket.getInputStream()));
-    }
-    catch(Exception e) {
-      logger.error("Could not open ObjectInputStream to "+socket, e);
+        new BufferedInputStream(socket.getInputStream()));
+    } catch (Exception e) {
+      logger.error("Could not open ObjectInputStream to " + socket, e);
     }
   }
 
@@ -72,40 +70,40 @@ public class SocketNode implements Runnable {
 
     try {
       if (ois != null) {
-          while(true) {
-	        // read an event from the wire
-	        event = (LoggingEvent) ois.readObject();
-	        // get a logger from the hierarchy. The name of the logger is taken to be the name contained in the event.
-	        remoteLogger = hierarchy.getLogger(event.getLoggerName());
-	        //event.logger = remoteLogger;
-	        // apply the logger-level filter
-	        if(event.getLevel().isGreaterOrEqual(remoteLogger.getEffectiveLevel())) {
-	        // finally log the event as if was generated locally
-	        remoteLogger.callAppenders(event);
-	      }
+        while (true) {
+          // read an event from the wire
+          event = (LoggingEvent) ois.readObject();
+          // get a logger from the hierarchy. The name of the logger is taken to be the name contained in the event.
+          remoteLogger = hierarchy.getLogger(event.getLoggerName());
+          //event.logger = remoteLogger;
+          // apply the logger-level filter
+          if (event.getLevel().isGreaterOrEqual(remoteLogger.getEffectiveLevel())) {
+            // finally log the event as if was generated locally
+            remoteLogger.callAppenders(event);
+          }
         }
       }
-    } catch(java.io.EOFException e) {
+    } catch (java.io.EOFException e) {
       logger.info("Caught java.io.EOFException closing conneciton.");
-    } catch(java.net.SocketException e) {
+    } catch (java.net.SocketException e) {
       logger.info("Caught java.net.SocketException closing conneciton.");
-    } catch(IOException e) {
-      logger.info("Caught java.io.IOException: "+e);
+    } catch (IOException e) {
+      logger.info("Caught java.io.IOException: " + e);
       logger.info("Closing connection.");
-    } catch(Exception e) {
+    } catch (Exception e) {
       logger.error("Unexpected exception. Closing conneciton.", e);
     } finally {
       if (ois != null) {
-         try {
-            ois.close();
-         } catch(Exception e) {
-            logger.info("Could not close connection.", e);
-         }
+        try {
+          ois.close();
+        } catch (Exception e) {
+          logger.info("Could not close connection.", e);
+        }
       }
       if (socket != null) {
         try {
           socket.close();
-        } catch(IOException ex) {
+        } catch (IOException ex) {
         }
       }
     }

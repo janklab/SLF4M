@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -59,20 +59,17 @@ public class JTableAppender extends JTable {
 
   PatternLayout layout;
 
-  public
-  JTableAppender() {
+  public JTableAppender() {
     layout = new PatternLayout("%r %p %c [%t] -  %m");
     this.setDefaultRenderer(Object.class, new Renderer());
 
   }
 
-  public
-  void add(LoggingEvent event) {
-    ((JTableAppenderModel)getModel()).add(event);
+  public void add(LoggingEvent event) {
+    ((JTableAppenderModel) getModel()).add(event);
   }
 
-  public
-  Dimension getPreferredSize() {
+  public Dimension getPreferredSize() {
     System.out.println("getPreferredSize() called");
     return super.getPreferredSize();
   }
@@ -83,45 +80,45 @@ public class JTableAppender extends JTable {
     Container container = frame.getContentPane();
 
     JTableAppender appender = new JTableAppender();
-    
-    JTableAppenderModel model = new 
-                              JTableAppenderModel(Integer.parseInt(args[0]));
+
+    JTableAppenderModel model = new
+      JTableAppenderModel(Integer.parseInt(args[0]));
     appender.setModel(model);
     //appender.createDefaultColumnsFromModel();    
 
 
     JScrollPane sp = new JScrollPane(appender);
     sp.setPreferredSize(new Dimension(250, 80));
-    
+
     container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
     //container.add(view);
     container.add(sp);
 
     JButton button = new JButton("ADD");
     container.add(button);
-    
+
 
     button.addActionListener(new JTableAddAction(appender));
 
     frame.setVisible(true);
-    frame.setSize(new Dimension(700,700));
+    frame.setSize(new Dimension(700, 700));
 
     long before = System.currentTimeMillis();
 
     int RUN = 10000;
     int i = 0;
-    while(i++ < RUN) {      
-      LoggingEvent event = new LoggingEvent("x", cat, Priority.ERROR, 
-					    "Message "+i, null);
+    while (i++ < RUN) {
+      LoggingEvent event = new LoggingEvent("x", cat, Priority.ERROR,
+        "Message " + i, null);
       event.getThreadName();
-      if(i % 10 == 0) {
-	//event.throwable = new Exception("hello "+i);
+      if (i % 10 == 0) {
+        //event.throwable = new Exception("hello "+i);
       }
       appender.add(event);
     }
 
     long after = System.currentTimeMillis();
-    System.out.println("Time taken :"+ ((after-before)*1000/RUN));
+    System.out.println("Time taken :" + ((after - before) * 1000 / RUN));
 
   }
 
@@ -130,35 +127,34 @@ public class JTableAppender extends JTable {
     Object o = new Object();
     int i = 0;
 
-    public
-    Renderer() {
-      System.out.println("Render() called ----------------------");      
+    public Renderer() {
+      System.out.println("Render() called ----------------------");
     }
 
     public Component getTableCellRendererComponent(JTable table,
-						   Object value,
-						   boolean isSelected,
-						   boolean hasFocus,
-						   int row,
-						   int column) {
+                                                   Object value,
+                                                   boolean isSelected,
+                                                   boolean hasFocus,
+                                                   int row,
+                                                   int column) {
 
       System.out.println(o + " ============== " + i++);
       //LogLog.error("=======", new Exception());
       //setIcon(longIcon);
-      if(value instanceof LoggingEvent) {
-	LoggingEvent event = (LoggingEvent) value;
-	String str = layout.format(event);
-	String t = event.getThrowableInformation();
-	
-	if(t != null) {
-	  System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-	  setText(str + Layout.LINE_SEP + t);
-	} else {	
-	  setText(str);
-	}
-	
+      if (value instanceof LoggingEvent) {
+        LoggingEvent event = (LoggingEvent) value;
+        String str = layout.format(event);
+        String t = event.getThrowableInformation();
+
+        if (t != null) {
+          System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+          setText(str + Layout.LINE_SEP + t);
+        } else {
+          setText(str);
+        }
+
       } else {
-	setText(value.toString());
+        setText(value.toString());
       }
 
 
@@ -168,17 +164,15 @@ public class JTableAppender extends JTable {
 }
 
 
-
 class JTableAppenderModel extends AbstractTableModel {
 
   CyclicBuffer cb;
-  
+
   JTableAppenderModel(int size) {
     cb = new CyclicBuffer(size);
   }
 
-  public
-  void add(LoggingEvent event) {
+  public void add(LoggingEvent event) {
     //System.out.println("JListViewModel.add called");
     cb.add(event);
     int j = cb.length();
@@ -186,12 +180,12 @@ class JTableAppenderModel extends AbstractTableModel {
     fireTableDataChanged();
 
   }
-  public 
-  int getColumnCount() { 
-    return 1; 
+
+  public int getColumnCount() {
+    return 1;
   }
 
-  public int getRowCount() { 
+  public int getRowCount() {
     return cb.length();
   }
 
@@ -201,34 +195,31 @@ class JTableAppenderModel extends AbstractTableModel {
   //  return LoggingEvent.class;
   //}
 
-  public 
-  Object getValueAt(int row, int col) {
+  public Object getValueAt(int row, int col) {
     return cb.get(row);
   }
 }
 
 
 class JTableAddAction implements ActionListener {
-    
+
   int j;
   JTableAppender appender;
 
   Category cat = Category.getInstance("x");
-  
-  public
-  JTableAddAction(JTableAppender appender) {
+
+  public JTableAddAction(JTableAppender appender) {
     this.appender = appender;
     j = 0;
   }
-    
-  public
-  void actionPerformed(ActionEvent e) {
+
+  public void actionPerformed(ActionEvent e) {
     System.out.println("Action occured");
 
-    LoggingEvent event = new LoggingEvent("x", cat, Priority.DEBUG, 
-					    "Message "+j, null);
-    
-    if(j % 5 == 0) {
+    LoggingEvent event = new LoggingEvent("x", cat, Priority.DEBUG,
+      "Message " + j, null);
+
+    if (j % 5 == 0) {
       //event.throwable = new Exception("hello "+j);
     }
     j++;

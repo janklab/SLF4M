@@ -27,36 +27,36 @@ import org.apache.log4j.xml.DOMConfigurator;
  * Tests for SMTPAppender.
  */
 public class SMTPAppenderTest extends TestCase {
-    public SMTPAppenderTest(final String testName) {
-        super(testName);
-    }
+  public SMTPAppenderTest(final String testName) {
+    super(testName);
+  }
 
-    /**
-     * Reset configuration after every test.
-     */
+  /**
+   * Reset configuration after every test.
+   */
   public void tearDown() {
-      LogManager.resetConfiguration();
+    LogManager.resetConfiguration();
   }
 
-    /**
-     * Trivial implementation of TriggeringEventEvaluator.
-     */
+  /**
+   * Trivial implementation of TriggeringEventEvaluator.
+   */
   public static final class MockTriggeringEventEvaluator implements TriggeringEventEvaluator {
-        /**
-         * {@inheritDoc}
-         */
-      public boolean isTriggeringEvent(final LoggingEvent event) {
-          return true;
-      }
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isTriggeringEvent(final LoggingEvent event) {
+      return true;
+    }
   }
 
-    /**
-     * Tests that triggeringPolicy element will set evaluator.
-     */
+  /**
+   * Tests that triggeringPolicy element will set evaluator.
+   */
   public void testTrigger() {
-      DOMConfigurator.configure("input/xml/smtpAppender1.xml");
-      SMTPAppender appender = (SMTPAppender) Logger.getRootLogger().getAppender("A1");
-      TriggeringEventEvaluator evaluator = appender.getEvaluator();
-      assertTrue(evaluator instanceof MockTriggeringEventEvaluator);
+    DOMConfigurator.configure("input/xml/smtpAppender1.xml");
+    SMTPAppender appender = (SMTPAppender) Logger.getRootLogger().getAppender("A1");
+    TriggeringEventEvaluator evaluator = appender.getEvaluator();
+    assertTrue(evaluator instanceof MockTriggeringEventEvaluator);
   }
 }

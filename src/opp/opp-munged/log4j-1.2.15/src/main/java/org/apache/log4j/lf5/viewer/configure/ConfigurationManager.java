@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -104,7 +104,7 @@ public class ConfigurationManager extends Object {
     processLogRecordFilter(_monitor.getNDCTextFilter(), xml);
     processLogLevels(_monitor.getLogLevelMenuItems(), xml);
     processLogLevelColors(_monitor.getLogLevelMenuItems(),
-        LogLevel.getLogLevelColorMap(), xml);
+      LogLevel.getLogLevelColorMap(), xml);
     processLogTableColumns(LogTableColumn.getLogTableColumns(), xml);
     processConfigurationNode(root, xml);
     closeConfigurationXML(xml);
@@ -140,7 +140,7 @@ public class ConfigurationManager extends Object {
     if (file.exists()) {
       try {
         DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.
-            newInstance();
+          newInstance();
         DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
         Document doc = docBuilder.parse(file);
         processRecordFilter(doc);
@@ -152,7 +152,7 @@ public class ConfigurationManager extends Object {
         // ignore all error and just continue as if there was no
         // configuration xml file but do report a message
         System.err.println("Unable process configuration file at " +
-            getFilename() + ". Error Message=" + e.getMessage());
+          getFilename() + ". Error Message=" + e.getMessage());
       }
     }
 
@@ -214,7 +214,7 @@ public class ConfigurationManager extends Object {
       String name = getValue(map, NAME);
       try {
         JCheckBoxMenuItem item =
-            (JCheckBoxMenuItem) menuItems.get(LogLevel.valueOf(name));
+          (JCheckBoxMenuItem) menuItems.get(LogLevel.valueOf(name));
         item.setSelected(getValue(map, SELECTED).equalsIgnoreCase("true"));
       } catch (LogLevelFormatException e) {
         // ignore it will be on by default.
@@ -268,7 +268,7 @@ public class ConfigurationManager extends Object {
       try {
         LogTableColumn column = LogTableColumn.valueOf(name);
         JCheckBoxMenuItem item =
-            (JCheckBoxMenuItem) menuItems.get(column);
+          (JCheckBoxMenuItem) menuItems.get(column);
         item.setSelected(getValue(map, SELECTED).equalsIgnoreCase("true"));
 
         if (item.isSelected()) {
@@ -332,7 +332,7 @@ public class ConfigurationManager extends Object {
       }
     } catch (SecurityException e) {
       System.err.println("Cannot delete " + getFilename() +
-          " because a security violation occured.");
+        " because a security violation occured.");
     }
   }
 

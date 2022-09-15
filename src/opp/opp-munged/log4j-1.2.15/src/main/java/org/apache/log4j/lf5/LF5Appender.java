@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -76,7 +76,7 @@ public class LF5Appender extends AppenderSkeleton {
    * additional log monitoring windows.
    *
    * @param monitor An instance of a <code>LogBrokerMonitor</code>
-   * created by the user.
+   *                created by the user.
    */
   public LF5Appender(LogBrokerMonitor monitor) {
 
@@ -92,8 +92,9 @@ public class LF5Appender extends AppenderSkeleton {
   /**
    * Appends a <code>LoggingEvent</code> record to the
    * <code>LF5Appender</code>.
+   *
    * @param event The <code>LoggingEvent</code>
-   * to be appended.
+   *              to be appended.
    */
   public void append(LoggingEvent event) {
     // Retrieve the information from the log4j LoggingEvent.
@@ -164,7 +165,7 @@ public class LF5Appender extends AppenderSkeleton {
    * and will shut down swing thread and the virtual machine.
    *
    * @param callSystemExitOnClose A boolean value indicating whether
-   * to call System.exit(0) when closing the log window.
+   *                              to call System.exit(0) when closing the log window.
    */
   public void setCallSystemExitOnClose(boolean callSystemExitOnClose) {
     _logMonitor.setCallSystemExitOnClose(callSystemExitOnClose);
@@ -177,7 +178,7 @@ public class LF5Appender extends AppenderSkeleton {
    * LogBrokerMonitor</code>.
    *
    * @param compareTo A boolean value indicating whether
-   * the two LF5Appenders are equal.
+   *                  the two LF5Appenders are equal.
    */
   public boolean equals(LF5Appender compareTo) {
     // If both reference the same LogBrokerMonitor, they are equal.
@@ -206,11 +207,11 @@ public class LF5Appender extends AppenderSkeleton {
     if (_defaultLogMonitor == null) {
       try {
         _defaultLogMonitor =
-            new LogBrokerMonitor(LogLevel.getLog4JLevels());
+          new LogBrokerMonitor(LogLevel.getLog4JLevels());
         _finalizer = new AppenderFinalizer(_defaultLogMonitor);
 
         _defaultLogMonitor.setFrameSize(getDefaultMonitorWidth(),
-            getDefaultMonitorHeight());
+          getDefaultMonitorHeight());
         _defaultLogMonitor.setFontSize(12);
         _defaultLogMonitor.show();
 

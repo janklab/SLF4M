@@ -31,11 +31,11 @@ import java.util.Calendar;
 
 /**
  * Tests for DateLayout.
- *
  */
 public class DateLayoutTest extends LayoutTest {
   /**
    * Construct a new instance of LayoutTest.
+   *
    * @param testName test name.
    */
   public DateLayoutTest(final String testName) {
@@ -44,11 +44,12 @@ public class DateLayoutTest extends LayoutTest {
 
   /**
    * Constructor for use by derived tests.
-   * @param testName name of test.
-   * @param expectedContentType expected value for getContentType().
+   *
+   * @param testName                 name of test.
+   * @param expectedContentType      expected value for getContentType().
    * @param expectedIgnoresThrowable expected value for ignoresThrowable().
-   * @param expectedHeader expected value for getHeader().
-   * @param expectedFooter expected value for getFooter().
+   * @param expectedHeader           expected value for getHeader().
+   * @param expectedFooter           expected value for getFooter().
    */
   protected DateLayoutTest(
     final String testName, final String expectedContentType,
@@ -82,6 +83,7 @@ public class DateLayoutTest extends LayoutTest {
 
   /**
    * Tests DateLayout.DATE_FORMAT_OPTION constant.
+   *
    * @deprecated since constant is deprecated
    */
   public void testDateFormatOption() {
@@ -90,6 +92,7 @@ public class DateLayoutTest extends LayoutTest {
 
   /**
    * Tests DateLayout.TIMEZONE_OPTION constant.
+   *
    * @deprecated since constant is deprecated
    */
   public void testTimeZoneOption() {
@@ -98,8 +101,8 @@ public class DateLayoutTest extends LayoutTest {
 
   /**
    * Tests getOptionStrings().
-   * @deprecated since getOptionStrings is deprecated.
    *
+   * @deprecated since getOptionStrings is deprecated.
    */
   public void testGetOptionStrings() {
     String[] options = ((DateLayout) createLayout()).getOptionStrings();
@@ -108,6 +111,7 @@ public class DateLayoutTest extends LayoutTest {
 
   /**
    * Tests setting DateFormat through setOption method.
+   *
    * @deprecated since setOption is deprecated.
    */
   public void testSetOptionDateFormat() {
@@ -118,6 +122,7 @@ public class DateLayoutTest extends LayoutTest {
 
   /**
    * Tests setting TimeZone through setOption method.
+   *
    * @deprecated since setOption is deprecated.
    */
   public void testSetOptionTimeZone() {
@@ -220,32 +225,34 @@ public class DateLayoutTest extends LayoutTest {
   }
 
 
-    /**
-     * Tests IS08601DateFormat class.
-     * @deprecated since ISO8601DateFormat is deprecated
-     */
+  /**
+   * Tests IS08601DateFormat class.
+   *
+   * @deprecated since ISO8601DateFormat is deprecated
+   */
   public void testISO8601Format() {
-      DateFormat format = new ISO8601DateFormat();
-      Calendar calendar = Calendar.getInstance();
-      calendar.clear();
-      calendar.set(1970, 0, 1, 0, 0, 0);
-      String actual = format.format(calendar.getTime());
-      assertEquals("1970-01-01 00:00:00,000", actual);
+    DateFormat format = new ISO8601DateFormat();
+    Calendar calendar = Calendar.getInstance();
+    calendar.clear();
+    calendar.set(1970, 0, 1, 0, 0, 0);
+    String actual = format.format(calendar.getTime());
+    assertEquals("1970-01-01 00:00:00,000", actual);
   }
 
-    /**
-     * Tests DateTimeDateFormat class.
-     * @deprecated since DateTimeDateFormat is deprecated
-     */
+  /**
+   * Tests DateTimeDateFormat class.
+   *
+   * @deprecated since DateTimeDateFormat is deprecated
+   */
   public void testDateTimeFormat() {
-      DateFormat format = new DateTimeDateFormat();
-      Calendar calendar = Calendar.getInstance();
-      calendar.clear();
-      calendar.set(1970, 0, 1, 0, 0, 0);
-      String actual = format.format(calendar.getTime());
-      SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy HH:mm:ss,SSS");
-      String expected = df.format(calendar.getTime());
-      assertEquals(expected, actual);
+    DateFormat format = new DateTimeDateFormat();
+    Calendar calendar = Calendar.getInstance();
+    calendar.clear();
+    calendar.set(1970, 0, 1, 0, 0, 0);
+    String actual = format.format(calendar.getTime());
+    SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy HH:mm:ss,SSS");
+    String expected = df.format(calendar.getTime());
+    assertEquals(expected, actual);
   }
 
   /**

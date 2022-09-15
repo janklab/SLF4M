@@ -20,6 +20,7 @@ package org.apache.log4j;
 import junit.framework.TestCase;
 
 import org.apache.log4j.util.SerializationTestHelper;
+
 import java.util.Locale;
 
 
@@ -32,6 +33,7 @@ import java.util.Locale;
 public class LevelTest extends TestCase {
   /**
    * Constructs new instance of test.
+   *
    * @param name test name.
    */
   public LevelTest(final String name) {
@@ -40,17 +42,18 @@ public class LevelTest extends TestCase {
 
   /**
    * Serialize Level.INFO and check against witness.
-   * @throws Exception if exception during test.
    *
+   * @throws Exception if exception during test.
    */
   public void testSerializeINFO() throws Exception {
-    int[] skip = new int[] {  };
+    int[] skip = new int[]{};
     SerializationTestHelper.assertSerializationEquals(
       "witness/serialization/info.bin", Level.INFO, skip, Integer.MAX_VALUE);
   }
 
   /**
    * Deserialize witness and see if resolved to Level.INFO.
+   *
    * @throws Exception if exception during test.
    */
   public void testDeserializeINFO() throws Exception {
@@ -63,7 +66,7 @@ public class LevelTest extends TestCase {
     //
     //  JDK 1.1 doesn't support readResolve necessary for the assertion
     if (!System.getProperty("java.version").startsWith("1.1.")) {
-       assertTrue(obj == Level.INFO);
+      assertTrue(obj == Level.INFO);
     }
   }
 
@@ -89,177 +92,177 @@ public class LevelTest extends TestCase {
    * serializable, but not resolved to a plain Level.
    */
   private static class CustomLevel extends Level {
-      /**
-       * Create an instance of CustomLevel.
-       */
+    /**
+     * Create an instance of CustomLevel.
+     */
     public CustomLevel() {
       super(
         Level.INFO.level, Level.INFO.levelStr, Level.INFO.syslogEquivalent);
     }
   }
 
-    /**
-     * Tests Level.TRACE_INT.
-     */
+  /**
+   * Tests Level.TRACE_INT.
+   */
   public void testTraceInt() {
-      assertEquals(5000, Level.TRACE_INT);
+    assertEquals(5000, Level.TRACE_INT);
   }
 
-    /**
-     * Tests Level.TRACE.
-     */
+  /**
+   * Tests Level.TRACE.
+   */
   public void testTrace() {
-      assertEquals("TRACE", Level.TRACE.toString());
-      assertEquals(5000, Level.TRACE.toInt());
-      assertEquals(7, Level.TRACE.getSyslogEquivalent());
+    assertEquals("TRACE", Level.TRACE.toString());
+    assertEquals(5000, Level.TRACE.toInt());
+    assertEquals(7, Level.TRACE.getSyslogEquivalent());
   }
 
-    /**
-     * Tests Level.toLevel(Level.TRACE_INT).
-     */
+  /**
+   * Tests Level.toLevel(Level.TRACE_INT).
+   */
   public void testIntToTrace() {
-      Level trace = Level.toLevel(5000);
-      assertEquals("TRACE", trace.toString());
+    Level trace = Level.toLevel(5000);
+    assertEquals("TRACE", trace.toString());
   }
 
-    /**
-     * Tests Level.toLevel("TRACE");
-     */
+  /**
+   * Tests Level.toLevel("TRACE");
+   */
   public void testStringToTrace() {
-        Level trace = Level.toLevel("TRACE");
-        assertEquals("TRACE", trace.toString());
+    Level trace = Level.toLevel("TRACE");
+    assertEquals("TRACE", trace.toString());
   }
 
-    /**
-     * Tests that Level extends Priority.
-     */
+  /**
+   * Tests that Level extends Priority.
+   */
   public void testLevelExtendsPriority() {
-      assertTrue(Priority.class.isAssignableFrom(Level.class));
+    assertTrue(Priority.class.isAssignableFrom(Level.class));
   }
 
-    /**
-     * Tests Level.OFF.
-     */
+  /**
+   * Tests Level.OFF.
+   */
   public void testOFF() {
     assertTrue(Level.OFF instanceof Level);
   }
 
-    /**
-     * Tests Level.FATAL.
-     */
-    public void testFATAL() {
-      assertTrue(Level.FATAL instanceof Level);
-    }
+  /**
+   * Tests Level.FATAL.
+   */
+  public void testFATAL() {
+    assertTrue(Level.FATAL instanceof Level);
+  }
 
-    /**
-     * Tests Level.ERROR.
-     */
-    public void testERROR() {
-      assertTrue(Level.ERROR instanceof Level);
-    }
+  /**
+   * Tests Level.ERROR.
+   */
+  public void testERROR() {
+    assertTrue(Level.ERROR instanceof Level);
+  }
 
-    /**
-     * Tests Level.WARN.
-     */
-    public void testWARN() {
-      assertTrue(Level.WARN instanceof Level);
-    }
+  /**
+   * Tests Level.WARN.
+   */
+  public void testWARN() {
+    assertTrue(Level.WARN instanceof Level);
+  }
 
-    /**
-     * Tests Level.INFO.
-     */
-    public void testINFO() {
-      assertTrue(Level.INFO instanceof Level);
-    }
+  /**
+   * Tests Level.INFO.
+   */
+  public void testINFO() {
+    assertTrue(Level.INFO instanceof Level);
+  }
 
-    /**
-     * Tests Level.DEBUG.
-     */
-    public void testDEBUG() {
-      assertTrue(Level.DEBUG instanceof Level);
-    }
+  /**
+   * Tests Level.DEBUG.
+   */
+  public void testDEBUG() {
+    assertTrue(Level.DEBUG instanceof Level);
+  }
 
-    /**
-     * Tests Level.TRACE.
-     */
-    public void testTRACE() {
-      assertTrue(Level.TRACE instanceof Level);
-    }
+  /**
+   * Tests Level.TRACE.
+   */
+  public void testTRACE() {
+    assertTrue(Level.TRACE instanceof Level);
+  }
 
-    /**
-     * Tests Level.ALL.
-     */
-    public void testALL() {
-      assertTrue(Level.ALL instanceof Level);
-    }
+  /**
+   * Tests Level.ALL.
+   */
+  public void testALL() {
+    assertTrue(Level.ALL instanceof Level);
+  }
 
-    /**
-     * Tests Level.serialVersionUID.
-     */
-    public void testSerialVersionUID() {
-      assertEquals(3491141966387921974L, Level.serialVersionUID);
-    }
+  /**
+   * Tests Level.serialVersionUID.
+   */
+  public void testSerialVersionUID() {
+    assertEquals(3491141966387921974L, Level.serialVersionUID);
+  }
 
-    /**
-     * Tests Level.toLevel(Level.All_INT).
-     */
+  /**
+   * Tests Level.toLevel(Level.All_INT).
+   */
   public void testIntToAll() {
-      Level level = Level.toLevel(Level.ALL_INT);
-      assertEquals("ALL", level.toString());
+    Level level = Level.toLevel(Level.ALL_INT);
+    assertEquals("ALL", level.toString());
   }
 
-    /**
-     * Tests Level.toLevel(Level.FATAL_INT).
-     */
+  /**
+   * Tests Level.toLevel(Level.FATAL_INT).
+   */
   public void testIntToFatal() {
-      Level level = Level.toLevel(Level.FATAL_INT);
-      assertEquals("FATAL", level.toString());
+    Level level = Level.toLevel(Level.FATAL_INT);
+    assertEquals("FATAL", level.toString());
   }
 
 
-    /**
-     * Tests Level.toLevel(Level.OFF_INT).
-     */
+  /**
+   * Tests Level.toLevel(Level.OFF_INT).
+   */
   public void testIntToOff() {
-      Level level = Level.toLevel(Level.OFF_INT);
-      assertEquals("OFF", level.toString());
+    Level level = Level.toLevel(Level.OFF_INT);
+    assertEquals("OFF", level.toString());
   }
 
-    /**
-     * Tests Level.toLevel(17, Level.FATAL).
-     */
+  /**
+   * Tests Level.toLevel(17, Level.FATAL).
+   */
   public void testToLevelUnrecognizedInt() {
-      Level level = Level.toLevel(17, Level.FATAL);
-      assertEquals("FATAL", level.toString());
+    Level level = Level.toLevel(17, Level.FATAL);
+    assertEquals("FATAL", level.toString());
   }
 
-    /**
-     * Tests Level.toLevel(null, Level.FATAL).
-     */
+  /**
+   * Tests Level.toLevel(null, Level.FATAL).
+   */
   public void testToLevelNull() {
-      Level level = Level.toLevel(null, Level.FATAL);
-      assertEquals("FATAL", level.toString());
+    Level level = Level.toLevel(null, Level.FATAL);
+    assertEquals("FATAL", level.toString());
   }
 
-    /**
-     * Test that dotless lower I + "nfo" is recognized as INFO.
-     */
+  /**
+   * Test that dotless lower I + "nfo" is recognized as INFO.
+   */
   public void testDotlessLowerI() {
-      Level level = Level.toLevel("\u0131nfo");
-      assertEquals("INFO", level.toString());
+    Level level = Level.toLevel("\u0131nfo");
+    assertEquals("INFO", level.toString());
   }
 
-    /**
-     * Test that dotted lower I + "nfo" is recognized as INFO
-     * even in Turkish locale.
-     */
+  /**
+   * Test that dotted lower I + "nfo" is recognized as INFO
+   * even in Turkish locale.
+   */
   public void testDottedLowerI() {
-      Locale defaultLocale = Locale.getDefault();
-      Locale turkey = new Locale("tr", "TR");
-      Locale.setDefault(turkey);
-      Level level = Level.toLevel("info");
-      Locale.setDefault(defaultLocale);
-      assertEquals("INFO", level.toString());
+    Locale defaultLocale = Locale.getDefault();
+    Locale turkey = new Locale("tr", "TR");
+    Locale.setDefault(turkey);
+    Level level = Level.toLevel("info");
+    Locale.setDefault(defaultLocale);
+    assertEquals("INFO", level.toString());
   }
 
 

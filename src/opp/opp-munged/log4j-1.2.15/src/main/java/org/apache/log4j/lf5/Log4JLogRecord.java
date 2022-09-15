@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -55,6 +55,7 @@ public class Log4JLogRecord extends LogRecord {
   //--------------------------------------------------------------------------
   //   Public Methods:
   //--------------------------------------------------------------------------
+
   /**
    * Determines which <code>Priority</code> levels will
    * be displayed in colored font when the <code>LogMonitorAppender</code>
@@ -67,7 +68,7 @@ public class Log4JLogRecord extends LogRecord {
     boolean isSevere = false;
 
     if (LogLevel.ERROR.equals(getLevel()) ||
-        LogLevel.FATAL.equals(getLevel())) {
+      LogLevel.FATAL.equals(getLevel())) {
       isSevere = true;
     }
 
@@ -81,7 +82,7 @@ public class Log4JLogRecord extends LogRecord {
    * available via the getThrownStackTrace() method.
    *
    * @param throwableInfo An org.apache.log4j.spi.ThrowableInformation to
-   * associate with this Log4JLogRecord.
+   *                      associate with this Log4JLogRecord.
    * @see #getThrownStackTrace()
    */
   public void setThrownStackTrace(ThrowableInformation throwableInfo) {

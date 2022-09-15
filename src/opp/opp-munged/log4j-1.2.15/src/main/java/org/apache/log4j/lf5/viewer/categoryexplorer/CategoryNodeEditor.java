@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -84,14 +84,14 @@ public class CategoryNodeEditor extends CategoryAbstractCellEditor {
   //--------------------------------------------------------------------------
 
   public Component getTreeCellEditorComponent(JTree tree, Object value,
-      boolean selected, boolean expanded,
-      boolean leaf, int row) {
+                                              boolean selected, boolean expanded,
+                                              boolean leaf, int row) {
     _lastEditedNode = (CategoryNode) value;
     _tree = tree;
 
     return _renderer.getTreeCellRendererComponent(tree,
-        value, selected, expanded,
-        leaf, row, true);
+      value, selected, expanded,
+      leaf, row, true);
     // hasFocus ignored
   }
 
@@ -114,10 +114,10 @@ public class CategoryNodeEditor extends CategoryAbstractCellEditor {
 
   protected void showPropertiesDialog(CategoryNode node) {
     JOptionPane.showMessageDialog(
-        _tree,
-        getDisplayedProperties(node),
-        "Category Properties: " + node.getTitle(),
-        JOptionPane.PLAIN_MESSAGE
+      _tree,
+      getDisplayedProperties(node),
+      "Category Properties: " + node.getTitle(),
+      JOptionPane.PLAIN_MESSAGE
     );
   }
 
@@ -131,11 +131,11 @@ public class CategoryNodeEditor extends CategoryAbstractCellEditor {
       result.add("Contains descendants with a fatal LogRecord.");
     }
     result.add("LogRecords in this category alone: " +
-        node.getNumberOfContainedRecords());
+      node.getNumberOfContainedRecords());
     result.add("LogRecords in descendant categories: " +
-        node.getNumberOfRecordsFromChildren());
+      node.getNumberOfRecordsFromChildren());
     result.add("LogRecords in this category including descendants: " +
-        node.getTotalNumberOfRecords());
+      node.getTotalNumberOfRecords());
     return result.toArray();
   }
 
@@ -161,27 +161,27 @@ public class CategoryNodeEditor extends CategoryAbstractCellEditor {
 
   protected JMenuItem createSelectDescendantsMenuItem(final CategoryNode node) {
     JMenuItem selectDescendants =
-        new JMenuItem("Select All Descendant Categories");
+      new JMenuItem("Select All Descendant Categories");
     selectDescendants.addActionListener(
-        new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            _categoryModel.setDescendantSelection(node, true);
-          }
+      new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          _categoryModel.setDescendantSelection(node, true);
         }
+      }
     );
     return selectDescendants;
   }
 
   protected JMenuItem createUnselectDescendantsMenuItem(final CategoryNode node) {
     JMenuItem unselectDescendants =
-        new JMenuItem("Deselect All Descendant Categories");
+      new JMenuItem("Deselect All Descendant Categories");
     unselectDescendants.addActionListener(
 
-        new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            _categoryModel.setDescendantSelection(node, false);
-          }
+      new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          _categoryModel.setDescendantSelection(node, false);
         }
+      }
 
     );
     return unselectDescendants;
@@ -213,7 +213,7 @@ public class CategoryNodeEditor extends CategoryAbstractCellEditor {
    * could be pruned from the Category Explorer popup menu.
    * This menu option only appears when a user right clicks on
    * the Category parent node.
-   *
+   * <p>
    * See removeUnusedNodes()
    */
   protected JMenuItem createRemoveMenuItem() {
@@ -254,7 +254,7 @@ public class CategoryNodeEditor extends CategoryAbstractCellEditor {
     while (enumeration.hasMoreElements()) {
       CategoryNode node = (CategoryNode) enumeration.nextElement();
       if (node.isLeaf() && node.getNumberOfContainedRecords() == 0
-          && node.getParent() != null) {
+        && node.getParent() != null) {
         _categoryModel.removeNodeFromParent(node);
         count++;
       }

@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -40,9 +40,11 @@ import java.io.Serializable;
 
 
 /**
-   Unit test the {@link ObjectRenderer}.
-   @author Ceki G&uuml;lc&uuml;
-   @since 1.0 */
+ * Unit test the {@link ObjectRenderer}.
+ *
+ * @author Ceki G&uuml;lc&uuml;
+ * @since 1.0
+ */
 public class ORTestCase extends TestCase {
 
   static UTObjectRenderer aor;
@@ -57,18 +59,16 @@ public class ORTestCase extends TestCase {
   static UTObjectRenderer sor;
 
 
-
   public ORTestCase(String name) {
     super(name);
   }
 
 
-  public
-  void setUp() {
+  public void setUp() {
     aor = new UTObjectRenderer("A");
     bor = new UTObjectRenderer("B");
-    xor = new UTObjectRenderer("X");    
-    yor = new UTObjectRenderer("Y");    
+    xor = new UTObjectRenderer("X");
+    yor = new UTObjectRenderer("Y");
 
     oor = new UTObjectRenderer("Object");
     nor = new UTObjectRenderer("Number");
@@ -79,8 +79,7 @@ public class ORTestCase extends TestCase {
 
   // Add: no renderer
   // Expect: defaultRenderer
-  public
-  void test1() {
+  public void test1() {
     RendererMap map = new RendererMap();
     ObjectRenderer dr = map.getDefaultRenderer();
     ObjectRenderer r = map.get(Integer.class);
@@ -89,8 +88,7 @@ public class ORTestCase extends TestCase {
 
   // Add: Integer renderer
   // Expect: Integer renderer
-  public
-  void test2() {
+  public void test2() {
     RendererMap map = new RendererMap();
     map.put(Integer.class, ior);
     ObjectRenderer r = map.get(Integer.class);
@@ -100,8 +98,7 @@ public class ORTestCase extends TestCase {
 
   // Add: Number renderer
   // Expect: Number
-  public
-  void test3() {
+  public void test3() {
     RendererMap map = new RendererMap();
     map.put(Number.class, ior);
     ObjectRenderer r = map.get(Integer.class);
@@ -110,8 +107,7 @@ public class ORTestCase extends TestCase {
 
   // Add: Object renderer
   // Result: Object
-  public
-  void test4() {
+  public void test4() {
     RendererMap map = new RendererMap();
     map.put(Object.class, oor);
     ObjectRenderer r = map.get(Integer.class);
@@ -120,8 +116,7 @@ public class ORTestCase extends TestCase {
 
   // Add: Object, Number, Integer
   // Expect: Integer
-  public
-  void test5() {
+  public void test5() {
     RendererMap map = new RendererMap();
 
     map.put(Object.class, oor);
@@ -134,28 +129,26 @@ public class ORTestCase extends TestCase {
 
   // Add: Object, Number
   // Expect: Number
-  public
-  void test6() {
+  public void test6() {
     RendererMap map = new RendererMap();
 
     map.put(Object.class, oor);
     map.put(Number.class, nor);
- 
+
     ObjectRenderer r = map.get(Integer.class);
     assertEquals(r, nor);
   }
 
   // Add: Comparable
   // Expect: Comparable
-  public
-  void test7() throws Exception {
+  public void test7() throws Exception {
     RendererMap map = new RendererMap();
-    Class comparable = null; 
+    Class comparable = null;
     try {
-        comparable = getClass().forName("java.lang.Comparable");
-    } catch(Exception ex) {
-        //  likely JDK 1.1
-        return;
+      comparable = getClass().forName("java.lang.Comparable");
+    } catch (Exception ex) {
+      //  likely JDK 1.1
+      return;
     }
     map.put(comparable, cor);
     ObjectRenderer r = map.get(Integer.class);
@@ -165,40 +158,34 @@ public class ORTestCase extends TestCase {
 
   // Add: Serializable
   // Expect: Serializablee
-  public
-  void test8() {
+  public void test8() {
     RendererMap map = new RendererMap();
-    map.put(Serializable.class, sor); 
+    map.put(Serializable.class, sor);
     ObjectRenderer r = map.get(Integer.class);
     assertEquals(r, sor);
   }
 
   // Add: Y
   // Expect: Y
-  public
-  void test9() {
+  public void test9() {
     RendererMap map = new RendererMap();
-    map.put(Y.class, yor); 
+    map.put(Y.class, yor);
     ObjectRenderer r = map.get(B.class);
     assertEquals(r, yor);
   }
 
   // Add: X
   // Expect: X
-  public
-  void test10() {
+  public void test10() {
     RendererMap map = new RendererMap();
-    map.put(X.class, xor); 
+    map.put(X.class, xor);
     ObjectRenderer r = map.get(B.class);
     assertEquals(r, xor);
   }
 
 
-
-
   public
-  static
-  Test suite() {
+  static Test suite() {
     TestSuite suite = new TestSuite();
     suite.addTest(new ORTestCase("test1"));
     suite.addTest(new ORTestCase("test2"));
@@ -214,38 +201,35 @@ public class ORTestCase extends TestCase {
   }
 
 
-
 }
 
 class UTObjectRenderer implements ObjectRenderer {
-  
+
   String name;
 
   UTObjectRenderer(String name) {
     this.name = name;
   }
 
-  public
-  String doRender(Object o) {
+  public String doRender(Object o) {
     return name;
   }
 
-  public
-  String toString() {
-    return("UTObjectRenderer: "+name);
+  public String toString() {
+    return ("UTObjectRenderer: " + name);
   }
 }
 
 
-interface X  {
+interface X {
 }
 
 interface Y extends X {
 }
 
 
-class A implements Y  {
+class A implements Y {
 }
 
-class B extends A  {
+class B extends A {
 }

@@ -55,21 +55,21 @@ public class XMLLayoutTest extends LayoutTest {
     super(testName, "text/plain", false, null, null);
   }
 
-    /**
-     * Clear MDC and NDC before test.
-     */
+  /**
+   * Clear MDC and NDC before test.
+   */
   public void setUp() {
-      NDC.clear();
-      if (MDC.getContext() != null) {
-        MDC.getContext().clear();
-      }
+    NDC.clear();
+    if (MDC.getContext() != null) {
+      MDC.getContext().clear();
+    }
   }
 
-    /**
-     * Clear MDC and NDC after test.
-     */
+  /**
+   * Clear MDC and NDC after test.
+   */
   public void tearDown() {
-      setUp();
+    setUp();
   }
 
   /**
@@ -81,6 +81,7 @@ public class XMLLayoutTest extends LayoutTest {
 
   /**
    * Parses the string as the body of an XML document and returns the document element.
+   *
    * @param source source string.
    * @return document element.
    * @throws Exception if parser can not be constructed or source is not a valid XML document.
@@ -99,8 +100,9 @@ public class XMLLayoutTest extends LayoutTest {
 
   /**
    * Checks a log4j:event element against expectations.
+   *
    * @param element element, may not be null.
-   * @param event event, may not be null.
+   * @param event   event, may not be null.
    */
   private void checkEventElement(
     final Element element, final LoggingEvent event) {
@@ -115,6 +117,7 @@ public class XMLLayoutTest extends LayoutTest {
 
   /**
    * Checks a log4j:message element against expectations.
+   *
    * @param element element, may not be null.
    * @param message expected message.
    */
@@ -131,6 +134,7 @@ public class XMLLayoutTest extends LayoutTest {
 
   /**
    * Checks a log4j:message element against expectations.
+   *
    * @param element element, may not be null.
    * @param message expected message.
    */
@@ -146,8 +150,9 @@ public class XMLLayoutTest extends LayoutTest {
 
   /**
    * Checks a log4j:throwable element against expectations.
+   *
    * @param element element, may not be null.
-   * @param ex exception, may not be null.
+   * @param ex      exception, may not be null.
    */
   private void checkThrowableElement(
     final Element element, final Exception ex) {
@@ -162,33 +167,35 @@ public class XMLLayoutTest extends LayoutTest {
     assertNull(messageNode.getNextSibling());
   }
 
-    /**
-     * Checks a log4j:properties element against expectations.
-     * @param element element, may not be null.
-     * @param key key.
-     * @param value value.
-     */
-    private void checkPropertiesElement(
-      final Element element, final String key, final String value) {
-      assertEquals("log4j:properties", element.getTagName());
+  /**
+   * Checks a log4j:properties element against expectations.
+   *
+   * @param element element, may not be null.
+   * @param key     key.
+   * @param value   value.
+   */
+  private void checkPropertiesElement(
+    final Element element, final String key, final String value) {
+    assertEquals("log4j:properties", element.getTagName());
 
-      int childNodeCount = 0;
-      for(Node child = element.getFirstChild();
-               child != null;
-               child = child.getNextSibling()) {
-          if (child.getNodeType() == Node.ELEMENT_NODE) {
-              assertEquals("log4j:data", child.getNodeName());
-              Element childElement = (Element) child;
-              assertEquals(key, childElement.getAttribute("name"));
-              assertEquals(value, childElement.getAttribute("value"));
-              childNodeCount++;
-          }
+    int childNodeCount = 0;
+    for (Node child = element.getFirstChild();
+         child != null;
+         child = child.getNextSibling()) {
+      if (child.getNodeType() == Node.ELEMENT_NODE) {
+        assertEquals("log4j:data", child.getNodeName());
+        Element childElement = (Element) child;
+        assertEquals(key, childElement.getAttribute("name"));
+        assertEquals(value, childElement.getAttribute("value"));
+        childNodeCount++;
       }
-      assertEquals(1, childNodeCount);  
     }
+    assertEquals(1, childNodeCount);
+  }
 
   /**
    * Tests formatted results.
+   *
    * @throws Exception if parser can not be constructed or source is not a valid XML document.
    */
   public void testFormat() throws Exception {
@@ -205,26 +212,26 @@ public class XMLLayoutTest extends LayoutTest {
 
     for (
       Node node = parsedResult.getFirstChild(); node != null;
-        node = node.getNextSibling()) {
+      node = node.getNextSibling()) {
       switch (node.getNodeType()) {
-      case Node.ELEMENT_NODE:
-        childElementCount++;
-        checkMessageElement((Element) node, "Hello, World");
+        case Node.ELEMENT_NODE:
+          childElementCount++;
+          checkMessageElement((Element) node, "Hello, World");
 
-        break;
+          break;
 
-      case Node.COMMENT_NODE:
-        break;
+        case Node.COMMENT_NODE:
+          break;
 
-      case Node.TEXT_NODE:
+        case Node.TEXT_NODE:
 
-        //  should only be whitespace
-        break;
+          //  should only be whitespace
+          break;
 
-      default:
-        fail("Unexpected node type");
+        default:
+          fail("Unexpected node type");
 
-        break;
+          break;
       }
     }
 
@@ -233,6 +240,7 @@ public class XMLLayoutTest extends LayoutTest {
 
   /**
    * Tests formatted results with an exception.
+   *
    * @throws Exception if parser can not be constructed or source is not a valid XML document.
    */
   public void testFormatWithException() throws Exception {
@@ -250,31 +258,31 @@ public class XMLLayoutTest extends LayoutTest {
 
     for (
       Node node = parsedResult.getFirstChild(); node != null;
-        node = node.getNextSibling()) {
+      node = node.getNextSibling()) {
       switch (node.getNodeType()) {
-      case Node.ELEMENT_NODE:
-        childElementCount++;
+        case Node.ELEMENT_NODE:
+          childElementCount++;
 
-        if (childElementCount == 1) {
-          checkMessageElement((Element) node, "Hello, World");
-        } else {
-          checkThrowableElement((Element) node, ex);
-        }
+          if (childElementCount == 1) {
+            checkMessageElement((Element) node, "Hello, World");
+          } else {
+            checkThrowableElement((Element) node, ex);
+          }
 
-        break;
+          break;
 
-      case Node.COMMENT_NODE:
-        break;
+        case Node.COMMENT_NODE:
+          break;
 
-      case Node.TEXT_NODE:
+        case Node.TEXT_NODE:
 
-        //  should only be whitespace
-        break;
+          //  should only be whitespace
+          break;
 
-      default:
-        fail("Unexpected node type");
+        default:
+          fail("Unexpected node type");
 
-        break;
+          break;
       }
     }
 
@@ -283,6 +291,7 @@ public class XMLLayoutTest extends LayoutTest {
 
   /**
    * Tests formatted results with an exception.
+   *
    * @throws Exception if parser can not be constructed or source is not a valid XML document.
    */
   public void testFormatWithNDC() throws Exception {
@@ -303,31 +312,31 @@ public class XMLLayoutTest extends LayoutTest {
 
     for (
       Node node = parsedResult.getFirstChild(); node != null;
-        node = node.getNextSibling()) {
+      node = node.getNextSibling()) {
       switch (node.getNodeType()) {
-      case Node.ELEMENT_NODE:
-        childElementCount++;
+        case Node.ELEMENT_NODE:
+          childElementCount++;
 
-        if (childElementCount == 1) {
-          checkMessageElement((Element) node, "Hello, World");
-        } else {
-          checkNDCElement((Element) node, "NDC goes here");
-        }
+          if (childElementCount == 1) {
+            checkMessageElement((Element) node, "Hello, World");
+          } else {
+            checkNDCElement((Element) node, "NDC goes here");
+          }
 
-        break;
+          break;
 
-      case Node.COMMENT_NODE:
-        break;
+        case Node.COMMENT_NODE:
+          break;
 
-      case Node.TEXT_NODE:
+        case Node.TEXT_NODE:
 
-        //  should only be whitespace
-        break;
+          //  should only be whitespace
+          break;
 
-      default:
-        fail("Unexpected node type");
+        default:
+          fail("Unexpected node type");
 
-        break;
+          break;
       }
     }
 
@@ -354,77 +363,79 @@ public class XMLLayoutTest extends LayoutTest {
     layout.activateOptions();
   }
 
+  /**
+   * Level with arbitrary toString value.
+   */
+  private static final class ProblemLevel extends Level {
     /**
-     * Level with arbitrary toString value.
+     * Construct new instance.
+     *
+     * @param levelName level name, may not be null.
      */
-    private static final class ProblemLevel extends Level {
-        /**
-         * Construct new instance.
-         * @param levelName level name, may not be null.
-         */
-        public ProblemLevel(final String levelName) {
-            super(6000, levelName, 6);
-        }
+    public ProblemLevel(final String levelName) {
+      super(6000, levelName, 6);
     }
+  }
 
-    /**
-     * Tests problematic characters in multiple fields.
-     * @throws Exception if parser can not be constructed or source is not a valid XML document.
-     */
-    public void testProblemCharacters() throws Exception {
-      String problemName = "com.example.bar<>&\"'";
-      Logger logger = Logger.getLogger(problemName);
-      Level level = new ProblemLevel(problemName);
-      Exception ex = new IllegalArgumentException(problemName);
-      String threadName = Thread.currentThread().getName();
-      Thread.currentThread().setName(problemName);
-      NDC.push(problemName);
-      Hashtable mdcMap = MDC.getContext();
-      if (mdcMap != null) {
-          mdcMap.clear();
-      }
-      MDC.put(problemName, problemName);
-      LoggingEvent event =
-        new LoggingEvent(
-          problemName, logger, level, problemName, ex);
-      XMLLayout layout = (XMLLayout) createLayout();
-      layout.setProperties(true);
-      String result = layout.format(event);
-      mdcMap = MDC.getContext();
-      if (mdcMap != null) {
-          mdcMap.clear();
-      }
-      Thread.currentThread().setName(threadName);
+  /**
+   * Tests problematic characters in multiple fields.
+   *
+   * @throws Exception if parser can not be constructed or source is not a valid XML document.
+   */
+  public void testProblemCharacters() throws Exception {
+    String problemName = "com.example.bar<>&\"'";
+    Logger logger = Logger.getLogger(problemName);
+    Level level = new ProblemLevel(problemName);
+    Exception ex = new IllegalArgumentException(problemName);
+    String threadName = Thread.currentThread().getName();
+    Thread.currentThread().setName(problemName);
+    NDC.push(problemName);
+    Hashtable mdcMap = MDC.getContext();
+    if (mdcMap != null) {
+      mdcMap.clear();
+    }
+    MDC.put(problemName, problemName);
+    LoggingEvent event =
+      new LoggingEvent(
+        problemName, logger, level, problemName, ex);
+    XMLLayout layout = (XMLLayout) createLayout();
+    layout.setProperties(true);
+    String result = layout.format(event);
+    mdcMap = MDC.getContext();
+    if (mdcMap != null) {
+      mdcMap.clear();
+    }
+    Thread.currentThread().setName(threadName);
 
-      Element parsedResult = parse(result);
-      checkEventElement(parsedResult, event);
+    Element parsedResult = parse(result);
+    checkEventElement(parsedResult, event);
 
-      int childElementCount = 0;
+    int childElementCount = 0;
 
-      for (
-        Node node = parsedResult.getFirstChild(); node != null;
-          node = node.getNextSibling()) {
-        switch (node.getNodeType()) {
+    for (
+      Node node = parsedResult.getFirstChild(); node != null;
+      node = node.getNextSibling()) {
+      switch (node.getNodeType()) {
         case Node.ELEMENT_NODE:
           childElementCount++;
-          switch(childElementCount) {
-              case 1:
+          switch (childElementCount) {
+            case 1:
               checkMessageElement((Element) node, problemName);
               break;
 
-              case 2:
+            case 2:
               checkNDCElement((Element) node, problemName);
               break;
 
-              case 3:
+            case 3:
               checkThrowableElement((Element) node, ex);
               break;
 
-              case 4:
+            case 4:
               checkPropertiesElement((Element) node, problemName, problemName);
               break;
 
-              default:
+            default:
               fail("Unexpected element");
               break;
           }
@@ -443,58 +454,58 @@ public class XMLLayoutTest extends LayoutTest {
           fail("Unexpected node type");
 
           break;
-        }
       }
     }
+  }
 
-    /**
-      * Tests CDATA element within NDC content.  See bug 37560.
-      */
-    public void testNDCWithCDATA() throws Exception {
-        Logger logger = Logger.getLogger("com.example.bar");
-        Level level = Level.INFO;
-        String ndcMessage ="<envelope><faultstring><![CDATA[The EffectiveDate]]></faultstring><envelope>";
-        NDC.push(ndcMessage);
-        LoggingEvent event =
-          new LoggingEvent(
-            "com.example.bar", logger, level, "Hello, World", null);
-        Layout layout = createLayout();
-        String result = layout.format(event);
-        NDC.clear();
-        Element parsedResult = parse(result);
-        NodeList ndcs = parsedResult.getElementsByTagName("log4j:NDC");
-        assertEquals(1, ndcs.getLength());
-        StringBuffer buf = new StringBuffer();
-        for(Node child = ndcs.item(0).getFirstChild();
-                child != null;
-                child = child.getNextSibling()) {
-            buf.append(child.getNodeValue());
-        }
-        assertEquals(ndcMessage, buf.toString());
-   }
+  /**
+   * Tests CDATA element within NDC content.  See bug 37560.
+   */
+  public void testNDCWithCDATA() throws Exception {
+    Logger logger = Logger.getLogger("com.example.bar");
+    Level level = Level.INFO;
+    String ndcMessage = "<envelope><faultstring><![CDATA[The EffectiveDate]]></faultstring><envelope>";
+    NDC.push(ndcMessage);
+    LoggingEvent event =
+      new LoggingEvent(
+        "com.example.bar", logger, level, "Hello, World", null);
+    Layout layout = createLayout();
+    String result = layout.format(event);
+    NDC.clear();
+    Element parsedResult = parse(result);
+    NodeList ndcs = parsedResult.getElementsByTagName("log4j:NDC");
+    assertEquals(1, ndcs.getLength());
+    StringBuffer buf = new StringBuffer();
+    for (Node child = ndcs.item(0).getFirstChild();
+         child != null;
+         child = child.getNextSibling()) {
+      buf.append(child.getNodeValue());
+    }
+    assertEquals(ndcMessage, buf.toString());
+  }
 
-    /**
-      * Tests CDATA element within exception.  See bug 37560.
-      */
-    public void testExceptionWithCDATA() throws Exception {
-        Logger logger = Logger.getLogger("com.example.bar");
-        Level level = Level.INFO;
-        String exceptionMessage ="<envelope><faultstring><![CDATA[The EffectiveDate]]></faultstring><envelope>";
-        LoggingEvent event =
-          new LoggingEvent(
-            "com.example.bar", logger, level, "Hello, World", new Exception(exceptionMessage));
-        Layout layout = createLayout();
-        String result = layout.format(event);
-        Element parsedResult = parse(result);
-        NodeList throwables = parsedResult.getElementsByTagName("log4j:throwable");
-        assertEquals(1, throwables.getLength());
-        StringBuffer buf = new StringBuffer();
-        for(Node child = throwables.item(0).getFirstChild();
-                child != null;
-                child = child.getNextSibling()) {
-            buf.append(child.getNodeValue());
-        }
-        assertTrue(buf.toString().indexOf(exceptionMessage) != -1);
-   }
+  /**
+   * Tests CDATA element within exception.  See bug 37560.
+   */
+  public void testExceptionWithCDATA() throws Exception {
+    Logger logger = Logger.getLogger("com.example.bar");
+    Level level = Level.INFO;
+    String exceptionMessage = "<envelope><faultstring><![CDATA[The EffectiveDate]]></faultstring><envelope>";
+    LoggingEvent event =
+      new LoggingEvent(
+        "com.example.bar", logger, level, "Hello, World", new Exception(exceptionMessage));
+    Layout layout = createLayout();
+    String result = layout.format(event);
+    Element parsedResult = parse(result);
+    NodeList throwables = parsedResult.getElementsByTagName("log4j:throwable");
+    assertEquals(1, throwables.getLength());
+    StringBuffer buf = new StringBuffer();
+    for (Node child = throwables.item(0).getFirstChild();
+         child != null;
+         child = child.getNextSibling()) {
+      buf.append(child.getNodeValue());
+    }
+    assertTrue(buf.toString().indexOf(exceptionMessage) != -1);
+  }
 
 }

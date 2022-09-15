@@ -27,20 +27,20 @@ log4j.appender.NULL.layout.ConversionPattern=%r [%t] %-5p %.10c %x - %m%n
 -->
 <log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
 
-        <appender name="NULL" class="org.apache.log4j.performance.NullAppender">
-           <layout class="org.apache.log4j.PatternLayout">
-              <param name="ConversionPattern" 
-                     value="%r [%t] %-5p %.10c %x - %m%n"/>
-	   </layout>
-	</appender>
- 
-        <category name="A0123456789">  	
-	   <priority value ="info" />
-        </category>  	
+  <appender name="NULL" class="org.apache.log4j.performance.NullAppender">
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern"
+             value="%r [%t] %-5p %.10c %x - %m%n"/>
+    </layout>
+  </appender>
 
-	<root>
-	   <priority value ="debug" />
-   	   <appender-ref ref="NULL" />
-	</root>
-	
+  <category name="A0123456789">
+    <priority value="info"/>
+  </category>
+
+  <root>
+    <priority value="debug"/>
+    <appender-ref ref="NULL"/>
+  </root>
+
 </log4j:configuration>

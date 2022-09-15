@@ -47,6 +47,7 @@ public class LoggingEventTest extends TestCase {
   /**
    * Serialize a simple logging event and check it against
    * a witness.
+   *
    * @throws Exception if exception during test.
    */
   public void testSerializationSimple() throws Exception {
@@ -56,7 +57,7 @@ public class LoggingEventTest extends TestCase {
         root.getClass().getName(), root, Level.INFO, "Hello, world.", null);
 //    event.prepareForDeferredProcessing();
 
-    int[] skip = new int[] { 352, 353, 354, 355, 356 };
+    int[] skip = new int[]{352, 353, 354, 355, 356};
     SerializationTestHelper.assertSerializationEquals(
       "witness/serialization/simple.bin", event, skip, 237);
   }
@@ -64,8 +65,8 @@ public class LoggingEventTest extends TestCase {
   /**
    * Serialize a logging event with an exception and check it against
    * a witness.
-   * @throws Exception if exception during test.
    *
+   * @throws Exception if exception during test.
    */
   public void testSerializationWithException() throws Exception {
     Logger root = Logger.getRootLogger();
@@ -75,7 +76,7 @@ public class LoggingEventTest extends TestCase {
         root.getClass().getName(), root, Level.INFO, "Hello, world.", ex);
 //    event.prepareForDeferredProcessing();
 
-    int[] skip = new int[] { 352, 353, 354, 355, 356 };
+    int[] skip = new int[]{352, 353, 354, 355, 356};
     SerializationTestHelper.assertSerializationEquals(
       "witness/serialization/exception.bin", event, skip, 237);
   }
@@ -83,8 +84,8 @@ public class LoggingEventTest extends TestCase {
   /**
    * Serialize a logging event with an exception and check it against
    * a witness.
-   * @throws Exception if exception during test.
    *
+   * @throws Exception if exception during test.
    */
   public void testSerializationWithLocation() throws Exception {
     Logger root = Logger.getRootLogger();
@@ -94,15 +95,15 @@ public class LoggingEventTest extends TestCase {
     LocationInfo info = event.getLocationInformation();
 //    event.prepareForDeferredProcessing();
 
-    int[] skip = new int[] { 352, 353, 354, 355, 356 };
+    int[] skip = new int[]{352, 353, 354, 355, 356};
     SerializationTestHelper.assertSerializationEquals(
       "witness/serialization/location.bin", event, skip, 237);
   }
 
   /**
    * Serialize a logging event with ndc.
-   * @throws Exception if exception during test.
    *
+   * @throws Exception if exception during test.
    */
   public void testSerializationNDC() throws Exception {
     Logger root = Logger.getRootLogger();
@@ -113,15 +114,15 @@ public class LoggingEventTest extends TestCase {
         root.getClass().getName(), root, Level.INFO, "Hello, world.", null);
 //    event.prepareForDeferredProcessing();
 
-    int[] skip = new int[] { 352, 353, 354, 355, 356 };
+    int[] skip = new int[]{352, 353, 354, 355, 356};
     SerializationTestHelper.assertSerializationEquals(
       "witness/serialization/ndc.bin", event, skip, 237);
-    }
+  }
 
   /**
    * Serialize a logging event with mdc.
-   * @throws Exception if exception during test.
    *
+   * @throws Exception if exception during test.
    */
   public void testSerializationMDC() throws Exception {
     Logger root = Logger.getRootLogger();
@@ -132,15 +133,15 @@ public class LoggingEventTest extends TestCase {
         root.getClass().getName(), root, Level.INFO, "Hello, world.", null);
 //    event.prepareForDeferredProcessing();
 
-    int[] skip = new int[] { 352, 353, 354, 355, 356 };
+    int[] skip = new int[]{352, 353, 354, 355, 356};
     SerializationTestHelper.assertSerializationEquals(
       "witness/serialization/mdc.bin", event, skip, 237);
   }
 
   /**
    * Deserialize a simple logging event.
-   * @throws Exception if exception during test.
    *
+   * @throws Exception if exception during test.
    */
   public void testDeserializationSimple() throws Exception {
     Object obj =
@@ -155,8 +156,8 @@ public class LoggingEventTest extends TestCase {
 
   /**
    * Deserialize a logging event with an exception.
-   * @throws Exception if exception during test.
    *
+   * @throws Exception if exception during test.
    */
   public void testDeserializationWithException() throws Exception {
     Object obj =
@@ -171,8 +172,8 @@ public class LoggingEventTest extends TestCase {
 
   /**
    * Deserialize a logging event with an exception.
-   * @throws Exception if exception during test.
    *
+   * @throws Exception if exception during test.
    */
   public void testDeserializationWithLocation() throws Exception {
     Object obj =
@@ -185,57 +186,58 @@ public class LoggingEventTest extends TestCase {
     assertEquals(Level.INFO, event.getLevel());
   }
 
-    /**
-     * Tests LoggingEvent.fqnOfCategoryClass.
-     */
+  /**
+   * Tests LoggingEvent.fqnOfCategoryClass.
+   */
   public void testFQNOfCategoryClass() {
-      Category root = Logger.getRootLogger();
-      Priority info = Level.INFO;
-      String catName = Logger.class.toString();
-      LoggingEvent event =
-        new LoggingEvent(
-          catName, root, info, "Hello, world.", null);
-      assertEquals(catName, event.fqnOfCategoryClass);
+    Category root = Logger.getRootLogger();
+    Priority info = Level.INFO;
+    String catName = Logger.class.toString();
+    LoggingEvent event =
+      new LoggingEvent(
+        catName, root, info, "Hello, world.", null);
+    assertEquals(catName, event.fqnOfCategoryClass);
   }
 
-    /**
-     * Tests LoggingEvent.level.
-     * @deprecated
-     */
+  /**
+   * Tests LoggingEvent.level.
+   *
+   * @deprecated
+   */
   public void testLevel() {
-      Category root = Logger.getRootLogger();
-      Priority info = Level.INFO;
-      String catName = Logger.class.toString();
-      LoggingEvent event =
-        new LoggingEvent(
-          catName, root, 0L,  info, "Hello, world.", null);
-      Priority error = Level.ERROR;
-      event.level = error;
-      assertEquals(Level.ERROR, event.level);
+    Category root = Logger.getRootLogger();
+    Priority info = Level.INFO;
+    String catName = Logger.class.toString();
+    LoggingEvent event =
+      new LoggingEvent(
+        catName, root, 0L, info, "Hello, world.", null);
+    Priority error = Level.ERROR;
+    event.level = error;
+    assertEquals(Level.ERROR, event.level);
   }
 
-    /**
-     * Tests LoggingEvent.getLocationInfo() when no FQCN is specified.
-     * See bug 41186.
-     */
+  /**
+   * Tests LoggingEvent.getLocationInfo() when no FQCN is specified.
+   * See bug 41186.
+   */
   public void testLocationInfoNoFQCN() {
-      Category root = Logger.getRootLogger();
-	  Priority level = Level.INFO;
-      LoggingEvent event =
-        new LoggingEvent(
-          null, root, 0L,  level, "Hello, world.", null);
-      LocationInfo info = event.getLocationInformation();
-	  //
-	  //  log4j 1.2 returns an object, its layout doesn't check for nulls.
-	  //  log4j 1.3 returns a null.
-	  //
-	  assertNotNull(info);
-	  if (info != null) {
-	     assertEquals("?", info.getLineNumber());
-		 assertEquals("?", info.getClassName());
-		 assertEquals("?", info.getFileName());
-		 assertEquals("?", info.getMethodName());
-	  }
+    Category root = Logger.getRootLogger();
+    Priority level = Level.INFO;
+    LoggingEvent event =
+      new LoggingEvent(
+        null, root, 0L, level, "Hello, world.", null);
+    LocationInfo info = event.getLocationInformation();
+    //
+    //  log4j 1.2 returns an object, its layout doesn't check for nulls.
+    //  log4j 1.3 returns a null.
+    //
+    assertNotNull(info);
+    if (info != null) {
+      assertEquals("?", info.getLineNumber());
+      assertEquals("?", info.getClassName());
+      assertEquals("?", info.getFileName());
+      assertEquals("?", info.getMethodName());
+    }
   }
 
 

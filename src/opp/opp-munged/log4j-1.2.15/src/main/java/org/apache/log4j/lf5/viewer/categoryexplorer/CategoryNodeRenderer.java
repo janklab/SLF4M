@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -60,7 +60,7 @@ public class CategoryNodeRenderer extends DefaultTreeCellRenderer {
     if (_sat == null) {
       // Load the satellite image.
       String resource =
-          "/org/apache/log4j/lf5/viewer/images/channelexplorer_satellite.gif";
+        "/org/apache/log4j/lf5/viewer/images/channelexplorer_satellite.gif";
       URL satURL = getClass().getResource(resource);
 
       _sat = new ImageIcon(satURL);
@@ -85,10 +85,10 @@ public class CategoryNodeRenderer extends DefaultTreeCellRenderer {
   //   Public Methods:
   //--------------------------------------------------------------------------
   public Component getTreeCellRendererComponent(
-      JTree tree, Object value,
-      boolean selected, boolean expanded,
-      boolean leaf, int row,
-      boolean hasFocus) {
+    JTree tree, Object value,
+    boolean selected, boolean expanded,
+    boolean leaf, int row,
+    boolean hasFocus) {
 
     CategoryNode node = (CategoryNode) value;
     //FileNode node = (FileNode)value;
@@ -96,8 +96,8 @@ public class CategoryNodeRenderer extends DefaultTreeCellRenderer {
     //						   expanded, leaf, row, hasFocus);
 
     super.getTreeCellRendererComponent(
-        tree, value, selected, expanded,
-        leaf, row, hasFocus);
+      tree, value, selected, expanded,
+      leaf, row, hasFocus);
 
     if (row == 0) {
       // Root row -- no check box

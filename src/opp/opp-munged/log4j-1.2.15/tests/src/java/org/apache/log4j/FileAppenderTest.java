@@ -25,7 +25,6 @@ import java.lang.reflect.Method;
 
 
 /**
- *
  * FileAppender tests.
  *
  * @author Curt Arnold
@@ -34,7 +33,6 @@ public class FileAppenderTest extends TestCase {
   /**
    * Tests that any necessary directories are attempted to
    * be created if they don't exist.  See bug 9150.
-   *
    */
   public void testDirectoryCreation() {
     //
@@ -57,6 +55,7 @@ public class FileAppenderTest extends TestCase {
 
   /**
    * Tests that the return type of getThreshold is Priority.
+   *
    * @throws Exception
    */
   public void testGetThresholdReturnType() throws Exception {

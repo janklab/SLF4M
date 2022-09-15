@@ -20,19 +20,19 @@
 
   <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
     <errorHandler class="org.apache.log4j.xml.DOMTestCase$CustomErrorHandler">
-        <logger-ref ref="org.apache.log4j.xml.DOMTestCase.testCategoryFactory2.1"/>
+      <logger-ref ref="org.apache.log4j.xml.DOMTestCase.testCategoryFactory2.1"/>
     </errorHandler>
     <layout class="org.apache.log4j.PatternLayout">
       <param name="ConversionPattern" value="%m%n"/>
-    </layout>	    
+    </layout>
   </appender>
-  
+
   <root>
-    <appender-ref ref="CONSOLE" />
+    <appender-ref ref="CONSOLE"/>
   </root>
-  
+
   <categoryFactory class="org.apache.log4j.xml.DOMTestCase$CustomLoggerFactory">
-  	 <param name="additivity" value="false"/>
+    <param name="additivity" value="false"/>
   </categoryFactory>
-    
+
 </log4j:configuration>

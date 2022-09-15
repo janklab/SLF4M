@@ -65,6 +65,7 @@ public final class VectorErrorHandler implements ErrorHandler {
 
   /**
    * Gets last logger specified by setLogger.
+   *
    * @return logger.
    */
   public Logger getLogger() {
@@ -99,7 +100,7 @@ public final class VectorErrorHandler implements ErrorHandler {
     final String message, final Exception e, final int errorCode,
     final LoggingEvent event) {
     errors.addElement(
-      new Object[] { message, e, new Integer(errorCode), event });
+      new Object[]{message, e, new Integer(errorCode), event});
   }
 
   /**
@@ -144,6 +145,7 @@ public final class VectorErrorHandler implements ErrorHandler {
 
   /**
    * Gets number of errors captured.
+   *
    * @return number of errors captured.
    */
   public int size() {
@@ -159,6 +161,7 @@ public final class VectorErrorHandler implements ErrorHandler {
 
   /**
    * Get appender.
+   *
    * @return appender, may be null.
    */
   public Appender getAppender() {
@@ -174,6 +177,7 @@ public final class VectorErrorHandler implements ErrorHandler {
 
   /**
    * Get backup appender.
+   *
    * @return backup appender, may be null.
    */
   public Appender getBackupAppender() {

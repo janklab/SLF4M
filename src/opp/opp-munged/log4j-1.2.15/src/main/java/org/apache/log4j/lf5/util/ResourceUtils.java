@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,10 +23,9 @@ import java.net.URL;
  * ResourceUtils.  Provide a set of convenience methods for working with
  * Resources.
  *
- * @see org.apache.log4j.lf5.util.Resource
- *
  * @author Michael J. Sikorsky
  * @author Robert Shaw
+ * @see org.apache.log4j.lf5.util.Resource
  */
 
 // Contributed by ThoughtWorks Inc.
@@ -60,13 +59,10 @@ public class ResourceUtils {
    *                 This parameter is quite important from a
    *                 visibility of resources standpoint as the
    *                 hierarchy of Classloaders plays a role.
-   *
    * @param resource The resource to load.
-   *
    * @return If the Resource was found, the InputStream, otherwise null.
-   *
    * @see Resource
-   * @see #getResourceAsURL(Object,Resource)
+   * @see #getResourceAsURL(Object, Resource)
    * @see InputStream
    */
   public static InputStream getResourceAsStream(Object object, Resource resource) {
@@ -90,13 +86,10 @@ public class ResourceUtils {
    *                 This parameter is quite important from a
    *                 visibility of resources standpoint as the
    *                 hierarchy of Classloaders plays a role.
-   *
    * @param resource The resource to load.
-   *
    * @return If the Resource was found, the URL, otherwise null.
-   *
    * @see Resource
-   * @see #getResourceAsStream(Object,Resource)
+   * @see #getResourceAsStream(Object, Resource)
    */
   public static URL getResourceAsURL(Object object, Resource resource) {
     ClassLoader loader = object.getClass().getClassLoader();

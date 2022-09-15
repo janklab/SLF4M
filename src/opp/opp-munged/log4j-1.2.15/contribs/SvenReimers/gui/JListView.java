@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -60,11 +60,10 @@ public class JListView extends JList {
   //JListViewModel model;
   PatternLayout layout;
 
-  static LoggingEvent proto = new LoggingEvent("x", cat, Priority.ERROR, 
-					       "Message ", new Throwable());
+  static LoggingEvent proto = new LoggingEvent("x", cat, Priority.ERROR,
+    "Message ", new Throwable());
 
-  public
-  JListView(JListViewModel model) {
+  public JListView(JListViewModel model) {
     super(model);
     layout = new PatternLayout("%r %p %c [%t] -  %m");
     //this.setModel(model);
@@ -74,9 +73,8 @@ public class JListView extends JList {
 
   }
 
-  public
-  void add(LoggingEvent event) {
-    ((JListViewModel)getModel()).add(event);
+  public void add(LoggingEvent event) {
+    ((JListViewModel) getModel()).add(event);
   }
 
   /*
@@ -111,18 +109,18 @@ public class JListView extends JList {
   //boolean getScrollableTracksViewportWidth() {
   //System.out.println("getScrollableTracksViewportWidth called.");
   //return true;
-    //boolean b = super.getScrollableTracksViewportWidth();
-    //System.out.println("result is: "+b);
-    //return b;
+  //boolean b = super.getScrollableTracksViewportWidth();
+  //System.out.println("result is: "+b);
+  //return b;
   //}
-  
+
   //public
   //boolean getScrollableTracksViewportHeight() { 
   // System.out.println("getScrollableTracksViewportHeight called.");
   // return true;
-     //boolean b = super.getScrollableTracksViewportHeight();
-     //System.out.println("result is: "+b);
-     //return b;
+  //boolean b = super.getScrollableTracksViewportHeight();
+  //System.out.println("result is: "+b);
+  //return b;
   //}
 
   //public 
@@ -137,8 +135,7 @@ public class JListView extends JList {
   //return proto;
   //}
 
-  
-  
+
   static public void main(String[] args) {
 
     JFrame frame = new JFrame("JListView test");
@@ -149,7 +146,7 @@ public class JListView extends JList {
 
     JScrollPane sp = new JScrollPane(view);
     sp.setPreferredSize(new Dimension(250, 80));
-    
+
     container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
     //container.add(view);
     container.add(sp);
@@ -160,7 +157,7 @@ public class JListView extends JList {
     JButton b1000 = new JButton("Add 1000");
     JButton b10000 = new JButton("Add 10000");
 
-    JPanel panel = new JPanel(new GridLayout(0,1));
+    JPanel panel = new JPanel(new GridLayout(0, 1));
     container.add(panel);
 
     panel.add(b1);
@@ -168,7 +165,7 @@ public class JListView extends JList {
     panel.add(b100);
     panel.add(b1000);
     panel.add(b10000);
-    
+
 
     AddAction a1 = new AddAction(view, 1);
     AddAction a10 = new AddAction(view, 10);
@@ -183,32 +180,32 @@ public class JListView extends JList {
     b10000.addActionListener(a10000);
 
     frame.setVisible(true);
-    frame.setSize(new Dimension(700,700));
+    frame.setSize(new Dimension(700, 700));
 
     long before = System.currentTimeMillis();
 
     int RUN = 1000;
     int i = 0;
-    while(i++ < RUN) {      
-      LoggingEvent event0 = new LoggingEvent("x", cat, Priority.ERROR, 
-					     "Message "+i, null);
-      
-      Throwable t = new Exception("hello "+i);
-      LoggingEvent event1 = new LoggingEvent("x", cat, Priority.ERROR, 
-					     "Message "+i, t);
-      
+    while (i++ < RUN) {
+      LoggingEvent event0 = new LoggingEvent("x", cat, Priority.ERROR,
+        "Message " + i, null);
 
-      if(i % 10 == 0) {	
-	event1.getThreadName();
-	view.add(event1);
+      Throwable t = new Exception("hello " + i);
+      LoggingEvent event1 = new LoggingEvent("x", cat, Priority.ERROR,
+        "Message " + i, t);
+
+
+      if (i % 10 == 0) {
+        event1.getThreadName();
+        view.add(event1);
       } else {
-	event0.getThreadName();
-	view.add(event0);
+        event0.getThreadName();
+        view.add(event0);
       }
     }
 
     long after = System.currentTimeMillis();
-    System.out.println("Time taken :"+ ((after-before)*1000/RUN));
+    System.out.println("Time taken :" + ((after - before) * 1000 / RUN));
 
   }
 
@@ -218,53 +215,50 @@ public class JListView extends JList {
     int i = 0;
     final ImageIcon longIcon = new ImageIcon("RedFlag.gif");
 
-    public
-    MyCellRenderer() {
+    public MyCellRenderer() {
       System.out.println("----------------------");
-      
+
     }
 
 
-
-    public
-    int getTabSize()  {
+    public int getTabSize() {
       return 2;
     }
 
-    public Image loadIcon ( String path ) {
-    Image img = null;
-    try {
-      URL url = ClassLoader.getSystemResource(path);
-      img = (Image) (Toolkit.getDefaultToolkit()).getImage(url);
-    } catch (Exception e) {
-      System.out.println("Exception occured: " + e.getMessage() + 
-			 " - " + e );   
-    }	
-    return (img);
-  }
+    public Image loadIcon(String path) {
+      Image img = null;
+      try {
+        URL url = ClassLoader.getSystemResource(path);
+        img = (Image) (Toolkit.getDefaultToolkit()).getImage(url);
+      } catch (Exception e) {
+        System.out.println("Exception occured: " + e.getMessage() +
+          " - " + e);
+      }
+      return (img);
+    }
 
     public Component getListCellRendererComponent(JList list,
-						Object value, 
-						int index, // cell index
-						boolean isSelected, 
-						boolean cellHasFocus) {
+                                                  Object value,
+                                                  int index, // cell index
+                                                  boolean isSelected,
+                                                  boolean cellHasFocus) {
 
       //      System.out.println(o + " ============== " + i++);
       //LogLog.error("=======", new Exception());
       //setIcon(longIcon);
-      if(value instanceof LoggingEvent) {
-	LoggingEvent event = (LoggingEvent) value;
-	String str = layout.format(event);
-	String t = event.getThrowableInformation();
+      if (value instanceof LoggingEvent) {
+        LoggingEvent event = (LoggingEvent) value;
+        String str = layout.format(event);
+        String t = event.getThrowableInformation();
 
-	if(t != null) {
-	  setText(str + Layout.LINE_SEP + t);
-	} else {	
-	  setText(str);
-	}
-	
+        if (t != null) {
+          setText(str + Layout.LINE_SEP + t);
+        } else {
+          setText(str);
+        }
+
       } else {
-	setText(value.toString());
+        setText(value.toString());
       }
 
 
@@ -274,35 +268,30 @@ public class JListView extends JList {
 }
 
 
-
 class JListViewModel extends AbstractListModel {
 
   CyclicBuffer cb;
-  
+
   JListViewModel(int size) {
     cb = new CyclicBuffer(size);
   }
 
-  public
-  void add(LoggingEvent event) {
+  public void add(LoggingEvent event) {
     //System.out.println("JListViewModel.add called");
     cb.add(event);
     int j = cb.length();
     fireContentsChanged(this, 0, j);
   }
-    
 
 
-  public
-  Object getElementAt(int index) {
+  public Object getElementAt(int index) {
     return cb.get(index);
   }
 
-  public
-  int getSize() {
+  public int getSize() {
     return cb.length();
   }
-  
+
 }
 
 class AddAction implements ActionListener {
@@ -311,16 +300,14 @@ class AddAction implements ActionListener {
 
   static int counter = 0;
 
-  public
-  AddAction(JListView view, int burst) {
+  public AddAction(JListView view, int burst) {
     this.t = new AddThread(view, burst);
     t.start();
   }
-    
-  public
-  void actionPerformed(ActionEvent e) {
+
+  public void actionPerformed(ActionEvent e) {
     System.out.println("Action occured");
-    synchronized(t) {
+    synchronized (t) {
       t.notify();
     }
   }
@@ -330,35 +317,34 @@ class AddAction implements ActionListener {
     JListView view;
 
     Category cat = Category.getInstance("x");
-    
+
     AddThread(JListView view, int burst) {
       super();
       this.burst = burst;
       this.view = view;
-      setName("AddThread"+burst);
+      setName("AddThread" + burst);
     }
 
-    public
-    void run() {
+    public void run() {
 
-      while(true) {
-	synchronized(this) {
-	  try {
-	    this.wait();
-	  } catch(Exception e) {
-	  }
-	}
-	for(int i = 0; i < burst; i++) {
-	  LoggingEvent event = new LoggingEvent("x", cat, Priority.DEBUG, 
-						"Message "+counter, null);
+      while (true) {
+        synchronized (this) {
+          try {
+            this.wait();
+          } catch (Exception e) {
+          }
+        }
+        for (int i = 0; i < burst; i++) {
+          LoggingEvent event = new LoggingEvent("x", cat, Priority.DEBUG,
+            "Message " + counter, null);
 
-	  event.getThreadName();    
-	  if(counter % 50 == 0) {
-	    //event.throwable = new Exception("hello "+counter);
-	  }
-	  counter++;
-	  view.add(event);
-	}
+          event.getThreadName();
+          if (counter % 50 == 0) {
+            //event.throwable = new Exception("hello "+counter);
+          }
+          counter++;
+          view.add(event);
+        }
       }
     }
   }

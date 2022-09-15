@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,40 +29,36 @@ import org.apache.log4j.AppenderSkeleton;
  * <code>org.apache.log4j.performance.NullAppender</code> class is
  * intended for internal use only.</font> Consequently, it is not
  * included in the <em>log4j.jar</em> file.</b> </p>
- * */
+ */
 public class NullAppender extends AppenderSkeleton {
 
   public static String s;
   public String t;
 
-  public
-  NullAppender() {}
+  public NullAppender() {
+  }
 
-  public
-  NullAppender(Layout layout) {
+  public NullAppender(Layout layout) {
     this.layout = layout;
   }
 
-  public
-  void close() {}
+  public void close() {
+  }
 
-  public
-  void doAppend(LoggingEvent event) {
-    if(layout != null) {
+  public void doAppend(LoggingEvent event) {
+    if (layout != null) {
       t = layout.format(event);
       s = t;
     }
   }
 
-  public
-  void append(LoggingEvent event) {
+  public void append(LoggingEvent event) {
   }
 
   /**
-     This is a bogus appender but it still uses a layout.
-  */
-  public
-  boolean requiresLayout() {
+   * This is a bogus appender but it still uses a layout.
+   */
+  public boolean requiresLayout() {
     return true;
   }
 }

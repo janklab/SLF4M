@@ -27,20 +27,19 @@ import org.apache.log4j.spi.LoggingEvent;
  * @deprecated Since 1.3.
  */
 class Dispatcher extends Thread {
-    /**
-     * @deprecated
-     */
+  /**
+   * @deprecated
+   */
   private org.apache.log4j.helpers.BoundedFIFO bf;
   private AppenderAttachableImpl aai;
   private boolean interrupted = false;
   AsyncAppender container;
 
-    /**
-     *
-     * @param bf
-     * @param container
-     * @deprecated
-     */
+  /**
+   * @param bf
+   * @param container
+   * @deprecated
+   */
   Dispatcher(org.apache.log4j.helpers.BoundedFIFO bf, AsyncAppender container) {
     this.bf = bf;
     this.container = container;

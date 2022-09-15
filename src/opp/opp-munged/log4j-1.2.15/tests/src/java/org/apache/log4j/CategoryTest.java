@@ -31,6 +31,7 @@ import java.lang.reflect.Method;
 public class CategoryTest extends TestCase {
   /**
    * Constructs new instance of test.
+   *
    * @param name test name.
    */
   public CategoryTest(final String name) {
@@ -49,6 +50,7 @@ public class CategoryTest extends TestCase {
 
   /**
    * Tests that the return type of getChainedPriority is Priority.
+   *
    * @throws Exception thrown if Category.getChainedPriority can not be found.
    */
   public void testGetChainedPriorityReturnType() throws Exception {
@@ -78,6 +80,7 @@ public class CategoryTest extends TestCase {
 
   /**
    * Tests setPriority(Priority).
+   *
    * @deprecated
    */
   public void testSetPriority() {
@@ -92,6 +95,7 @@ public class CategoryTest extends TestCase {
   private static class MockCategory extends Logger {
     /**
      * Create new instance of MockCategory.
+     *
      * @param name category name
      */
     public MockCategory(final String name) {
@@ -101,6 +105,7 @@ public class CategoryTest extends TestCase {
 
     /**
      * Request an info level message.
+     *
      * @param msg message
      */
     public void info(final String msg) {

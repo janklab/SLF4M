@@ -125,6 +125,7 @@ public class PatternLayoutTest extends LayoutTest {
 
     /**
      * Get BUF_SIZE.
+     *
      * @return return initial buffer size in characters.
      */
     public int getBufSize() {
@@ -133,6 +134,7 @@ public class PatternLayoutTest extends LayoutTest {
 
     /**
      * Get MAX_CAPACITY.
+     *
      * @return maximum capacity in characters.
      */
     public int getMaxCapacity() {

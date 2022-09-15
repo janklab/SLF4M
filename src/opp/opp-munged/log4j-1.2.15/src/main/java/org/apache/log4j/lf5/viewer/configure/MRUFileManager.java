@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -73,7 +73,7 @@ public class MRUFileManager {
 
     try {
       ObjectOutputStream oos = new ObjectOutputStream(new
-          FileOutputStream(file));
+        FileOutputStream(file));
       oos.writeObject(_mruFileList);
       oos.flush();
       oos.close();
@@ -106,7 +106,7 @@ public class MRUFileManager {
    * Returns a input stream to the resource at the specified index
    */
   public InputStream getInputStream(int index) throws IOException,
-      FileNotFoundException {
+    FileNotFoundException {
     if (index < size()) {
       Object o = getFile(index);
       if (o instanceof File) {
@@ -187,6 +187,7 @@ public class MRUFileManager {
   //--------------------------------------------------------------------------
   //   Protected Methods:
   //--------------------------------------------------------------------------
+
   /**
    * Gets an input stream for the corresponding file.
    *
@@ -194,9 +195,9 @@ public class MRUFileManager {
    * @return InputStream
    */
   protected InputStream getInputStream(File file) throws IOException,
-      FileNotFoundException {
+    FileNotFoundException {
     BufferedInputStream reader =
-        new BufferedInputStream(new FileInputStream(file));
+      new BufferedInputStream(new FileInputStream(file));
 
     return reader;
   }
@@ -235,7 +236,7 @@ public class MRUFileManager {
     if (file.exists()) {
       try {
         ObjectInputStream ois = new ObjectInputStream(
-            new FileInputStream(file));
+          new FileInputStream(file));
         _mruFileList = (LinkedList) ois.readObject();
         ois.close();
 

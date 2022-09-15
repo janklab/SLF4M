@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -52,12 +52,13 @@ public class LogTextPanelExample {
     frame.setVisible(true);
   }
 
-  /**Main method*/
+  /**
+   * Main method
+   */
   public static void main(String[] args) {
     try {
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     LogTextPanelExample foo = new LogTextPanelExample();
@@ -98,34 +99,34 @@ class LogTextPanelExampleGenThread extends Thread {
   public void run() {
     Category cat = Category.getInstance(catName);
     int cnt = 0;
-    while(true) {
+    while (true) {
       cnt++;
-      int randEvt = (int)(Math.random() * 125);
-      if(randEvt < 3)
+      int randEvt = (int) (Math.random() * 125);
+      if (randEvt < 3)
         cat.fatal("{" + cnt + "} Something screwed up bad.");
-      else if(randEvt < 10)
+      else if (randEvt < 10)
         cat.error("{" + cnt + "} An error occured while trying to delete all of your files.");
-      else if(randEvt < 25)
+      else if (randEvt < 25)
         cat.warn("{" + cnt + "} It seems as if your hard disk is getting full.");
-      else if(randEvt < 55)
+      else if (randEvt < 55)
         cat.info("{" + cnt + "} It is now time for tea.");
-      else if(randEvt < 65)
+      else if (randEvt < 65)
         cat.debug("{" + cnt + "} Something bad is happening on line 565 of com.foo.Crap");
-      else if(randEvt < 75)
+      else if (randEvt < 75)
         cat.debug("{" + cnt + "} Input value for xe343dd is not equal to xe39dfd!");
-      else if(randEvt < 85)
+      else if (randEvt < 85)
         cat.debug("{" + cnt + "} Successfully reached line 2312 of com.foo.Goo");
-      else if(randEvt < 105)
+      else if (randEvt < 105)
         cat.debug("{" + cnt + "} Here is some extra handy debugging information for you.");
-      else if(randEvt < 115)
+      else if (randEvt < 115)
         cat.debug("{" + cnt + "} The file you are about to write to is not open.");
-      else if(randEvt < 125)
+      else if (randEvt < 125)
         cat.debug("{" + cnt + "} The input value to the method was <null>.");
 
       try {
         Thread.sleep(10);
+      } catch (Exception e) {
       }
-      catch(Exception e) {}
 
     }
   }

@@ -17,6 +17,7 @@
 package org.apache.log4j.xml;
 
 import org.w3c.dom.Element;
+
 import java.util.Properties;
 
 /**
@@ -29,14 +30,15 @@ import java.util.Properties;
  * @since 1.2.15
  */
 public interface UnrecognizedElementHandler {
-    /**
-     * Called to inform a configured object when
-     * an unrecognized child element is encountered.
-     * @param element element, may not be null.
-     * @param props properties in force, may be null.
-     * @return true if configured object recognized the element
-     * @throws Exception throw an exception to prevent activation
-     * of the configured object.
-     */
-    boolean parseUnrecognizedElement(Element element, Properties props) throws Exception;
+  /**
+   * Called to inform a configured object when
+   * an unrecognized child element is encountered.
+   *
+   * @param element element, may not be null.
+   * @param props   properties in force, may be null.
+   * @return true if configured object recognized the element
+   * @throws Exception throw an exception to prevent activation
+   *                   of the configured object.
+   */
+  boolean parseUnrecognizedElement(Element element, Properties props) throws Exception;
 }

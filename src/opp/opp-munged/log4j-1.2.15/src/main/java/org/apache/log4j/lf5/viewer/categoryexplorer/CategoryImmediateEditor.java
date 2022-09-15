@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -51,8 +51,8 @@ public class CategoryImmediateEditor extends DefaultTreeCellEditor {
   //   Constructors:
   //--------------------------------------------------------------------------
   public CategoryImmediateEditor(JTree tree,
-      CategoryNodeRenderer renderer,
-      CategoryNodeEditor editor) {
+                                 CategoryNodeRenderer renderer,
+                                 CategoryNodeEditor editor) {
     super(tree, renderer, editor);
     this.renderer = renderer;
     renderer.setIcon(null);
@@ -72,9 +72,9 @@ public class CategoryImmediateEditor extends DefaultTreeCellEditor {
     if (e instanceof MouseEvent) {
       MouseEvent me = (MouseEvent) e;
       TreePath path = tree.getPathForLocation(me.getX(),
-          me.getY());
+        me.getY());
       CategoryNode node = (CategoryNode)
-          path.getLastPathComponent();
+        path.getLastPathComponent();
 
       rv = node.isLeaf() /*|| !inCheckBoxHitRegion(me)*/;
     }
@@ -83,7 +83,7 @@ public class CategoryImmediateEditor extends DefaultTreeCellEditor {
 
   public boolean inCheckBoxHitRegion(MouseEvent e) {
     TreePath path = tree.getPathForLocation(e.getX(),
-        e.getY());
+      e.getY());
     if (path == null) {
       return false;
     }
@@ -96,10 +96,10 @@ public class CategoryImmediateEditor extends DefaultTreeCellEditor {
 
       Rectangle bounds = tree.getRowBounds(lastRow);
       Dimension checkBoxOffset =
-          renderer.getCheckBoxOffset();
+        renderer.getCheckBoxOffset();
 
       bounds.translate(offset + checkBoxOffset.width,
-          checkBoxOffset.height);
+        checkBoxOffset.height);
 
       rv = bounds.contains(e.getPoint());
     }
@@ -122,8 +122,8 @@ public class CategoryImmediateEditor extends DefaultTreeCellEditor {
   }
 
   protected void determineOffset(JTree tree, Object value,
-      boolean isSelected, boolean expanded,
-      boolean leaf, int row) {
+                                 boolean isSelected, boolean expanded,
+                                 boolean leaf, int row) {
     // Very important: means that the tree won't jump around.
     offset = 0;
   }

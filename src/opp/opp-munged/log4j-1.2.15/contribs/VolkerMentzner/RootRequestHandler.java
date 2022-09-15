@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,10 +33,10 @@ public class RootRequestHandler implements HTTPRequestHandler {
   private String handledPath;
   private String ReplyType = "Content-type: text/html\r\n\r\n";
   private String ReplyHTML = "<HTML><HEAD><TITLE>Root</TITLE></HEAD>\r\n"
-                           + "<BODY><H1>Root</H1>\r\n"
-                           + "</BODY></HTML>\r\n";
+    + "<BODY><H1>Root</H1>\r\n"
+    + "</BODY></HTML>\r\n";
 
- /**
+  /**
    * Creates a new RootRequestHandler object
    */
   public RootRequestHandler() {
@@ -81,28 +81,28 @@ public class RootRequestHandler implements HTTPRequestHandler {
     this.ReplyHTML = ReplyHTML;
   }
 
- /**
+  /**
    * Gets the title for html page
    */
   public String getTitle() {
     return this.title;
   }
 
- /**
+  /**
    * Sets the title for html page
    */
   public void setTitle(String title) {
     this.title = title;
   }
 
- /**
+  /**
    * Gets the description for html page
    */
   public String getDescription() {
     return this.description;
   }
 
- /**
+  /**
    * Sets the description for html page
    */
   public void setDescription(String description) {
@@ -127,18 +127,18 @@ public class RootRequestHandler implements HTTPRequestHandler {
     this.handledPath = path;
   }
 
- /**
+  /**
    * Handles the given request and writes the reply to the given out-stream.
    *
    * @param request - client browser request
-   * @param out - Out stream for sending data to client browser
+   * @param out     - Out stream for sending data to client browser
    * @return if the request was handled by this handler : true, else : false
    */
   public boolean handleRequest(String request, Writer out) {
     String path = "";
     String query = null;
     try {
-      URL url = new URL("http://localhost"+request);
+      URL url = new URL("http://localhost" + request);
       path = url.getPath();
       query = url.getPath();
       if (path.equals(handledPath) == false) {

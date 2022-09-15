@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -69,7 +69,7 @@ public class LogFileParser implements Runnable {
   //   Constructors:
   //--------------------------------------------------------------------------
   public LogFileParser(File file) throws IOException,
-      FileNotFoundException {
+    FileNotFoundException {
     this(new FileInputStream(file));
   }
 
@@ -83,6 +83,7 @@ public class LogFileParser implements Runnable {
   /**
    * Starts a new thread to parse the log file and create a LogRecord.
    * See run().
+   *
    * @param monitor LogBrokerMonitor
    */
   public void parse(LogBrokerMonitor monitor) throws RuntimeException {
@@ -103,7 +104,7 @@ public class LogFileParser implements Runnable {
     boolean isLogFile = false;
 
     _loadDialog = new LogFactor5LoadingDialog(
-        _monitor.getBaseFrame(), "Loading file...");
+      _monitor.getBaseFrame(), "Loading file...");
 
 
     try {
@@ -140,7 +141,7 @@ public class LogFileParser implements Runnable {
     } catch (RuntimeException e) {
       destroyDialog();
       displayError("Error - Invalid log file format.\nPlease see documentation"
-          + " on how to load log files.");
+        + " on how to load log files.");
     } catch (IOException e) {
       destroyDialog();
       displayError("Error - Unable to load log file!");
@@ -154,7 +155,7 @@ public class LogFileParser implements Runnable {
   //--------------------------------------------------------------------------
   protected void displayError(String message) {
     LogFactor5ErrorDialog error = new LogFactor5ErrorDialog(
-        _monitor.getBaseFrame(), message);
+      _monitor.getBaseFrame(), message);
 
   }
 

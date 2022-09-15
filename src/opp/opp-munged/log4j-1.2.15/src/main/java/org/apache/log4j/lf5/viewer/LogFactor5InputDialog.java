@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,7 +25,7 @@ import java.awt.event.KeyEvent;
 
 /**
  * LogFactor5InputDialog
- *
+ * <p>
  * Creates a popup input dialog box so that users can enter
  * a URL to open a log file from.
  *
@@ -70,7 +70,7 @@ public class LogFactor5InputDialog extends LogFactor5Dialog {
    * param size the size of the text field.
    */
   public LogFactor5InputDialog(JFrame jframe, String title, String label,
-      int size) {
+                               int size) {
     super(jframe, title, true);
 
     JPanel bottom = new JPanel();

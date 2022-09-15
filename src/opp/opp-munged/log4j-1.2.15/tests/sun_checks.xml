@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE module PUBLIC
-    "-//Puppy Crawl//DTD Check Configuration 1.0//EN"
-    "http://www.puppycrawl.com/dtds/configuration_1_0.dtd">
+  "-//Puppy Crawl//DTD Check Configuration 1.0//EN"
+  "http://www.puppycrawl.com/dtds/configuration_1_0.dtd">
 <!--
  Licensed to the Apache Software Foundation (ASF) under one or more
  contributor license agreements.  See the NOTICE file distributed with
@@ -68,12 +68,11 @@
     <!--  default conflicts with jalopy configuration which
               places a space after the opening brace of an array initialization  -->
     <module name="NoWhitespaceAfter">
-        <property name="tokens" value="BNOT, DEC, DOT, INC, LNOT, UNARY_MINUS, UNARY_PLUS"/>
+      <property name="tokens" value="BNOT, DEC, DOT, INC, LNOT, UNARY_MINUS, UNARY_PLUS"/>
     </module>
     <module name="NoWhitespaceBefore"/>
     <module name="WhitespaceAfter"/>
     <module name="WhitespaceAround"/>
-
 
 
     <!--                       JavaDoc guidelines -->
@@ -88,7 +87,6 @@
     <module name="UpperEll"/>
 
 
-
     <!--                                    Api Doc -->
 
     <!-- override hashCode whenever you override equals() -->
@@ -99,7 +97,6 @@
     <module name="IllegalInstantiation">
       <property name="classes" value="java.lang.Boolean"/>
     </module>
-
 
 
     <!--                             best practices -->

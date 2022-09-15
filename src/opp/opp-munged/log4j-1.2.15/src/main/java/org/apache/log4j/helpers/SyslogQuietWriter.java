@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,39 +18,35 @@
 package org.apache.log4j.helpers;
 
 
-
 import java.io.Writer;
+
 import org.apache.log4j.spi.ErrorHandler;
 
 /**
-   SyslogQuietWriter extends QuietWriter by prepending the syslog
-   level code before each printed String.
-
-   @since 0.7.3
-*/
+ * SyslogQuietWriter extends QuietWriter by prepending the syslog
+ * level code before each printed String.
+ *
+ * @since 0.7.3
+ */
 public class SyslogQuietWriter extends QuietWriter {
 
   int syslogFacility;
   int level;
 
-  public
-  SyslogQuietWriter(Writer writer, int syslogFacility, ErrorHandler eh) {
+  public SyslogQuietWriter(Writer writer, int syslogFacility, ErrorHandler eh) {
     super(writer, eh);
     this.syslogFacility = syslogFacility;
   }
 
-  public
-  void setLevel(int level) {
+  public void setLevel(int level) {
     this.level = level;
   }
 
-  public
-  void setSyslogFacility(int syslogFacility) {
+  public void setSyslogFacility(int syslogFacility) {
     this.syslogFacility = syslogFacility;
   }
 
-  public
-  void write(String string) {
-    super.write("<"+(syslogFacility | level)+">" + string);
+  public void write(String string) {
+    super.write("<" + (syslogFacility | level) + ">" + string);
   }
 }

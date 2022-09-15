@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -37,7 +37,7 @@ import java.util.List;
 // Contributed by ThoughtWorks Inc.
 
 public class FilteredLogTableModel
-    extends AbstractTableModel {
+  extends AbstractTableModel {
   //--------------------------------------------------------------------------
   //   Constants:
   //--------------------------------------------------------------------------
@@ -51,14 +51,14 @@ public class FilteredLogTableModel
   protected List _filteredRecords;
   protected int _maxNumberOfLogRecords = 5000;
   protected String[] _colNames = {"Date",
-                                  "Thread",
-                                  "Message #",
-                                  "Level",
-                                  "NDC",
-                                  "Category",
-                                  "Message",
-                                  "Location",
-                                  "Thrown"};
+    "Thread",
+    "Message #",
+    "Level",
+    "NDC",
+    "Category",
+    "Message",
+    "Location",
+    "Thrown"};
 
   //--------------------------------------------------------------------------
   //   Private Variables:
@@ -238,7 +238,7 @@ public class FilteredLogTableModel
       int trim = numberOfRecordsToTrim();
       if (trim > 1) {
         List oldRecords =
-            _allRecords.subList(0, trim);
+          _allRecords.subList(0, trim);
         oldRecords.clear();
         refresh();
       } else {

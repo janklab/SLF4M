@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -59,22 +59,24 @@ public abstract class StreamUtils {
   /**
    * Copies information from the input stream to the output stream using
    * a default buffer size of 2048 bytes.
+   *
    * @throws java.io.IOException
    */
   public static void copy(InputStream input, OutputStream output)
-      throws IOException {
+    throws IOException {
     copy(input, output, DEFAULT_BUFFER_SIZE);
   }
 
   /**
    * Copies information from the input stream to the output stream using
    * the specified buffer size
+   *
    * @throws java.io.IOException
    */
   public static void copy(InputStream input,
-      OutputStream output,
-      int bufferSize)
-      throws IOException {
+                          OutputStream output,
+                          int bufferSize)
+    throws IOException {
     byte[] buf = new byte[bufferSize];
     int bytesRead = input.read(buf);
     while (bytesRead != -1) {
@@ -87,10 +89,11 @@ public abstract class StreamUtils {
   /**
    * Copies information between specified streams and then closes
    * both of the streams.
+   *
    * @throws java.io.IOException
    */
   public static void copyThenClose(InputStream input, OutputStream output)
-      throws IOException {
+    throws IOException {
     copy(input, output);
     input.close();
     output.close();
@@ -102,7 +105,7 @@ public abstract class StreamUtils {
    * @throws java.io.IOException
    */
   public static byte[] getBytes(InputStream input)
-      throws IOException {
+    throws IOException {
     ByteArrayOutputStream result = new ByteArrayOutputStream();
     copy(input, result);
     result.close();

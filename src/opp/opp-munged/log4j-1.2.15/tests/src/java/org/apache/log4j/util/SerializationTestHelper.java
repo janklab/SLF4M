@@ -44,9 +44,10 @@ public class SerializationTestHelper {
   /**
    * Creates a clone by serializing object and
    * deserializing byte stream.
+   *
    * @param obj object to serialize and deserialize.
    * @return clone
-   * @throws IOException on IO error.
+   * @throws IOException            on IO error.
    * @throws ClassNotFoundException if class not found.
    */
   public static Object serializeClone(final Object obj)
@@ -64,6 +65,7 @@ public class SerializationTestHelper {
 
   /**
    * Deserializes a specified file.
+   *
    * @param witness serialization file, may not be null.
    * @return deserialized object.
    * @throws Exception thrown on IO or deserialization exception.
@@ -80,9 +82,9 @@ public class SerializationTestHelper {
    * Checks the serialization of an object against an file
    * containing the expected serialization.
    *
-   * @param witness name of file containing expected serialization.
-   * @param obj object to be serialized.
-   * @param skip positions in serialized stream that should not be compared.
+   * @param witness    name of file containing expected serialization.
+   * @param obj        object to be serialized.
+   * @param skip       positions in serialized stream that should not be compared.
    * @param endCompare position to stop comparison.
    * @throws Exception thrown on IO or serialization exception.
    */
@@ -99,9 +101,10 @@ public class SerializationTestHelper {
 
   /**
    * Asserts the serialized form of an object.
-   * @param witness file name of expected serialization.
-   * @param actual byte array of actual serialization.
-   * @param skip positions to skip comparison.
+   *
+   * @param witness    file name of expected serialization.
+   * @param actual     byte array of actual serialization.
+   * @param skip       positions to skip comparison.
    * @param endCompare position to stop comparison.
    * @throws IOException thrown on IO or serialization exception.
    */
@@ -117,8 +120,8 @@ public class SerializationTestHelper {
       int bytesRead = is.read(expected);
       is.close();
 
-      if(bytesRead < endCompare) {
-          TestCase.assertEquals(bytesRead, actual.length);
+      if (bytesRead < endCompare) {
+        TestCase.assertEquals(bytesRead, actual.length);
       }
 
       int endScan = actual.length;

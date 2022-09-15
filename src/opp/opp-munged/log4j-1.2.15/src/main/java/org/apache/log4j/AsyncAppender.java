@@ -35,11 +35,11 @@ import java.util.Map;
 
 /**
  * The AsyncAppender lets users log events asynchronously.
- *
+ * <p>
  * The AsyncAppender will collect the events sent to it and then dispatch them
  * to all the appenders that are attached to it. You can attach multiple
  * appenders to an AsyncAppender.
- *
+ * <p>
  * The AsyncAppender uses a separate thread to serve the events in its buffer.
  *
  * <b>Important note:</b> The <code>AsyncAppender</code> can only be script
@@ -72,7 +72,9 @@ public class AsyncAppender extends AppenderSkeleton
    */
   private int bufferSize = DEFAULT_BUFFER_SIZE;
 
-  /** Nested appenders. */
+  /**
+   * Nested appenders.
+   */
   AppenderAttachableImpl aai;
 
   /**
@@ -183,8 +185,8 @@ public class AsyncAppender extends AppenderSkeleton
         //      wait for a buffer notification
         boolean discard = true;
         if (blocking
-                && !Thread.interrupted()
-                && Thread.currentThread() != dispatcher) {
+          && !Thread.interrupted()
+          && Thread.currentThread() != dispatcher) {
           try {
             buffer.wait();
             discard = false;
@@ -238,7 +240,7 @@ public class AsyncAppender extends AppenderSkeleton
       Thread.currentThread().interrupt();
       org.apache.log4j.helpers.LogLog.error(
         "Got an InterruptedException while waiting for the "
-        + "dispatcher to finish.", e);
+          + "dispatcher to finish.", e);
     }
 
     //
@@ -261,6 +263,7 @@ public class AsyncAppender extends AppenderSkeleton
 
   /**
    * Get iterator over attached appenders.
+   *
    * @return iterator or null if no attached appenders.
    */
   public Enumeration getAllAppenders() {
@@ -293,6 +296,7 @@ public class AsyncAppender extends AppenderSkeleton
 
   /**
    * Determines if specified appender is attached.
+   *
    * @param appender appender.
    * @return true if attached.
    */
@@ -320,6 +324,7 @@ public class AsyncAppender extends AppenderSkeleton
 
   /**
    * Removes an appender.
+   *
    * @param appender appender to remove.
    */
   public void removeAppender(final Appender appender) {
@@ -330,6 +335,7 @@ public class AsyncAppender extends AppenderSkeleton
 
   /**
    * Remove appender by name.
+   *
    * @param name name.
    */
   public void removeAppender(final String name) {
@@ -344,7 +350,7 @@ public class AsyncAppender extends AppenderSkeleton
    * information related to the event. As a result, the event that will be
    * ultimately logged will likely to contain the wrong location information
    * (if present in the log format).
-   *
+   * <p>
    * Location information extraction is comparatively very slow and should be
    * avoided unless performance is not a concern.
    *
@@ -382,6 +388,7 @@ public class AsyncAppender extends AppenderSkeleton
 
   /**
    * Gets the current buffer size.
+   *
    * @return the current value of the <b>BufferSize</b> option.
    */
   public int getBufferSize() {
@@ -458,14 +465,14 @@ public class AsyncAppender extends AppenderSkeleton
       String msg =
         MessageFormat.format(
           "Discarded {0} messages due to full event buffer including: {1}",
-          new Object[] { new Integer(count), maxEvent.getMessage() });
+          new Object[]{new Integer(count), maxEvent.getMessage()});
 
       return new LoggingEvent(
-              "org.apache.log4j.AsyncAppender.DONT_REPORT_LOCATION",
-              Logger.getLogger(maxEvent.getLoggerName()),
-              maxEvent.getLevel(),
-              msg,
-              null);
+        "org.apache.log4j.AsyncAppender.DONT_REPORT_LOCATION",
+        Logger.getLogger(maxEvent.getLoggerName()),
+        maxEvent.getLevel(),
+        msg,
+        null);
     }
   }
 
@@ -552,7 +559,7 @@ public class AsyncAppender extends AppenderSkeleton
 
               for (
                 Iterator iter = discardMap.values().iterator();
-                  iter.hasNext();) {
+                iter.hasNext(); ) {
                 events[index++] = ((DiscardSummary) iter.next()).createEvent();
               }
 

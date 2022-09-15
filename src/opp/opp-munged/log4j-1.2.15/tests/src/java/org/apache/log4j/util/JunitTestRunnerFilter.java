@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,24 +33,24 @@ public class JunitTestRunnerFilter implements Filter {
 
     if (
       util.match(
-          "/at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner/", in)) {
+        "/at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner/", in)) {
       return null;
     } else if (
       util.match(
-          "/at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner/",
-          in)) {
+        "/at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner/",
+        in)) {
       return null;
     } else if (
       util.match(
-          "/at com.intellij/",
-          in)) {
+        "/at com.intellij/",
+        in)) {
       return null;
     } else if (in.indexOf("at junit.") >= 0 && in.indexOf("ui.TestRunner") >= 0) {
-       return null;
+      return null;
     } else if (in.indexOf("org.apache.maven") >= 0) {
-       return null;
+      return null;
     } else if (util.match("/\\sat /", in)) {
-       return "\t" + in.trim();
+      return "\t" + in.trim();
     } else {
       return in;
     }

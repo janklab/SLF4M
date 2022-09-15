@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,14 +21,15 @@ import org.apache.log4j.spi.RendererSupport;
 import org.apache.log4j.helpers.LogLog;
 import org.apache.log4j.helpers.Loader;
 import org.apache.log4j.helpers.OptionConverter;
+
 import java.util.Hashtable;
 
 /**
-   Map class objects to an {@link ObjectRenderer}.
-
-   @author Ceki G&uuml;lc&uuml;
-   @since version 1.0
-   */
+ * Map class objects to an {@link ObjectRenderer}.
+ *
+ * @author Ceki G&uuml;lc&uuml;
+ * @since version 1.0
+ */
 public class RendererMap {
 
   Hashtable map;
@@ -38,50 +39,49 @@ public class RendererMap {
   /**
    * Construct a new, empty object.
    */
-  public
-  RendererMap() {
+  public RendererMap() {
     map = new Hashtable();
   }
 
   /**
-     Add a renderer to a hierarchy passed as parameter.
-     @param repository ???
-     @param renderedClassName ???
-     @param renderingClassName ???
-  */
+   * Add a renderer to a hierarchy passed as parameter.
+   *
+   * @param repository         ???
+   * @param renderedClassName  ???
+   * @param renderingClassName ???
+   */
   static
-  public
-  void addRenderer(RendererSupport repository, String renderedClassName,
-		   String renderingClassName) {
-    LogLog.debug("Rendering class: ["+renderingClassName+"], Rendered class: ["+
-		 renderedClassName+"].");
+  public void addRenderer(RendererSupport repository, String renderedClassName,
+                          String renderingClassName) {
+    LogLog.debug("Rendering class: [" + renderingClassName + "], Rendered class: [" +
+      renderedClassName + "].");
     ObjectRenderer renderer = (ObjectRenderer)
-             OptionConverter.instantiateByClassName(renderingClassName,
-						    ObjectRenderer.class,
-						    null);
-    if(renderer == null) {
-      LogLog.error("Could not instantiate renderer ["+renderingClassName+"].");
+      OptionConverter.instantiateByClassName(renderingClassName,
+        ObjectRenderer.class,
+        null);
+    if (renderer == null) {
+      LogLog.error("Could not instantiate renderer [" + renderingClassName + "].");
       return;
     } else {
       try {
-	Class renderedClass = Loader.loadClass(renderedClassName);
-	repository.setRenderer(renderedClass, renderer);
-      } catch(ClassNotFoundException e) {
-	LogLog.error("Could not find class ["+renderedClassName+"].", e);
+        Class renderedClass = Loader.loadClass(renderedClassName);
+        repository.setRenderer(renderedClass, renderer);
+      } catch (ClassNotFoundException e) {
+        LogLog.error("Could not find class [" + renderedClassName + "].", e);
       }
     }
   }
 
 
   /**
-     Find the appropriate renderer for the class type of the
-     <code>o</code> parameter. This is accomplished by calling the
-     {@link #get(Class)} method. Once a renderer is found, it is
-     applied on the object <code>o</code> and the result is returned
-     as a {@link String}. */
-  public
-  String findAndRender(Object o) {
-    if(o == null)
+   * Find the appropriate renderer for the class type of the
+   * <code>o</code> parameter. This is accomplished by calling the
+   * {@link #get(Class)} method. Once a renderer is found, it is
+   * applied on the object <code>o</code> and the result is returned
+   * as a {@link String}.
+   */
+  public String findAndRender(Object o) {
+    if (o == null)
       return null;
     else
       return get(o.getClass()).doRender(o);
@@ -89,11 +89,11 @@ public class RendererMap {
 
 
   /**
-     Syntactic sugar method that calls {@link #get(Class)} with the
-     class of the object parameter. */
-  public
-  ObjectRenderer get(Object o) {
-    if(o == null)
+   * Syntactic sugar method that calls {@link #get(Class)} with the
+   * class of the object parameter.
+   */
+  public ObjectRenderer get(Object o) {
+    if (o == null)
       return null;
     else
       return get(o.getClass());
@@ -101,67 +101,66 @@ public class RendererMap {
 
 
   /**
-     Search the parents of <code>clazz</code> for a renderer. The
-     renderer closest in the hierarchy will be returned. If no
-     renderers could be found, then the default renderer is returned.
-
-     <p>The search first looks for a renderer configured for
-     <code>clazz</code>. If a renderer could not be found, then the
-     search continues by looking at all the interfaces implemented by
-     <code>clazz</code> including the super-interfaces of each
-     interface.  If a renderer cannot be found, then the search looks
-     for a renderer defined for the parent (superclass) of
-     <code>clazz</code>. If that fails, then all the interfaces
-     implemented by the parent of <code>clazz</code> are searched and
-     so on.
-
-     <p>For example, if A0, A1, A2 are classes and X0, X1, X2, Y0, Y1
-     are interfaces where A2 extends A1 which in turn extends A0 and
-     similarly X2 extends X1 which extends X0 and Y1 extends Y0. Let
-     us also assume that A1 implements the Y0 interface and that A2
-     implements the X2 interface.
-
-     <p>The table below shows the results returned by the
-     <code>get(A2.class)</code> method depending on the renderers
-     added to the map.
-
-     <table border="1">
-     <caption>Renderer Behavior</caption>
-     <tr><th>Added renderers</th><th>Value returned by <code>get(A2.class)</code></th>
-
-     <tr><td><code>A0Renderer</code>
-         <td align="center"><code>A0Renderer</code>
-
-     <tr><td><code>A0Renderer, A1Renderer</code>
-         <td align="center"><code>A1Renderer</code>
-
-     <tr><td><code>X0Renderer</code>
-         <td align="center"><code>X0Renderer</code>
-
-     <tr><td><code>A1Renderer, X0Renderer</code>
-         <td align="center"><code>X0Renderer</code>
-
-     </table>
-
-     <p>This search algorithm is not the most natural, although it is
-     particularly easy to implement. Future log4j versions
-     <em>may</em> implement a more intuitive search
-     algorithm. However, the present algorithm should be acceptable in
-     the vast majority of circumstances.
-
-   @param clazz The class to get the renderer for, as a Class object.
- */
-  public
-  ObjectRenderer get(Class clazz) {
+   * Search the parents of <code>clazz</code> for a renderer. The
+   * renderer closest in the hierarchy will be returned. If no
+   * renderers could be found, then the default renderer is returned.
+   *
+   * <p>The search first looks for a renderer configured for
+   * <code>clazz</code>. If a renderer could not be found, then the
+   * search continues by looking at all the interfaces implemented by
+   * <code>clazz</code> including the super-interfaces of each
+   * interface.  If a renderer cannot be found, then the search looks
+   * for a renderer defined for the parent (superclass) of
+   * <code>clazz</code>. If that fails, then all the interfaces
+   * implemented by the parent of <code>clazz</code> are searched and
+   * so on.
+   *
+   * <p>For example, if A0, A1, A2 are classes and X0, X1, X2, Y0, Y1
+   * are interfaces where A2 extends A1 which in turn extends A0 and
+   * similarly X2 extends X1 which extends X0 and Y1 extends Y0. Let
+   * us also assume that A1 implements the Y0 interface and that A2
+   * implements the X2 interface.
+   *
+   * <p>The table below shows the results returned by the
+   * <code>get(A2.class)</code> method depending on the renderers
+   * added to the map.
+   *
+   * <table border="1">
+   * <caption>Renderer Behavior</caption>
+   * <tr><th>Added renderers</th><th>Value returned by <code>get(A2.class)</code></th>
+   *
+   * <tr><td><code>A0Renderer</code>
+   * <td align="center"><code>A0Renderer</code>
+   *
+   * <tr><td><code>A0Renderer, A1Renderer</code>
+   * <td align="center"><code>A1Renderer</code>
+   *
+   * <tr><td><code>X0Renderer</code>
+   * <td align="center"><code>X0Renderer</code>
+   *
+   * <tr><td><code>A1Renderer, X0Renderer</code>
+   * <td align="center"><code>X0Renderer</code>
+   *
+   * </table>
+   *
+   * <p>This search algorithm is not the most natural, although it is
+   * particularly easy to implement. Future log4j versions
+   * <em>may</em> implement a more intuitive search
+   * algorithm. However, the present algorithm should be acceptable in
+   * the vast majority of circumstances.
+   *
+   * @param clazz The class to get the renderer for, as a Class object.
+   */
+  public ObjectRenderer get(Class clazz) {
     ObjectRenderer r = null;
-    for(Class c = clazz; c != null; c = c.getSuperclass()) {
+    for (Class c = clazz; c != null; c = c.getSuperclass()) {
       r = (ObjectRenderer) map.get(c);
-      if(r != null) {
-	return r;
+      if (r != null) {
+        return r;
       }
       r = searchInterfaces(c);
-      if(r != null)
-	return r;
+      if (r != null)
+        return r;
     }
     return defaultRenderer;
   }
@@ -169,20 +168,20 @@ public class RendererMap {
   /**
    * Search for a renderer for a given class. In this context, "search"
    * means ??? and is distinct from the get() process in that ???.
-   * 
+   *
    * @param c The class to search for, as a Class object.
    * @return The object renderer for the given class.
    */
   ObjectRenderer searchInterfaces(Class c) {
     ObjectRenderer r = (ObjectRenderer) map.get(c);
-    if(r != null) {
+    if (r != null) {
       return r;
     } else {
       Class[] ia = c.getInterfaces();
-      for(int i = 0; i < ia.length; i++) {
-	r = searchInterfaces(ia[i]);
-	if(r != null)
-	  return r;
+      for (int i = 0; i < ia.length; i++) {
+        r = searchInterfaces(ia[i]);
+        if (r != null)
+          return r;
       }
     }
     return null;
@@ -191,26 +190,25 @@ public class RendererMap {
 
   /**
    * Gets the default renderer.
+   *
    * @return The default ObjectRenderer.
    */
-  public
-  ObjectRenderer getDefaultRenderer() {
+  public ObjectRenderer getDefaultRenderer() {
     return defaultRenderer;
   }
 
 
-  public
-  void clear() {
+  public void clear() {
     map.clear();
   }
 
   /**
-     Register an {@link ObjectRenderer} for <code>clazz</code>.
-     @param clazz The class to be rendered.
-     @param or The object renderer to use for clazz.
-  */
-  public
-  void put(Class clazz, ObjectRenderer or) {
+   * Register an {@link ObjectRenderer} for <code>clazz</code>.
+   *
+   * @param clazz The class to be rendered.
+   * @param or    The object renderer to use for clazz.
+   */
+  public void put(Class clazz, ObjectRenderer or) {
     map.put(clazz, or);
   }
 }
