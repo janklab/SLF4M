@@ -4,3 +4,9 @@ dist/
 # Jekyll droppings
 docs/_site
 docs/Gemfile.lock
+
+# Local-repo IDE & editor files
+src/opp/opp-munged/log4j-1.2.15/.idea/workspace.xml
+src/opp/opp-munged/log4j-1.2.16/.idea/workspace.xml
+src/opp/opp-munged/log4j-1.2.17/.idea/workspace.xml
+.vscode/
