@@ -1,5 +1,4 @@
-SLF4M Jankalog - README
-=======================
+# SLF4M Jankalog - README
 
 The Jankalog library is a collection of customized Java logging libraries to support [SLF4M](https://slf4m.janklab.net/). It is part of the [Janklab](https://janklab.net) suite of FLOSS libraries for Matlab.
 

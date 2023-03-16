@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="log4j-1.2.15" />
         <module name="apache-log4j-1.2.15" />
+        <module name="log4j" />
       </profile>
     </annotationProcessing>
   </component>
@@ -15,6 +16,7 @@
     <option name="ADDITIONAL_OPTIONS_STRING" value="-Xlint:unchecked" />
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="apache-log4j-1.2.15" options="" />
+      <module name="log4j" options="" />
       <module name="log4j-1.2.15" options="" />
     </option>
   </component>
